@@ -1,6 +1,6 @@
 # cali.so v3 上游源码审计
 
-初次审计：2026-07-22；基线更新：2026-08-09  
+初次审计：2026-07-22；基线更新：2026-08-09；上游复核：2026-08-09
 目标上游：[CaliCastle/cali.so](https://github.com/CaliCastle/cali.so)  
 锁定生产基线：[`9d9b4926e665a9b8f49135a2a7c5945bd9d87a7e`](https://github.com/CaliCastle/cali.so/commit/9d9b4926e665a9b8f49135a2a7c5945bd9d87a7e)（2026-08-08 `main`）
 
@@ -9,6 +9,15 @@
 `matthew-miao.com` 应当从上游 commit 直接派生，而不是根据截图重新实现。这样才能保留公开页面、后台、动效、可访问性、SEO、Feed、缓存和安全边界的实际行为。视觉与交互代码保持不变；只替换 Cali 的个人文字、文章、照片、项目、社交信息、地理信息、品牌资产和所有第三方账号。
 
 第一阶段不建议把 PostgreSQL 改写为 D1，也不建议把媒体处理搬进 Cloudflare Workers。原因不是 Cloudflare 本身不足，而是上游的完整功能已经明确依赖 PostgreSQL 专有并发约束和 Node 原生图像工具。上游已从 Next.js preview 升级到 16.3.0 正式版，降低了 OpenNext 版本风险，但不消除业务数据库和图像处理的移植边界。
+
+## 2026-08-09 上游复核
+
+- `upstream/main` 仍为锁定生产基线 `9d9b4926e665a9b8f49135a2a7c5945bd9d87a7e`，基线之后的提交数为零。
+- 上游默认引用 `upstream/dev` 位于 `91ef1d0403eed1f705862bffb5f03b6c8ce25214`，它是生产基线的祖先，不包含更新。
+- 未合并的 `cali/audit-v3-plan-bundle` 只增加上游审计计划；`cali/complete-security-baseline` 只调整上游安全验证文档与 gitleaks 例外，不是可移植的运行时修复。
+- 未合并的 `cali/og-metadata-audit` 修复 Vercel/pnpm tracing 下的 `subset-font` 动态加载。Matthew 站已在 Cloudflare 构建阶段生成并打包 OG 字体与内容，不依赖该运行时 tracing 路径，因此不移植。
+
+结论：本次没有可安全同步的上游代码。继续保持当前锁定基线；未来复核仍需逐项排除 Cali 身份、文章、照片、品牌和产品资产。
 
 ## 上游规模与边界
 
