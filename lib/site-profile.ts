@@ -26,6 +26,7 @@ export const siteProfile = {
     githubUsername: 'matthew6688',
     fengtalk: 'https://fengtalk.ai',
     uchat: 'https://uchat.au',
+    calcomBooking: 'https://cal.com/matthew-miao/ama',
     x: null,
     youtube: null,
     telegram: null,
