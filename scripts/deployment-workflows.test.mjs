@@ -94,6 +94,7 @@ test('main validates and deploys the exact commit to Cloudflare Workers', async 
     job.env.CLOUDFLARE_API_TOKEN,
     '${{ secrets.CLOUDFLARE_API_TOKEN }}',
   )
+  assert.equal(job.env.CALCOM_API_KEY, '${{ secrets.CALCOM_API_KEY }}')
   assertOrdered(
     job.steps,
     'Install dependencies',
@@ -102,8 +103,18 @@ test('main validates and deploys the exact commit to Cloudflare Workers', async 
   assertOrdered(
     job.steps,
     'Validate application',
+    'Verify Cal.com booking contract',
+  )
+  assertOrdered(
+    job.steps,
+    'Verify Cal.com booking contract',
     'Deploy exact commit to Cloudflare Workers',
   )
+  const calcom = job.steps.find(
+    (step) => step.name === 'Verify Cal.com booking contract',
+  )
+  assert.match(calcom.if, /env\.CALCOM_API_KEY != ''/)
+  assert.equal(calcom.run, 'pnpm verify:calcom')
   const validate = job.steps.find(
     (step) => step.name === 'Validate application',
   )

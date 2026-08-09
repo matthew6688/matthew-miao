@@ -122,16 +122,17 @@ Notes from ongoing experiments in web coding, AI agents, and automation—coveri
 
 ## AMA 咨询草案
 
-在上线真实付款前必须由本人确认。
+Matthew 于 2026-08-09 确认使用 Cal.com 承载公开预约与付款。
 
 - 主题：AI Agent、业务自动化、Web coding、outreach、外贸获客、company knowledge
 - 语言：中文或英文
-- 30 分钟：AUD 99
-- 60 分钟：AUD 179
+- 60 分钟：USD 99
 - 会议方式：Google Meet
 - 改期：开始前 24 小时可免费改期一次
 - 退款：开始前 24 小时取消可全额退款；之后不退款
-- 首发状态：展示介绍，但关闭真实付款，直到 Stripe、日历和规则获得最终确认
+- 预约地址：`https://cal.com/matthew-miao/ama`
+- Provider：Cal.com + 已连接的 Stripe + Google Meet
+- 首发状态：网站发布并完成 provider 验证后公开 Event Type
 
 ## 书架、唱片和图片
 
