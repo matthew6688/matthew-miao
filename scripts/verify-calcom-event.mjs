@@ -2,15 +2,20 @@ import assert from 'node:assert/strict'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const EVENT_TYPES_API =
-  'https://api.cal.com/v2/event-types?username=matthew-miao&eventSlug=ama'
+import { siteProfile } from '../lib/site-profile.ts'
+
+const bookingUrl = new URL(siteProfile.links.calcomBooking)
+const [username, eventSlug] = bookingUrl.pathname.split('/').filter(Boolean)
+const EVENT_TYPES_API = new URL('/v2/event-types', 'https://api.cal.com')
+EVENT_TYPES_API.searchParams.set('username', username)
+EVENT_TYPES_API.searchParams.set('eventSlug', eventSlug)
 
 export function assertCalcomAmaEvent(payload) {
   assert.equal(payload?.status, 'success')
   assert.ok(Array.isArray(payload.data), 'Cal.com event response needs data')
 
   const event = payload.data.find(
-    (candidate) => candidate?.bookingUrl === 'https://cal.com/matthew-miao/ama',
+    (candidate) => candidate?.bookingUrl === siteProfile.links.calcomBooking,
   )
   assert.ok(event, 'Cal.com AMA event is missing')
   assert.equal(event.lengthInMinutes, 60, 'Cal.com AMA duration')

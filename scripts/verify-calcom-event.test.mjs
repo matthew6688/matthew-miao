@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 
+import { siteProfile } from '../lib/site-profile.ts'
 import { assertCalcomAmaEvent } from './verify-calcom-event.mjs'
 
 function fixture(overrides = {}) {
@@ -8,7 +9,7 @@ function fixture(overrides = {}) {
     status: 'success',
     data: [
       {
-        bookingUrl: 'https://cal.com/matthew-miao/ama',
+        bookingUrl: siteProfile.links.calcomBooking,
         lengthInMinutes: 60,
         price: 9_900,
         currency: 'usd',
@@ -27,7 +28,7 @@ function fixture(overrides = {}) {
 test('accepts the published 60-minute US$99 Cal.com AMA contract', () => {
   assert.equal(
     assertCalcomAmaEvent(fixture()).bookingUrl,
-    'https://cal.com/matthew-miao/ama',
+    siteProfile.links.calcomBooking,
   )
 })
 

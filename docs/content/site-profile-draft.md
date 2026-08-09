@@ -132,7 +132,7 @@ Matthew 于 2026-08-09 确认使用 Cal.com 承载公开预约与付款。
 - 退款：开始前 24 小时取消可全额退款；之后不退款
 - 预约地址：`https://cal.com/matthew-miao/ama`
 - Provider：Cal.com + 已连接的 Stripe + Google Meet
-- 首发状态：网站发布并完成 provider 验证后公开 Event Type
+- 首发状态：Event Type 已公开；Event Type API 合同由 Production 门禁验证。真实付款、通知与退款往返仍是上线验收待办。
 
 ## 书架、唱片和图片
 
@@ -161,4 +161,3 @@ Matthew 于 2026-08-09 确认使用 Cal.com 承载公开预约与付款。
 - FengTalk.ai 的准确创立月份，以及是否将 2024 年作为网站公开年份
 - 更多工作经历与项目
 - 社交账号、书单、音乐和本人图片
-- AMA 正式价格与上线时间

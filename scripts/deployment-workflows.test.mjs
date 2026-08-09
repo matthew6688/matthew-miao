@@ -113,7 +113,7 @@ test('main validates and deploys the exact commit to Cloudflare Workers', async 
   const calcom = job.steps.find(
     (step) => step.name === 'Verify Cal.com booking contract',
   )
-  assert.match(calcom.if, /env\.CALCOM_API_KEY != ''/)
+  assert.equal(calcom.if, undefined)
   assert.equal(calcom.run, 'pnpm verify:calcom')
   const validate = job.steps.find(
     (step) => step.name === 'Validate application',

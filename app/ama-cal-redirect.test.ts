@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import EnglishAmaBookPage from './(en)/en/ama/book/page'
 import ChineseAmaBookPage from './(zh)/ama/book/page'
+import { siteProfile } from '../lib/site-profile'
 
 vi.mock('next/navigation', () => ({ redirect: vi.fn() }))
 
@@ -16,6 +17,6 @@ describe('Cal.com booking handoff', () => {
     page()
 
     expect(redirect).toHaveBeenCalledOnce()
-    expect(redirect).toHaveBeenCalledWith('https://cal.com/matthew-miao/ama')
+    expect(redirect).toHaveBeenCalledWith(siteProfile.links.calcomBooking)
   })
 })

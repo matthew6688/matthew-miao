@@ -49,9 +49,14 @@ they also skip deployment safely until the repository secret is configured.
 
 The public AMA page keeps the pinned visual contract. Its Chinese and English
 booking routes redirect to `https://cal.com/matthew-miao/ama`; Cal.com owns the
-60-minute US$99 Stripe payment, Google Meet, email, rescheduling, cancellation,
-and one-calendar-day refund workflow. `CALCOM_API_KEY` is a Worker secret used
-only for operations and `pnpm verify:calcom`; it is never sent to the browser.
+60-minute US$99 booking, Google Meet, email, rescheduling, and cancellation
+workflow. The Cal.com dashboard was configured with Stripe payment and a
+one-calendar-day refund policy on 2026-08-09, but a real paid booking, refund,
+and notification round trip remains a manual Production acceptance item.
+`CALCOM_API_KEY` is a GitHub Production environment secret used by
+`pnpm verify:calcom`; it is never sent to the Worker or browser. The automated
+gate verifies only fields exposed by Cal.com's Event Type API and cannot prove
+the payment-app connection or refund execution.
 The inherited self-hosted AMA provider routes remain fail-closed and are not the
 public booking system.
 
