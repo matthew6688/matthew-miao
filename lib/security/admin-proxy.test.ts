@@ -17,7 +17,7 @@ const previousClerkEnvironment = vi.hoisted(() => {
 })
 
 import { siteProxy } from '../../middleware'
-import { securityHeaders } from './headers'
+import { adminSecurityHeader, blogSecurityHeader, securityHeaders } from './headers'
 
 const throughRealClerkMiddleware = clerkMiddleware((_auth, request) =>
   siteProxy(request),
@@ -61,6 +61,8 @@ describe('admin CSP', () => {
 
     expect(policy).toContain("script-src 'self' 'unsafe-inline'")
     expect(policy).toContain("frame-src 'none'")
+    expect(blogSecurityHeader.value).toContain('frame-src https://www.youtube-nocookie.com')
+    expect(adminSecurityHeader.value).toContain("frame-src 'none'")
     expect(policy).toContain("object-src 'none'")
     expect(policy).not.toContain('nonce-')
     expect(policy).not.toContain('strict-dynamic')

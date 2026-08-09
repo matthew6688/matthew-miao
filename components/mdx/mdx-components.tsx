@@ -6,6 +6,7 @@ import { MermaidDiagram } from './mermaid-diagram'
 import { PhotoStack, PhotoStackCaption, PhotoStackFrames } from './photo-stack'
 import { TimeAllocationChart } from './time-allocation-chart'
 import { Tweet } from './tweet'
+import { VideoEmbed } from './video-embed'
 import { ExternalLink } from '~/components/external-link'
 import { ZoomImage } from '~/components/zoom-image'
 import { faviconUrl, getLinkPreview } from '~/lib/link-previews'
@@ -53,6 +54,9 @@ export function mdxComponents(slug: string, locale: Locale = 'zh'): MDXComponent
     PhotoStackFrames,
     TimeAllocationChart: () => <TimeAllocationChart locale={locale} />,
     Tweet: ({ id }: { id: string }) => <Tweet slug={slug} id={id} />,
+    VideoEmbed: (props: React.ComponentProps<typeof VideoEmbed>) => (
+      <VideoEmbed {...props} locale={locale} />
+    ),
     img: (props) => (
       <PostImage slug={slug} src={props.src as string} alt={props.alt} title={props.title} />
     ),

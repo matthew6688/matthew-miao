@@ -3,6 +3,7 @@ import type { NextConfig } from 'next'
 import legacyUrlManifest from './content/legacy-url-manifest.json'
 import {
   adminSecurityHeader,
+  blogSecurityHeader,
   googleOAuthFormSecurityHeader,
   securityHeaders,
 } from './lib/security/headers'
@@ -88,6 +89,14 @@ const nextConfig: NextConfig = {
     {
       source: '/:path*',
       headers: [...securityHeaders],
+    },
+    {
+      source: '/blog/:path*',
+      headers: [blogSecurityHeader],
+    },
+    {
+      source: '/en/blog/:path*',
+      headers: [blogSecurityHeader],
     },
     {
       // The global policy is intentionally useful for public navigation, but

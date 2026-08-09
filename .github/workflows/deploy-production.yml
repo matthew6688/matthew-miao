@@ -51,6 +51,7 @@ jobs:
         run: |
           pnpm typecheck
           pnpm test:unit
+          pnpm test:blog-skill
           pnpm test:localization
           pnpm build:cloudflare
 

@@ -59,6 +59,9 @@ jobs:
       - name: Test unit and integration suites
         run: pnpm test:unit
 
+      - name: Test agent blog publishing gate
+        run: pnpm test:blog-skill
+
       - name: Validate database migrations
         run: pnpm db:validate
 
