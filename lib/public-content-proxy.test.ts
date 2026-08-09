@@ -10,6 +10,17 @@ const event = {
 } as unknown as NextFetchEvent
 
 describe('public content proxy', () => {
+  it('redirects the www hostname to the canonical origin', () => {
+    const response = siteProxy(
+      new NextRequest('https://www.matthew-miao.com/en/blog?source=www'),
+    )
+
+    expect(response.status).toBe(308)
+    expect(response.headers.get('location')).toBe(
+      'https://matthew-miao.com/en/blog?source=www',
+    )
+  })
+
   it.each([
     '/blog/not-a-published-post',
     '/en/blog/not-a-published-post',

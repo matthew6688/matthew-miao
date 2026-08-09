@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import { Analytics } from '@vercel/analytics/next'
 import { Suspense } from 'react'
 
 import { AmbientBackground } from '~/components/ambient-background'
+import { CloudflareWebAnalytics } from '~/components/cloudflare-web-analytics'
 import { Dock, DockFallback } from '~/components/dock'
 import { LocaleRestorer } from '~/components/locale-restorer'
 import { LocaleSuggestion } from '~/components/locale-suggestion'
@@ -111,7 +111,7 @@ export async function SiteDocument({
             </Suspense>
           </PreviewCardTimingProvider>
         </ThemeProvider>
-        <Analytics />
+        <CloudflareWebAnalytics />
       </body>
     </html>
   )

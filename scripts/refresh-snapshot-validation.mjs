@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 
-const githubUser = 'CaliCastle'
+const githubUser = 'matthew6688'
 const isoDate = /^\d{4}-\d{2}-\d{2}$/
 const youtubeFollowerCount = /^(?:\d{1,9}|\d{1,3}(?:,\d{3})+)(?:\.\d{1,2})?[KM]?$/
 

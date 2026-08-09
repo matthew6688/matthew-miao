@@ -20,7 +20,7 @@ test('keyboard preview cards open without card or contribution-cell motion', asy
   await page.goto('/en')
   await expect(page.getByRole('button', { name: 'Preferences' })).toBeEnabled()
 
-  const trigger = page.locator('main a[href="https://github.com/CaliCastle"]:visible')
+  const trigger = page.locator('main a[href="https://github.com/matthew6688"]:visible')
   await expect(trigger).toHaveCount(1)
   await trigger.focus()
 

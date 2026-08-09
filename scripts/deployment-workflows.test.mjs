@@ -44,7 +44,7 @@ test('feature pushes branch from Staging, migrate, then deploy Preview', async (
 
   const job = config.jobs.deploy
   assert.equal(job.environment, 'preview')
-  assert.match(job.if, /CaliCastle\/cali\.so/)
+  assert.match(job.if, /matthew6688\/matthew-miao/)
   assert.match(job.if, /dependabot/)
   assert.equal(config.concurrency.group, 'preview-${{ github.ref_name }}')
 
@@ -118,57 +118,38 @@ test('dev continuously migrates and deploys the persistent Staging environment',
   )
 })
 
-test('main automatically deploys with protected Production credentials after migration', async () => {
+test('main validates and deploys the exact commit to Cloudflare Workers', async () => {
   const config = await workflow('deploy-production')
   assert.deepEqual(config.on.push.branches, ['main'])
-  assert.equal(config.jobs['migration-review'], undefined)
 
-  const job = config.jobs.deploy
-  assert.equal(job.needs, undefined)
+  const job = config.jobs['validate-and-deploy']
   assert.equal(job.environment, 'production')
-  assert.equal(job.env, undefined)
-  assertOrdered(
-    job.steps,
-    'Enforce expand-only database migrations',
-    'Run database migrations',
-  )
-  assertOrdered(
-    job.steps,
-    'Run database migrations',
-    'Deploy Vercel Production',
-  )
-  const compatibility = job.steps.find(
-    (step) => step.name === 'Enforce expand-only database migrations',
-  )
-  assert.equal(compatibility.env.BASE_SHA, '${{ github.event.before }}')
-  assert.equal(compatibility.env.HEAD_SHA, '${{ github.sha }}')
-  assert.match(compatibility.run, /"\$BASE_SHA" "\$HEAD_SHA"/)
-  assert.doesNotMatch(compatibility.run, /\$\{\{/)
-  const migrate = job.steps.find(
-    (step) => step.name === 'Run database migrations',
-  )
   assert.equal(
-    migrate.env.MIGRATION_DATABASE_URL,
-    '${{ secrets.MIGRATION_DATABASE_URL }}',
+    job.env.CLOUDFLARE_API_TOKEN,
+    '${{ secrets.CLOUDFLARE_API_TOKEN }}',
   )
-  assert.match(migrate.run, /\$\{MIGRATION_DATABASE_URL:\?/)
-  assert.match(migrate.run, /pnpm db:migrate/)
-  assert.equal(migrate.env.VERCEL_TOKEN, undefined)
+  assertOrdered(
+    job.steps,
+    'Install dependencies',
+    'Validate application',
+  )
+  assertOrdered(
+    job.steps,
+    'Validate application',
+    'Deploy exact commit to Cloudflare Workers',
+  )
+  const validate = job.steps.find(
+    (step) => step.name === 'Validate application',
+  )
+  assert.match(validate.run, /pnpm typecheck/)
+  assert.match(validate.run, /pnpm test:unit/)
+  assert.match(validate.run, /pnpm test:localization/)
+  assert.match(validate.run, /pnpm build:cloudflare/)
   const deploy = job.steps.find(
-    (step) => step.name === 'Deploy Vercel Production',
+    (step) => step.name === 'Deploy exact commit to Cloudflare Workers',
   )
-  for (const name of ['VERCEL_ORG_ID', 'VERCEL_PROJECT_ID', 'VERCEL_TOKEN']) {
-    assert.match(deploy.run, new RegExp(`\\$\\{${name}:\\?`))
-  }
-  assert.match(deploy.run, /vercel@56\.3\.1 deploy --prod/)
-  assert.match(
-    deploy.run,
-    /--build-env ENABLE_EXPERIMENTAL_COREPACK=1/,
-  )
-  assert.match(deploy.run, /GITHUB_STEP_SUMMARY/)
-  assert.equal(deploy.env.MIGRATION_DATABASE_URL, undefined)
-  assert.equal(deploy.env.DATABASE_URL, undefined)
-  assert.equal(deploy.env.NEON_API_KEY, undefined)
+  assert.match(deploy.run, /opennextjs-cloudflare deploy --skip-build/)
+  assert.doesNotMatch(JSON.stringify(job), /VERCEL_/)
 })
 
 test('release pull requests reject unsafe migrations before merging to main', async () => {

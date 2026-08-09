@@ -7,7 +7,7 @@ import { JSDOM } from 'jsdom'
 import { openProductionServer } from './production-server.mjs'
 
 const productionOrigin =
-  process.env.PUBLIC_DISCOVERY_EXPECTED_ORIGIN ?? 'https://cali.so'
+  process.env.PUBLIC_DISCOVERY_EXPECTED_ORIGIN ?? 'https://matthew-miao.com'
 
 function localizedPages(pathname, zh, en, imageAlt) {
   const zhPath = pathname
@@ -17,7 +17,7 @@ function localizedPages(pathname, zh, en, imageAlt) {
       path: zhPath,
       locale: 'zh-CN',
       title: zh.title,
-      documentTitle: pathname === '/' ? zh.title : `${zh.title} | Cali Castle`,
+      documentTitle: pathname === '/' ? zh.title : `${zh.title} | Matthew Miao`,
       description: zh.description,
       imageAlt: imageAlt.zh,
     },
@@ -25,7 +25,7 @@ function localizedPages(pathname, zh, en, imageAlt) {
       path: enPath,
       locale: 'en',
       title: en.title,
-      documentTitle: pathname === '/' ? en.title : `${en.title} | Cali Castle`,
+      documentTitle: pathname === '/' ? en.title : `${en.title} | Matthew Miao`,
       description: en.description,
       imageAlt: imageAlt.en,
     },
@@ -36,44 +36,44 @@ const publicPages = [
   ...localizedPages(
     '/',
     {
-      title: 'Cali Castle',
-      description: '设计工程师、Agent 指挥官、创意总监。',
+      title: '老苗',
+      description: 'Web coding、AI Agent、自动化、outreach 与企业知识系统。',
     },
     {
-      title: 'Cali Castle',
-      description: 'Design Engineer. Agent Orchestrator. Creative Director.',
+      title: 'Matthew Miao',
+      description: 'Web coding, AI agents, automation, outreach, and company knowledge systems.',
     },
     {
-      zh: 'Cali Castle。设计工程师、Agent 指挥官、创意总监。',
-      en: 'Cali Castle. Design Engineer. Agent Orchestrator. Creative Director.',
+      zh: '老苗。Web coding、AI Agent、自动化、outreach 与企业知识系统。',
+      en: 'Matthew Miao. Web coding, AI agents, automation, outreach, and company knowledge systems.',
     },
   ),
   ...localizedPages(
     '/blog',
     {
       title: '写作',
-      description: 'Cali 关于设计、工程、产品，以及一路上在意的人和事的文章。',
+      description: '老苗关于 Web coding、AI Agent、自动化、outreach 与企业知识系统的实践记录。',
     },
     {
       title: 'Writing',
       description:
-        'Essays by Cali about design, engineering, products, and the people and ideas that matter along the way.',
+        'Notes by Matthew on web coding, AI agents, automation, outreach, and company knowledge systems.',
     },
     {
-      zh: '写作 · Cali Castle。Cali 关于设计、工程、产品，以及一路上在意的人和事的文章。',
-      en: 'Writing · Cali Castle. Essays by Cali about design, engineering, products, and the people and ideas that matter along the way.',
+      zh: '写作 · Matthew Miao。老苗关于 Web coding、AI Agent、自动化、outreach 与企业知识系统的实践记录。',
+      en: 'Writing · Matthew Miao. Notes by Matthew on web coding, AI agents, automation, outreach, and company knowledge systems.',
     },
   ),
   ...localizedPages(
     '/photos',
-    { title: '照片', description: 'Cali 在工作、生活和旅途中留下的一些瞬间。' },
+    { title: '照片', description: '老苗在工作、生活和旅途中留下的一些瞬间。' },
     {
       title: 'Photos',
-      description: 'Moments Cali has kept from work, life, and everywhere in between.',
+      description: 'Moments Matthew has kept from work, life, and everywhere in between.',
     },
     {
-      zh: '照片 · Cali Castle。Cali 在工作、生活和旅途中留下的一些瞬间。',
-      en: 'Photos · Cali Castle. Moments Cali has kept from work, life, and everywhere in between.',
+      zh: '照片 · Matthew Miao。老苗在工作、生活和旅途中留下的一些瞬间。',
+      en: 'Photos · Matthew Miao. Moments Matthew has kept from work, life, and everywhere in between.',
     },
   ),
   ...localizedPages(
@@ -89,8 +89,8 @@ const publicPages = [
         'Products, open-source tools, and small experiments I have made over the years. Some useful, some playful, all made with care.',
     },
     {
-      zh: '项目 · Cali Castle。这些年做过的产品、开源工具和小实验。有些实用，有些只是好玩，但每一个我都认真做过。',
-      en: 'Projects · Cali Castle. Products, open-source tools, and small experiments I have made over the years. Some useful, some playful, all made with care.',
+      zh: '项目 · Matthew Miao。这些年做过的产品、开源工具和小实验。有些实用，有些只是好玩，但每一个我都认真做过。',
+      en: 'Projects · Matthew Miao. Products, open-source tools, and small experiments I have made over the years. Some useful, some playful, all made with care.',
     },
   ),
   ...localizedPages(
@@ -106,8 +106,8 @@ const publicPages = [
         'A one-to-one conversation about AI-native work, product strategy, engineering, startups, career moves, and building products.',
     },
     {
-      zh: '一对一 · Cali Castle。从产品设计、工程、职业到独立开发、创业、出海、英语学习与 AI 工作流，用一小时聊清楚怎么判断、怎么取舍、下一步做什么。',
-      en: 'AMA · Cali Castle. A one-to-one conversation about AI-native work, product strategy, engineering, startups, career moves, and building products.',
+      zh: '一对一 · Matthew Miao。从产品设计、工程、职业到独立开发、创业、出海、英语学习与 AI 工作流，用一小时聊清楚怎么判断、怎么取舍、下一步做什么。',
+      en: 'AMA · Matthew Miao. A one-to-one conversation about AI-native work, product strategy, engineering, startups, career moves, and building products.',
     },
   ),
 ]
@@ -122,8 +122,8 @@ for (const slug of (await readdir(blogDirectory)).sort()) {
       zh,
       en,
       {
-        zh: `${zh.title} · Cali Castle`,
-        en: `${en.title} · Cali Castle`,
+        zh: `${zh.title} · Matthew Miao`,
+        en: `${en.title} · Matthew Miao`,
       },
     ),
   )
@@ -139,8 +139,8 @@ for (const id of (await readdir(newsletterDirectory)).sort()) {
       zh,
       en,
       {
-        zh: `${zh.title} · Cali Castle`,
-        en: `${en.title} · Cali Castle`,
+        zh: `${zh.title} · Matthew Miao`,
+        en: `${en.title} · Matthew Miao`,
       },
     ),
   )
@@ -340,41 +340,9 @@ async function verifyNotFound(baseUrl) {
 }
 
 async function verifyNoIndexUtilities(baseUrl) {
-  const pages = [
-    {
-      path: '/confirm/legacy-token',
-      title: 'Newsletter 确认链接已停用 | Cali Castle',
-      description:
-        '这个旧链接不会再读取或更新任何订阅信息。Newsletter 服务已经停止，你仍然可以通过 RSS 阅读网站更新。',
-    },
-    {
-      path: '/en/confirm/legacy-token',
-      title: 'Newsletter confirmation is retired | Cali Castle',
-      description:
-        'This old link no longer reads or updates subscriber information. The newsletter service has ended, but site updates remain available through RSS.',
-    },
-  ]
-
-  for (const page of pages) {
-    const response = await fetch(new URL(page.path, baseUrl))
-    assert.equal(response.status, 200, `${page.path} status`)
-    const document = new JSDOM(await response.text()).window.document
-    assert.equal(document.title, page.title, `${page.path} title`)
-    assert.equal(
-      requiredElement(
-        document,
-        'meta[name="description"]',
-        `${page.path} description`,
-      ).getAttribute('content'),
-      page.description,
-    )
-    const robots = requiredElement(
-      document,
-      'meta[name="robots"]',
-      `${page.path} robots`,
-    ).getAttribute('content') ?? ''
-    assert.match(robots, /noindex/)
-    assert.match(robots, /nofollow/)
+  for (const path of ['/confirm/legacy-token', '/en/confirm/legacy-token']) {
+    const response = await fetch(new URL(path, baseUrl))
+    assert.equal(response.status, 404, `${path} status`)
   }
 }
 

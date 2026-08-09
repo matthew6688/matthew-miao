@@ -13,9 +13,7 @@ export interface Experience {
   url?: string
 }
 
-export const experience: Experience[] = [
-  { company: 'UChat', companyEn: 'UChat', role: '首席营销官', roleEn: 'Chief Marketing Officer', from: 2020, url: siteProfile.links.uchat },
-]
+export const experience: Experience[] = [...siteProfile.experience]
 
 export interface Record_ {
   artist: string

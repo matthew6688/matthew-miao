@@ -17,7 +17,7 @@ concurrency:
 jobs:
   deploy:
     if: >-
-      github.repository == 'CaliCastle/cali.so' &&
+      github.repository == 'matthew6688/matthew-miao' &&
       github.event.repository.fork == false &&
       github.actor != 'dependabot[bot]'
     runs-on: ubuntu-24.04

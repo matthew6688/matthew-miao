@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'node:fs/promises'
+import { readFile, readdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
 import { archivedNewsletterIds, publishedPostSlugs } from '../lib/public-content-routes.ts'
@@ -28,11 +28,13 @@ for (const id of archivedNewsletterIds) {
 }
 
 const assets = {}
+const generatedOgFiles = await readdir(path.join(root, 'public/generated-og'))
 for (const [publicPath, file] of [
   ['/images/matthew-placeholder-light.svg', 'public/images/matthew-placeholder-light.svg'],
   ['/fonts/og-regular.ttf', 'app/_fonts/FrexSansGB-OG-Regular.ttf'],
   ['/fonts/og-semibold.ttf', 'app/_fonts/FrexSansGB-OG-SemiBold.ttf'],
   ...postCovers,
+  ...generatedOgFiles.map((file) => [`/generated-og/${file}`, `public/generated-og/${file}`]),
 ]) {
   assets[publicPath] = (await readFile(path.join(root, file))).toString('base64')
 }

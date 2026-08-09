@@ -2,18 +2,11 @@ import { expect, type Page } from '@playwright/test'
 
 export const browserArticleFixture = {
   description: 'English article with a zoomable image and article map',
-  path: '/en/blog/how-to-protect-your-site-with-upstash',
+  path: '/en/blog/building-in-public-with-ai-agents',
 } as const
 
 export async function prepareBrowserPage(page: Page) {
-  if (process.env.PLAYWRIGHT_BASE_URL) return
-
-  // Vercel serves this first-party endpoint only on hosted deployments.
-  // Keep local production-build checks focused on application errors while
-  // the hosted smoke suite verifies the real Insights script.
-  await page.route('**/_vercel/insights/script.js', (route) =>
-    route.fulfill({ body: '', contentType: 'application/javascript' }),
-  )
+  void page
 }
 
 export function watchBrowserErrors(page: Page) {

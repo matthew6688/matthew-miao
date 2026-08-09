@@ -28,6 +28,18 @@ function optionalClerkSource() {
   }
 }
 
+function optionalCloudflareAnalyticsSource() {
+  return process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN
+    ? ' https://static.cloudflareinsights.com'
+    : ''
+}
+
+function optionalCloudflareAnalyticsConnectSource() {
+  return process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN
+    ? ' https://cloudflareinsights.com'
+    : ''
+}
+
 function contentSecurityPolicy(
   scriptSources: string,
   styleSources: string,
@@ -62,8 +74,9 @@ function contentSecurityPolicy(
 // nonce policy was retired in July 2026: nonces require dynamic rendering,
 // which is incompatible with instant navigation.
 const publicContentSecurityPolicy = contentSecurityPolicy(
-  `'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''}`,
+  `'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''}${optionalCloudflareAnalyticsSource()}`,
   "'self' 'unsafe-inline'",
+  { connectSources: optionalCloudflareAnalyticsConnectSource() },
 )
 
 // Admin pages ship clerk-js so the 60-second Clerk session token keeps

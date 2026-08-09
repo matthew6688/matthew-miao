@@ -161,7 +161,7 @@ export function XCardBody({ data }: { data: SocialSnapshot }) {
 
 export function XiaohongshuCardBody() {
   return (
-    <span className="xiaohongshu-card-content" data-profile-id="5cbba503000000001101b6a2">
+    <span className="xiaohongshu-card-content">
       <span className="service-card-head">
         <Image
           src="/images/matthew-placeholder-light.svg"
@@ -171,7 +171,7 @@ export function XiaohongshuCardBody() {
           className="service-card-avatar"
         />
         <span className="service-card-names">
-          <span className="service-card-name">Matthew Miao</span>
+          <span className="service-card-name">{siteProfile.name.en}</span>
           <span className="service-card-sub">账号待确认</span>
         </span>
         <span className="service-card-glyph xiaohongshu-card-wordmark" aria-hidden>
@@ -325,10 +325,13 @@ export function XiaohongshuCard({
   trigger?: React.ReactNode
   triggerClassName?: string
 }) {
+  const href = siteProfile.links.xiaohongshu
+  if (!href) return null
+
   return (
     <Card
       trigger={trigger}
-      href="https://xhslink.com/m/7vluP5ANiNE"
+      href={href}
       className="link-card service-card xiaohongshu-card"
       triggerClassName={triggerClassName}
     >
@@ -373,7 +376,7 @@ export function EmailCard({
                 width={32}
                 height={32}
               />
-              <span>老苗 · 20</span>
+              <span>{siteProfile.name.zh}</span>
             </span>
             <span className="email-envelope-stamp email-envelope-stamp-mark">
               <span className="email-envelope-stamp-star">✦</span>

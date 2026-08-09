@@ -7,7 +7,7 @@ const mocks = vi.hoisted(() => {
       callback({ driver: 'transaction-capable' }),
   )
   return {
-    attachDatabasePool: vi.fn(),
+    poolOptions: undefined as unknown,
     pool,
     transaction,
   }
@@ -21,13 +21,16 @@ vi.mock('~/lib/ama/server-env', () => ({
 
 vi.mock('server-only', () => ({}))
 
-vi.mock('@vercel/functions', () => ({
-  attachDatabasePool: mocks.attachDatabasePool,
+vi.mock('@opennextjs/cloudflare', () => ({
+  getCloudflareContext: () => {
+    throw new Error('No Worker context in unit tests')
+  },
 }))
 
 vi.mock('pg', () => ({
   Pool: class Pool {
-    constructor() {
+    constructor(options: unknown) {
+      mocks.poolOptions = options
       return mocks.pool
     }
   },
@@ -45,5 +48,8 @@ it('provides interactive transactions through the shared database client', async
   )
 
   expect(result).toEqual({ driver: 'transaction-capable' })
-  expect(mocks.attachDatabasePool).toHaveBeenCalledWith(mocks.pool)
+  expect(mocks.poolOptions).toEqual({
+    connectionString: 'postgresql://runtime:runtime@localhost:5432/cali',
+    max: 1,
+  })
 })

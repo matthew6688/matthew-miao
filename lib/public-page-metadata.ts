@@ -1,14 +1,16 @@
+import { siteProfile } from './site-profile'
+
 export const publicPageMetadata = {
   home: {
     zh: {
       title: '老苗',
-      description: 'Web coding、AI Agent、自动化、outreach 与企业知识系统。',
-      ogDescription: 'Web coding、AI Agent、自动化、outreach 与企业知识系统。',
+      description: siteProfile.bio.zh,
+      ogDescription: siteProfile.bio.zh,
     },
     en: {
       title: 'Matthew Miao',
-      description: 'Web coding, AI agents, automation, outreach, and company knowledge systems.',
-      ogDescription: 'Web coding, AI agents, automation, outreach, and company knowledge systems.',
+      description: siteProfile.bio.en,
+      ogDescription: siteProfile.bio.en,
     },
   },
   blog: {

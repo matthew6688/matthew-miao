@@ -97,7 +97,7 @@ export function SiteFooter({
         <div className="footer-colophon col-span-2 sm:order-first sm:col-span-1">
           <div>
             <p>
-              © <CopyrightYear /> {siteProfile.name.en}
+              © <CopyrightYear /> <T zh={siteProfile.copyright.zh} en={siteProfile.copyright.en} />
             </p>
             {/* the name echoed in braille — a printer's mark on the sheet */}
             <p className="footer-braille" aria-hidden>

@@ -6,6 +6,14 @@ export const siteProfile = {
   },
   email: 'hi@fengtalk.ai',
   domain: 'matthew-miao.com',
+  copyright: {
+    zh: '老苗 / Matthew Miao',
+    en: 'Matthew Miao',
+  },
+  bio: {
+    zh: 'Web coding、AI Agent、自动化、outreach 与企业知识系统。',
+    en: 'Web coding, AI agents, automation, outreach, and company knowledge systems.',
+  },
   location: {
     city: 'Brisbane',
     country: 'Australia',
@@ -18,7 +26,32 @@ export const siteProfile = {
     githubUsername: 'matthew6688',
     fengtalk: 'https://fengtalk.ai',
     uchat: 'https://uchat.au',
+    x: null,
+    youtube: null,
+    telegram: null,
+    xiaohongshu: null,
   },
+  experience: [
+    {
+      company: 'UChat',
+      companyEn: 'UChat',
+      role: '首席营销官',
+      roleEn: 'Chief Marketing Officer',
+      from: 2020,
+      url: 'https://uchat.au',
+    },
+  ],
+  projects: [
+    {
+      name: 'FengTalk.ai',
+      nameEn: 'FengTalk.ai',
+      description: '探索 Web coding、AI Agent、outreach 与企业知识如何变成真正运行的自动化系统。',
+      descriptionEn: 'Hands-on explorations in web coding, AI agents, outreach, and company knowledge systems.',
+      url: 'https://fengtalk.ai',
+      icon: '/images/projects/fengtalk.svg',
+      domain: 'fengtalk.ai',
+    },
+  ],
   features: {
     personalShelves: false,
   },

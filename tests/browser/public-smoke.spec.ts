@@ -72,7 +72,7 @@ for (const profile of profiles) {
 
     await expectHealthyPublicDocument(page, profile.path, profile.lang)
 
-    await expect(page).toHaveTitle(/Cali/)
+    await expect(page).toHaveTitle(/老苗|Matthew Miao/)
     expect(browserErrors).toEqual([])
   })
 }

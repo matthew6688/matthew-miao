@@ -38,7 +38,7 @@ for (const url of urls) {
     const res = await fetch(metadataUrl, {
       redirect: 'follow',
       signal: AbortSignal.timeout(10_000),
-      headers: { 'user-agent': 'Mozilla/5.0 (compatible; cali.so link previews)' },
+      headers: { 'user-agent': 'Mozilla/5.0 (compatible; matthew-miao.com link previews)' },
     })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
 

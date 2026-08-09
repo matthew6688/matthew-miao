@@ -43,13 +43,39 @@ function usesClerk(pathname: string) {
   )
 }
 
+function hasClerkConfiguration() {
+  return Boolean(
+    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
+      process.env.CLERK_SECRET_KEY,
+  )
+}
+
 // Admin pages use the static site CSP from next.config (July 2026): the
 // former per-request nonce policy forced dynamic rendering, which is
 // incompatible with the admin's prerendered instant-navigation shells.
 export function siteProxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  if (request.nextUrl.hostname === 'www.matthew-miao.com') {
+    const canonicalUrl = request.nextUrl.clone()
+    canonicalUrl.hostname = 'matthew-miao.com'
+    return NextResponse.redirect(canonicalUrl, 308)
+  }
+
+  if (/^\/(?:en\/)?confirm\//.test(pathname)) {
+    return new NextResponse('Not found', {
+      status: 404,
+      headers: { 'content-type': 'text/plain; charset=utf-8' },
+    })
+  }
+
   if (missingPublicContent(pathname) || isUnavailableAmaFixture(pathname)) {
+    const notFoundUrl = request.nextUrl.clone()
+    notFoundUrl.pathname = '/_not-found'
+    return NextResponse.rewrite(notFoundUrl, { status: 404 })
+  }
+
+  if (usesClerk(pathname) && !hasClerkConfiguration()) {
     const notFoundUrl = request.nextUrl.clone()
     notFoundUrl.pathname = '/_not-found'
     return NextResponse.rewrite(notFoundUrl, { status: 404 })
@@ -67,17 +93,31 @@ export function middleware(request: NextRequest, event: NextFetchEvent) {
   if (isUnavailableAmaFixture(request.nextUrl.pathname)) {
     return siteProxy(request)
   }
-  if (!usesClerk(request.nextUrl.pathname)) return siteProxy(request)
+  if (!usesClerk(request.nextUrl.pathname) || !hasClerkConfiguration()) {
+    return siteProxy(request)
+  }
   return clerkProxy(request, event)
 }
 
 export const config = {
   matcher: [
+    '/',
+    '/en',
+    '/blog',
+    '/en/blog',
+    '/projects',
+    '/en/projects',
+    '/photos',
+    '/en/photos',
+    '/ama/:path*',
+    '/en/ama/:path*',
     '/admin/:path*',
     '/api/admin/:path*',
     '/blog/:slug',
     '/en/blog/:slug',
     '/newsletters/:id',
     '/en/newsletters/:id',
+    '/confirm/:path*',
+    '/en/confirm/:path*',
   ],
 }

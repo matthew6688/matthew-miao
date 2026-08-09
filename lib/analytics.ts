@@ -1,5 +1,3 @@
-import { track } from '@vercel/analytics'
-
 /**
  * The public AMA booking funnel, counted without identifiers. Events carry
  * no properties by design: names, emails, briefs, and hold ids never reach
@@ -13,9 +11,6 @@ export type FunnelEvent =
   | 'ama_booking_paid'
 
 export function trackFunnelEvent(name: FunnelEvent) {
-  try {
-    track(name)
-  } catch {
-    // Analytics must never interrupt a booking.
-  }
+  if (typeof window === 'undefined') return
+  window.dispatchEvent(new CustomEvent('matthew:analytics', { detail: { name } }))
 }

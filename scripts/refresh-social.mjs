@@ -8,7 +8,12 @@ import {
   updateSocialSnapshot,
 } from './refresh-snapshot-validation.mjs'
 
-const response = await fetch('https://www.youtube.com/@calicastle', {
+const youtubeHandle = process.env.YOUTUBE_HANDLE?.replace(/^@/, '')
+if (!youtubeHandle) {
+  throw new Error('YOUTUBE_HANDLE is not configured; unconfirmed social accounts stay unpublished')
+}
+
+const response = await fetch(`https://www.youtube.com/@${youtubeHandle}`, {
   headers: { 'accept-language': 'en-US' },
 })
 if (!response.ok) throw new Error(`YouTube refresh failed with HTTP ${response.status}`)

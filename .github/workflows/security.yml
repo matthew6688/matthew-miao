@@ -23,20 +23,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      DATABASE_URL: postgresql://runtime:runtime@127.0.0.1:5432/cali
-      # Publishable keys are public by design; CI uses the site's real Clerk
-      # frontend so signed-out redirects can be verified without a secret.
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_live_Y2xlcmsuY2FsaS5zbyQ
-      CLERK_SECRET_KEY: sk_live_ci_secret_not_real
-      ADMIN_EMAIL: owner@example.com
+      DATABASE_URL: postgresql://runtime:runtime@127.0.0.1:5432/matthew
+      ADMIN_EMAIL: hi@fengtalk.ai
       AMA_ENCRYPTION_KEY: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
       MEDIA_ENCRYPTION_KEY: BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU=
       RATE_LIMIT_HASH_KEY: AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI=
       GOOGLE_CLIENT_ID: ci.apps.googleusercontent.com
       GOOGLE_CLIENT_SECRET: ci-google-secret
-      SITE_URL: https://cali.so
-      BUNNY_MEDIA_REGION: ny
-      BUNNY_MEDIA_ZONE: ci-media
+      SITE_URL: https://matthew-miao.com
+      PUBLIC_SITE_URL: https://matthew-miao.com
+      BUNNY_MEDIA_REGION: sg
+      BUNNY_MEDIA_ZONE: matthew-ci-media
       BUNNY_MEDIA_PASSWORD: ci-media-password
       BUNNY_MEDIA_CDN_URL: https://media-ci.example.com
       BUNNY_CDN_API_KEY: ci-cdn-api-key
@@ -86,7 +83,7 @@ jobs:
         run: pnpm audit:prod
 
       - name: Build
-        run: pnpm build
+        run: pnpm build:cloudflare
 
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium webkit

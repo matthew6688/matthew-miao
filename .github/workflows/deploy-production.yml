@@ -2,8 +2,8 @@ name: Deploy Production
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,10 +13,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  validate-and-deploy:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 35
     environment: production
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      DATABASE_URL: postgresql://build:build@127.0.0.1:5432/matthew
+      ADMIN_EMAIL: hi@fengtalk.ai
+      AMA_ENCRYPTION_KEY: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+      RATE_LIMIT_HASH_KEY: AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQE=
+      CRON_SECRET: build-only-placeholder
+      BUNNY_MEDIA_REGION: sg
+      BUNNY_MEDIA_ZONE: matthew-miao-media
+      BUNNY_MEDIA_PASSWORD: build-only-placeholder
+      BUNNY_MEDIA_CDN_URL: https://media.matthew-miao.com
+      BUNNY_CDN_API_KEY: build-only-placeholder
+      MEDIA_ENCRYPTION_KEY: AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI=
+      SITE_URL: https://matthew-miao.com
+      PUBLIC_SITE_URL: https://matthew-miao.com
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -35,40 +50,26 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Enforce expand-only database migrations
-        env:
-          BASE_SHA: ${{ github.event.before }}
-          HEAD_SHA: ${{ github.sha }}
-        run: node scripts/check-production-migrations.mjs "$BASE_SHA" "$HEAD_SHA"
-
-      - name: Run database migrations
-        env:
-          MIGRATION_DATABASE_URL: ${{ secrets.MIGRATION_DATABASE_URL }}
+      - name: Validate application
         run: |
-          : "${MIGRATION_DATABASE_URL:?Production MIGRATION_DATABASE_URL is not configured}"
-          pnpm db:migrate
+          pnpm typecheck
+          pnpm test:unit
+          pnpm test:localization
+          pnpm build:cloudflare
 
-      - name: Deploy Vercel Production
-        env:
-          DEPLOY_COMMIT_SHA: ${{ github.sha }}
-          VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy exact commit to Cloudflare Workers
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        run: pnpm exec opennextjs-cloudflare deploy --skip-build
+
+      - name: Report missing deployment credential
+        if: ${{ env.CLOUDFLARE_API_TOKEN == '' }}
         run: |
-          : "${VERCEL_ORG_ID:?Production VERCEL_ORG_ID is not configured}"
-          : "${VERCEL_PROJECT_ID:?Production VERCEL_PROJECT_ID is not configured}"
-          : "${VERCEL_TOKEN:?Production VERCEL_TOKEN is not configured}"
-          deployment_url="$(
-            pnpm dlx vercel@56.3.1 deploy --prod \
-              --yes \
-              --token "$VERCEL_TOKEN" \
-              --build-env ENABLE_EXPERIMENTAL_COREPACK=1 \
-              --meta githubCommitRef="main" \
-              --meta githubCommitSha="$DEPLOY_COMMIT_SHA"
-          )"
-          if [[ ! "$deployment_url" =~ ^https://[A-Za-z0-9.-]+\.vercel\.app$ ]]; then
-            echo "Vercel did not return a Production deployment URL." >&2
-            exit 1
-          fi
-          printf '### Production deployment\n[%s](%s)\n' \
-            "$deployment_url" "$deployment_url" >> "$GITHUB_STEP_SUMMARY"
+          echo "::warning::Validation passed, but CLOUDFLARE_API_TOKEN is not configured in the production environment."
+          echo "### Cloudflare deployment skipped" >> "$GITHUB_STEP_SUMMARY"
+          echo "Add the production secret CLOUDFLARE_API_TOKEN to enable automatic deployment." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify production routes
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        env:
+          PLAYWRIGHT_BASE_URL: https://matthew-miao.com
+        run: pnpm test:browser:hosted

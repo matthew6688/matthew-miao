@@ -19,7 +19,15 @@ export async function ogRuntimeFonts() {
   const [regular, semibold] = [
     bundledAssets['/fonts/og-regular.ttf'],
     bundledAssets['/fonts/og-semibold.ttf'],
-  ].map((font) => Uint8Array.from(Buffer.from(font, 'base64')).buffer)
+  ].map((font) => {
+    // Satori transfers/detaches font buffers while rendering. Allocate an
+    // explicit standalone buffer on every request; Workers' Buffer polyfill
+    // may otherwise reuse backing storage and later OG renders hang.
+    const decoded = Buffer.from(font, 'base64')
+    const copy = new ArrayBuffer(decoded.byteLength)
+    new Uint8Array(copy).set(decoded)
+    return copy
+  })
   return [
     { name: 'Frex Sans GB', data: regular, weight: 400 as const, style: 'normal' as const },
     { name: 'Frex Sans GB', data: semibold, weight: 600 as const, style: 'normal' as const },

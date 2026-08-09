@@ -6,14 +6,14 @@ const metadataCases = [
   {
     locale: 'Chinese',
     path: '/projects',
-    canonical: 'https://cali.so/projects',
+    canonical: 'https://matthew-miao.com/projects',
     openGraphLocale: 'zh_CN',
     socialLocale: 'zh',
   },
   {
     locale: 'English',
     path: '/en/projects',
-    canonical: 'https://cali.so/en/projects',
+    canonical: 'https://matthew-miao.com/en/projects',
     openGraphLocale: 'en_US',
     socialLocale: 'en',
   },
@@ -33,11 +33,11 @@ for (const metadata of metadataCases) {
     )
     await expect(page.locator('link[rel="alternate"][hreflang="zh-CN"]')).toHaveAttribute(
       'href',
-      'https://cali.so/projects',
+      'https://matthew-miao.com/projects',
     )
     await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute(
       'href',
-      'https://cali.so/en/projects',
+      'https://matthew-miao.com/en/projects',
     )
     await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute(
       'content',
@@ -49,7 +49,7 @@ for (const metadata of metadataCases) {
       .getAttribute('content')
     expect(socialImage).not.toBeNull()
     const socialImageUrl = new URL(socialImage!)
-    expect(socialImageUrl.origin).toBe('https://cali.so')
+    expect(socialImageUrl.origin).toBe('https://matthew-miao.com')
     expect(socialImageUrl.pathname).toBe('/og')
     expect(socialImageUrl.searchParams.get('locale')).toBe(metadata.socialLocale)
     expect(socialImageUrl.searchParams.get('path')).toBe('/projects')
@@ -66,11 +66,11 @@ test('@hosted feeds and localized social images return their public media contra
 
   expect(chineseFeed.status()).toBe(200)
   expect(chineseFeed.headers()['content-type']).toContain('xml')
-  expect(await chineseFeed.text()).toContain('https://cali.so/blog/')
+  expect(await chineseFeed.text()).toContain('https://matthew-miao.com/blog/')
 
   expect(englishFeed.status()).toBe(200)
   expect(englishFeed.headers()['content-type']).toContain('xml')
-  expect(await englishFeed.text()).toContain('https://cali.so/en/blog/')
+  expect(await englishFeed.text()).toContain('https://matthew-miao.com/en/blog/')
 
   expect(socialImage.status()).toBe(200)
   expect(socialImage.headers()['content-type']).toContain('image/png')
