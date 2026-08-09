@@ -19,9 +19,10 @@ Current as of 2026-08-09.
 - Chinese is unprefixed; English uses `/en`.
 
 Public home, blog, bilingual article, projects, photos empty state, sitemap, RSS,
-dynamic OG routes, and the Cal.com booking handoff have passed live HTTP smoke checks. The site currently
-uses a neutral Matthew monogram because no approved portrait or photo library
-has been supplied.
+dynamic OG routes, and the Cal.com booking handoff have passed live HTTP smoke checks. The site now uses Matthew's approved creek-side portrait, published
+as a metadata-stripped WebP through the existing interactive halftone treatment.
+Four additional approved photos are available for the future media catalog;
+their originals remain outside Git until the owner upload pipeline is enabled.
 
 ## Content ownership
 

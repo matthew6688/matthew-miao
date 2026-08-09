@@ -13,7 +13,7 @@ import {
 } from '~/components/route-motion-controller'
 import { SiteFooter } from '~/components/site-footer'
 import { ThemeProvider } from '~/components/theme-provider'
-import { getGitHub } from '~/lib/social-live'
+import { getGitHub, getSocial } from '~/lib/social-live'
 import { PREPAINT_SCRIPT } from '~/lib/security/inline-scripts'
 import { seo } from '~/lib/seo'
 import { siteProfile } from '~/lib/site-profile'
@@ -74,7 +74,7 @@ export async function SiteDocument({
 
   // Live-but-cached social numbers (ISR via the fetch data cache) keep the
   // shared public chrome fresh without making any page request-bound.
-  const github = await getGitHub()
+  const [github, social] = await Promise.all([getGitHub(), getSocial()])
 
   return (
     <html
@@ -104,7 +104,7 @@ export async function SiteDocument({
                     CSS-named list → loading shell → article groups active. */}
                 <RouteViewTransition>{children}</RouteViewTransition>
               </main>
-              <SiteFooter github={github} locale={locale} />
+              <SiteFooter github={github} x={social.x} locale={locale} />
             </div>
             <Suspense fallback={<DockFallback locale={locale} />}>
               <Dock />

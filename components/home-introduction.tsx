@@ -1,6 +1,12 @@
 import { ExternalLink } from '~/components/external-link'
 import { HomeIntroReplay } from '~/components/home-intro-replay'
-import { EmailCard, GitHubCard, type GitHubSnapshot } from '~/components/social-cards'
+import {
+  EmailCard,
+  GitHubCard,
+  type GitHubSnapshot,
+  type SocialSnapshot,
+  XCard,
+} from '~/components/social-cards'
 import { T } from '~/lib/i18n'
 import { faviconUrl, getLinkPreview } from '~/lib/link-previews'
 import { siteProfile } from '~/lib/site-profile'
@@ -147,19 +153,19 @@ function FengTalkLink({ children }: { children: React.ReactNode }) {
   )
 }
 
-function HomeContact({ github }: { github: GitHubSnapshot }) {
+function HomeContact({ github, x }: { github: GitHubSnapshot; x: SocialSnapshot }) {
   return (
     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
       <T
         zh={
           <>
-            可以在 <GitHubCard data={github} triggerClassName="home-contact-link" /> 找到我，也可以发邮件到{' '}
+            可以在 <XCard data={x} triggerClassName="home-contact-link" /> 或 <GitHubCard data={github} triggerClassName="home-contact-link" /> 找到我，也可以发邮件到{' '}
             <EmailCard address={siteProfile.email} trigger={siteProfile.email} triggerClassName="home-contact-link" />。
           </>
         }
         en={
           <>
-            Find me on <GitHubCard data={github} triggerClassName="home-contact-link" /> or email me at{' '}
+            Find me on <XCard data={x} triggerClassName="home-contact-link" /> or <GitHubCard data={github} triggerClassName="home-contact-link" />, or email me at{' '}
             <EmailCard address={siteProfile.email} trigger={siteProfile.email} triggerClassName="home-contact-link" />.
           </>
         }
@@ -168,7 +174,7 @@ function HomeContact({ github }: { github: GitHubSnapshot }) {
   )
 }
 
-export function HomeIntroduction({ github }: { github: GitHubSnapshot }) {
+export function HomeIntroduction({ github, x }: { github: GitHubSnapshot; x: SocialSnapshot }) {
   return (
     <div className="home-introduction">
       <p className="text-sm leading-relaxed text-muted-foreground">
@@ -226,7 +232,7 @@ export function HomeIntroduction({ github }: { github: GitHubSnapshot }) {
           en="I enjoy connecting tools and turning repetitive work into dependable, end-to-end workflows. AI amplifies that instinct and helps more people build what once required a much larger team."
         />
       </p>
-      <HomeContact github={github} />
+      <HomeContact github={github} x={x} />
     </div>
   )
 }

@@ -46,6 +46,8 @@ export const GLYPHS: Record<string, { path: string; color?: string }> = {
   },
 }
 
+type WeChatAccount = 'service' | 'subscription'
+
 function Glyph({ service }: { service: keyof typeof GLYPHS }) {
   const { path, color } = GLYPHS[service]
   return (
@@ -137,7 +139,7 @@ export function XCardBody({ data }: { data: SocialSnapshot }) {
     <>
       <Identity
         data={data}
-        avatar="/images/matthew-placeholder-light.svg"
+        avatar="/images/projects/fengtalk.svg"
         service="x"
       />
       {(data.followers || data.following) && (
@@ -159,12 +161,37 @@ export function XCardBody({ data }: { data: SocialSnapshot }) {
   )
 }
 
+export function WeChatCardBody({ account }: { account: WeChatAccount }) {
+  const profile = account === 'service'
+    ? siteProfile.links.wechatService
+    : siteProfile.links.wechatSubscription
+
+  return (
+    <span className="wechat-card-content">
+      <Image
+        src={profile.qrImage}
+        alt=""
+        width={470}
+        height={470}
+        className="wechat-card-qr"
+      />
+      <span className="service-card-stat">
+        <span>
+          <T zh={account === 'service' ? '微信服务号' : '微信订阅号'} en={account === 'service' ? 'WeChat Service Account' : 'WeChat Official Account'} />
+        </span>
+        <span aria-hidden>·</span>
+        <b>{profile.searchName}</b>
+      </span>
+    </span>
+  )
+}
+
 export function XiaohongshuCardBody() {
   return (
     <span className="xiaohongshu-card-content">
       <span className="service-card-head">
         <Image
-          src="/images/matthew-placeholder-light.svg"
+          src="/images/matthew-portrait.webp"
           alt=""
           width={40}
           height={40}
@@ -201,7 +228,7 @@ export function XiaohongshuCardBody() {
 }
 
 export function TelegramCardBody({ data }: { data: SocialSnapshot }) {
-  return <Identity data={data} avatar="/images/matthew-placeholder-light.svg" service="telegram" withBio={false} />
+  return <Identity data={data} avatar="/images/matthew-portrait.webp" service="telegram" withBio={false} />
 }
 
 export function YouTubeCardBody({ data }: { data: SocialSnapshot }) {
@@ -209,7 +236,7 @@ export function YouTubeCardBody({ data }: { data: SocialSnapshot }) {
     <>
       <Identity
         data={data}
-        avatar="/images/matthew-placeholder-light.svg"
+        avatar="/images/matthew-portrait.webp"
         service="youtube"
         withBio={false}
       />
@@ -272,11 +299,33 @@ export function XCard({
   return (
     <Card
       trigger={trigger}
-      href={`https://x.com/${data.handle}`}
+      href={siteProfile.links.x.url}
       className="link-card service-card"
       triggerClassName={triggerClassName}
     >
       <XCardBody data={data} />
+    </Card>
+  )
+}
+
+export function WeChatCard({
+  account,
+  trigger,
+}: {
+  account: WeChatAccount
+  trigger: React.ReactNode
+}) {
+  const profile = account === 'service'
+    ? siteProfile.links.wechatService
+    : siteProfile.links.wechatSubscription
+
+  return (
+    <Card
+      trigger={trigger}
+      href={profile.qrImage}
+      className="link-card service-card wechat-card"
+    >
+      <WeChatCardBody account={account} />
     </Card>
   )
 }
@@ -371,7 +420,7 @@ export function EmailCard({
           <span className="email-envelope-stamps">
             <span className="email-envelope-stamp email-envelope-stamp-portrait">
               <Image
-                src="/images/matthew-placeholder-light.svg"
+                src="/images/matthew-portrait.webp"
                 alt=""
                 width={32}
                 height={32}

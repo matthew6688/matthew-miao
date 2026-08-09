@@ -8,7 +8,10 @@ assets, and unconfirmed social imagery are not part of this inventory.
 | --- | --- |
 | `public/images/matthew-placeholder-light.svg` | Repository-authored neutral Matthew monogram; explicitly not a portrait |
 | `public/images/matthew-placeholder-dark.svg` | Repository-authored dark variant of the neutral Matthew monogram |
+| `public/images/matthew-portrait.webp` | Matthew's own creek-side portrait, supplied and approved by Matthew on 2026-08-10; square WebP derivative with EXIF/GPS metadata removed; original remains outside Git |
 | `public/images/projects/fengtalk.svg` | Repository-authored neutral project tile for Matthew's confirmed FengTalk project |
+| `public/images/social/wechat-service-matthewmiao.png` | Lossless QR crop from the official WeChat Service Account promotional asset supplied by Matthew on 2026-08-10; search name `matthewmiao` |
+| `public/images/social/wechat-subscription-fengtalk.png` | Lossless QR crop from the official WeChat Official Account promotional asset supplied by Matthew on 2026-08-10; search name `fengtalk.ai` |
 | `content/blog/building-in-public-with-ai-agents/automation-workflow.webp` | Generated for Matthew's site with OpenAI image generation on 2026-08-09; no people, logos, or third-party identity |
 | `public/images/codex.svg` | User-supplied Codex product mark, retained for editorial MDX references |
 | `public/images/products/slack.svg` | Slack's official site-navigation SVG, retained for editorial references; subject to [Slack brand terms](https://slack.com/terms-of-service/slack-brand) |

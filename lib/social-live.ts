@@ -53,5 +53,11 @@ export async function getSocial(): Promise<SocialData> {
   cacheLife({ stale: 43_200, revalidate: 43_200, expire: 604_800 })
   cacheTag('social-live')
 
-  return bakedSocial as SocialData
+  return {
+    ...(bakedSocial as SocialData),
+    x: {
+      ...(bakedSocial.x as SocialSnapshot),
+      handle: siteProfile.links.x.handle,
+    },
+  }
 }
