@@ -63,7 +63,7 @@ const clerkProxy = clerkMiddleware(async (auth, request) => {
   return siteProxy(request)
 })
 
-export function proxy(request: NextRequest, event: NextFetchEvent) {
+export function middleware(request: NextRequest, event: NextFetchEvent) {
   if (isUnavailableAmaFixture(request.nextUrl.pathname)) {
     return siteProxy(request)
   }

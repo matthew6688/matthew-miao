@@ -23,7 +23,7 @@ const localServerEnv = {
     process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ?? 'pk_live_Y2xlcmsuY2FsaS5zbyQ',
   RATE_LIMIT_HASH_KEY:
     process.env.RATE_LIMIT_HASH_KEY ?? 'AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI=',
-  SITE_URL: process.env.SITE_URL ?? 'https://cali.so',
+  SITE_URL: process.env.SITE_URL ?? 'https://matthew-miao.com',
 }
 
 export default defineConfig({

@@ -22,7 +22,7 @@ export class CaptureLocationError extends Error {
   }
 }
 
-const additionalData = Buffer.from('cali.so:media:capture-location:v1', 'utf8')
+const additionalData = Buffer.from('matthew-miao.com:media:capture-location:v1', 'utf8')
 const openError = 'Unable to open Capture Location'
 
 function decodeKey(value: string) {

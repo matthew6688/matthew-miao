@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import type { BunnyStorageConfig } from './bunny'
 
-export const BUNNY_CONTRACT_ORIGIN = 'https://cali.so'
+export const BUNNY_CONTRACT_ORIGIN = 'https://matthew-miao.com'
 
 export type BunnyContractExpectations = {
   origin: URL

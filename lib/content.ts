@@ -1,6 +1,3 @@
-import { readFileSync } from 'node:fs'
-import path from 'node:path'
-
 import GithubSlugger from 'github-slugger'
 import matter from 'gray-matter'
 import { z } from 'zod'
@@ -9,8 +6,7 @@ import {
   isPublishedPostSlug,
   publishedPostSlugs,
 } from './public-content-routes'
-
-const POSTS_DIR = path.join(process.cwd(), 'content/blog')
+import { bundledPosts } from './generated-worker-content'
 
 const frontmatterSchema = z.object({
   title: z.string().min(1),
@@ -145,10 +141,12 @@ function bodyStats(body: string) {
 }
 
 export function getPost(slug: string): Post {
-  const raw = readFileSync(path.join(POSTS_DIR, slug, 'index.mdx'), 'utf8')
+  const bundledPost = bundledPosts[slug as keyof typeof bundledPosts]
+  if (!bundledPost) throw new Error(`Unknown post: ${slug}`)
+  const raw = bundledPost.zh
   const { data, content } = matter(raw)
   const fm = frontmatterSchema.parse(data)
-  const translatedRaw = readFileSync(path.join(POSTS_DIR, slug, 'index.en.mdx'), 'utf8')
+  const translatedRaw = bundledPost.en
   const { data: translatedData, content: translatedContent } = matter(translatedRaw)
   const translatedFm = translatedFrontmatterSchema.parse(translatedData)
 

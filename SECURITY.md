@@ -3,7 +3,7 @@
 ## Supported versions
 
 Security fixes are applied to the version deployed at
-[cali.so](https://cali.so). The current v3 release is supported on `main`;
+[matthew-miao.com](https://matthew-miao.com). The current release is supported on `main`;
 unreleased integration work is supported while it remains on active `dev` or
 pull-request branches.
 

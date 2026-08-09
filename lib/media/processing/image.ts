@@ -3,7 +3,7 @@ import 'server-only'
 import { createHash } from 'node:crypto'
 
 import { parse } from 'exifr'
-import sharp from 'sharp'
+import type sharp from 'sharp'
 
 export const RENDITION_PROFILE_WIDTHS = [640, 1024, 1600, 2560] as const
 export const RENDITION_JPEG_QUALITY = 90
@@ -152,7 +152,17 @@ function orientation(metadata: OwnedExif) {
     : 1
 }
 
-function applyOrientation(pipeline: ReturnType<typeof sharp>, value: number) {
+type SharpFactory = typeof sharp
+
+async function loadSharp(): Promise<SharpFactory> {
+  // Native Sharp runs only in the separate Node media-processing environment.
+  // Keeping this import opaque prevents it from entering the Workers bundle.
+  const sharpPackage = 'sharp'
+  const moduleApi = process.getBuiltinModule('node:module') as typeof import('node:module')
+  return moduleApi.createRequire(import.meta.url)(sharpPackage) as SharpFactory
+}
+
+function applyOrientation(pipeline: ReturnType<SharpFactory>, value: number) {
   if (value === 2) return pipeline.flop()
   if (value === 3) return pipeline.rotate(180)
   if (value === 4) return pipeline.flip()
@@ -163,7 +173,7 @@ function applyOrientation(pipeline: ReturnType<typeof sharp>, value: number) {
   return pipeline
 }
 
-async function heifPipeline(input: Buffer, value: number) {
+async function heifPipeline(input: Buffer, value: number, sharpFactory: SharpFactory) {
   const { default: decodeHeic } = await import('heic-decode')
   const decoded = await decodeHeic({ buffer: input })
   if (
@@ -182,7 +192,7 @@ async function heifPipeline(input: Buffer, value: number) {
     throw new MediaImageError('invalid_image')
   }
   return applyOrientation(
-    sharp(decoded.data, {
+    sharpFactory(decoded.data, {
       failOn: 'error',
       limitInputPixels: MAX_IMAGE_PIXELS,
       raw: { width: decoded.width, height: decoded.height, channels: 4 },
@@ -192,10 +202,11 @@ async function heifPipeline(input: Buffer, value: number) {
 }
 
 export async function processOriginalImage(bytes: Uint8Array) {
+  const sharpFactory = await loadSharp()
   const input = imageBuffer(bytes)
-  let source: Awaited<ReturnType<ReturnType<typeof sharp>['metadata']>>
+  let source: Awaited<ReturnType<ReturnType<SharpFactory>['metadata']>>
   try {
-    source = await sharp(input, {
+    source = await sharpFactory(input, {
       failOn: 'error',
       limitInputPixels: MAX_IMAGE_PIXELS,
     }).metadata()
@@ -242,8 +253,8 @@ export async function processOriginalImage(bytes: Uint8Array) {
   try {
     const pipeline = (
       source.format === 'heif'
-        ? await heifPipeline(input, exifOrientation)
-        : sharp(input, {
+        ? await heifPipeline(input, exifOrientation, sharpFactory)
+        : sharpFactory(input, {
             failOn: 'error',
             limitInputPixels: MAX_IMAGE_PIXELS,
           }).autoOrient()

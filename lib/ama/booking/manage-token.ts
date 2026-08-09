@@ -16,10 +16,10 @@ export function deriveManageToken(encodedKey: string, bookingId: string): string
   const masterKey = Buffer.from(encodedKey, 'base64')
   if (masterKey.length !== 32) throw new Error('Invalid encryption key')
   const manageKey = createHmac('sha256', masterKey)
-    .update('cali.so:ama:manage-link-key:v1', 'utf8')
+    .update('matthew-miao.com:ama:manage-link-key:v1', 'utf8')
     .digest()
   return createHmac('sha256', manageKey)
-    .update(`cali.so:ama:manage-link:v1:${bookingId}`, 'utf8')
+    .update(`matthew-miao.com:ama:manage-link:v1:${bookingId}`, 'utf8')
     .digest('base64url')
 }
 

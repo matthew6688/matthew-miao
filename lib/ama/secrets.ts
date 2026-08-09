@@ -25,7 +25,7 @@ function decodeKey(value: string) {
 }
 
 function additionalData(purpose: SecretPurpose) {
-  return Buffer.from(`cali.so:ama:${purpose}:v1`, 'utf8')
+  return Buffer.from(`matthew-miao.com:ama:${purpose}:v1`, 'utf8')
 }
 
 export function createSecretBox(encodedKey: string) {

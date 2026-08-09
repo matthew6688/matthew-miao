@@ -8,6 +8,13 @@ import { books } from '~/lib/personal'
 
 import { Bookshelf } from './bookshelf'
 
+vi.mock('~/lib/personal', () => ({
+  books: [
+    { title: 'Grid Systems in Graphic Design', author: 'JMB', year: 1981, category: 'Design', spineColor: '#df6029', spineInk: '#171717', art: '/test/grid.jpg', coverWidth: 411, coverHeight: 600, spine: 24 },
+    { title: 'Refactoring UI', author: 'AW+SS', year: 2018, category: 'Design', spineColor: '#2e3849', spineInk: '#fff', art: '/test/refactoring.jpg', coverWidth: 758, coverHeight: 1014, spine: 24 },
+  ],
+}))
+
 vi.mock('next/image', () => ({
   default: forwardRef<HTMLImageElement, React.ImgHTMLAttributes<HTMLImageElement>>(
     function MockImage(props, ref) {

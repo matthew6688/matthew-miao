@@ -37,11 +37,15 @@ const nextConfig: NextConfig = {
   // slug is dynamic, so output tracing cannot discover these files from the
   // readFile calls on its own when packaging serverless functions.
   outputFileTracingIncludes: {
+    '**/*': [
+      './node_modules/pg-cloudflare/dist/**',
+      './node_modules/pg-cloudflare/esm/**',
+    ],
     '/og': [
       ...ogRuntimeAssets,
       './content/blog/**/*',
       './content/newsletters/**/*',
-      './public/images/headshot.jpg',
+      './public/images/matthew-placeholder-light.svg',
     ],
     '/blog/**': ['./content/blog/**/*', ...ogRuntimeAssets],
     '/en/blog/**': ['./content/blog/**/*', ...ogRuntimeAssets],
@@ -70,6 +74,7 @@ const nextConfig: NextConfig = {
   },
 
   images: {
+    unoptimized: true,
     // Post images are served from content/ via app/content/[...path]/route.ts;
     // site portraits/avatars live in public/images
     localPatterns: [

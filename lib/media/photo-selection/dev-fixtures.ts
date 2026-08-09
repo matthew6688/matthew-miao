@@ -44,7 +44,7 @@ ${Array.from({ length: 7 }, (_, i) => `<line x1="0" y1="${((i + 1) * height) / 8
 <path d="${corner(width - inset, height - inset, -1, -1)}"/>
 </g>
 <text x="${inset}" y="${height - inset * 1.4}" fill="${ink}" fill-opacity="0.85" font-family="ui-monospace, monospace" font-size="${Math.min(width, height) * 0.16}" font-weight="600">${number}</text>
-<text x="${inset}" y="${inset * 2.4}" fill="${ink}" fill-opacity="0.6" font-family="ui-monospace, monospace" font-size="${Math.min(width, height) * 0.035}" letter-spacing="4">CALI.SO TEST CARD ${number} — ${width}×${height}</text>
+<text x="${inset}" y="${inset * 2.4}" fill="${ink}" fill-opacity="0.6" font-family="ui-monospace, monospace" font-size="${Math.min(width, height) * 0.035}" letter-spacing="4">MATTHEW TEST CARD ${number} — ${width}×${height}</text>
 </svg>`
 
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`

@@ -1,0 +1,35 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "matthew-miao",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-08-08",
+  "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    { "pattern": "matthew-miao.com", "custom_domain": true },
+    { "pattern": "www.matthew-miao.com", "custom_domain": true }
+  ],
+  "vars": {
+    "SITE_URL": "https://matthew-miao.com",
+    "PUBLIC_SITE_URL": "https://matthew-miao.com",
+    "ADMIN_EMAIL": "hi@fengtalk.ai",
+    "BUNNY_MEDIA_REGION": "sg",
+    "BUNNY_MEDIA_ZONE": "matthew-miao-media",
+    "BUNNY_MEDIA_CDN_URL": "https://media.matthew-miao.com"
+  },
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "images": {
+    "binding": "IMAGES"
+  },
+  "r2_buckets": [
+    {
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",
+      "bucket_name": "matthew-miao-next-cache"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

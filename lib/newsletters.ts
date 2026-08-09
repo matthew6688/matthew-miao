@@ -1,10 +1,8 @@
-import { readFileSync } from 'node:fs'
-import path from 'node:path'
-
 import matter from 'gray-matter'
 import { z } from 'zod'
 
 import { type ArchivedNewsletterId as PublicArchivedNewsletterId } from './public-content-routes'
+import { bundledNewsletters } from './generated-worker-content'
 
 export {
   archivedNewsletterIds,
@@ -12,8 +10,6 @@ export {
 } from './public-content-routes'
 
 export type ArchivedNewsletterId = PublicArchivedNewsletterId
-
-const NEWSLETTERS_DIR = path.join(process.cwd(), 'content/newsletters')
 
 const newsletterFrontmatterSchema = z.object({
   title: z.string().min(1),
@@ -46,13 +42,10 @@ export function getArchivedNewsletter(
   const cached = archivedNewsletterCache.get(id)
   if (cached) return cached
 
-  const raw = readFileSync(path.join(NEWSLETTERS_DIR, id, 'index.mdx'), 'utf8')
+  const raw = bundledNewsletters[id].zh
   const { data, content } = matter(raw)
   const frontmatter = newsletterFrontmatterSchema.parse(data)
-  const englishRaw = readFileSync(
-    path.join(NEWSLETTERS_DIR, id, 'index.en.mdx'),
-    'utf8',
-  )
+  const englishRaw = bundledNewsletters[id].en
   const { data: englishData, content: englishContent } = matter(englishRaw)
   const englishFrontmatter = newsletterFrontmatterSchema.parse(englishData)
 

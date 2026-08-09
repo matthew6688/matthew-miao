@@ -1,38 +1,6 @@
-import { readFile } from 'node:fs/promises'
-import path from 'node:path'
 import { cacheLife } from 'next/cache'
 
-// ── Sharp SVG-buffer unblock ───────────────────────────────────────
-//
-// Next.js 16.3's Image Optimization API defense-in-depth change
-// (CVE-2026-64644) calls sharp.block({ operation: ['VipsForeignLoad'] })
-// then unblocks only HEIF/JPEG/GIF/PNG/TIFF/WebP. SVG is left blocked,
-// and because sharp.block/unblock modifies the *global* libvips operation
-// set, every sharp instance in the process is affected — including
-// @vercel/og's satori→SVG→PNG conversion, which passes an in-memory SVG
-// buffer to sharp.
-//
-// We re-enable only the SVG *buffer* loader (the specific operation
-// @vercel/og uses), not SVG file/source loading. The OG route generates
-// its own SVG from trusted satori output, and the project has no
-// images.remotePatterns, so the CVE's remote-image attack path is
-// absent. The unblock is still process-global, which is an upstream
-// Next.js issue (next/image mutates shared libvips policy); this is the
-// narrowest application-side workaround until it is fixed there.
-
-let _sharp: typeof import('sharp').default | undefined
-
-async function ensureSharpSvgLoad() {
-  if (!_sharp) {
-    try {
-      _sharp = (await import('sharp')).default
-    } catch {
-      // sharp not installed — @vercel/og falls back to resvg (WASM)
-      return
-    }
-  }
-  _sharp.unblock({ operation: ['VipsForeignLoadSvgBuffer'] })
-}
+import { bundledAssets } from './generated-worker-content'
 
 // Design-language tokens resolved to sRGB for satori (no oklch support).
 // Sources: --paper / --paper-ink / --foreground / --muted-foreground /
@@ -45,20 +13,13 @@ export const ogColors = {
   border: '#e5e5e5',
 } as const
 
-const FONTS_DIR = path.join(process.cwd(), 'app/_fonts')
-
 // Fonts are read per render (not cached) to keep font ArrayBuffer data
-// intact for satori. This also ensures ensureSharpSvgLoad() runs before
-// each ImageResponse creation.
+// intact for satori.
 export async function ogRuntimeFonts() {
-  await ensureSharpSvgLoad()
-  const [regular, semibold] = await Promise.all(
-    ['Regular', 'SemiBold'].map((weight) =>
-      readFile(path.join(FONTS_DIR, `FrexSansGB-OG-${weight}.ttf`)).then(
-        (font) => new Uint8Array(font).buffer,
-      ),
-    ),
-  )
+  const [regular, semibold] = [
+    bundledAssets['/fonts/og-regular.ttf'],
+    bundledAssets['/fonts/og-semibold.ttf'],
+  ].map((font) => Uint8Array.from(Buffer.from(font, 'base64')).buffer)
   return [
     { name: 'Frex Sans GB', data: regular, weight: 400 as const, style: 'normal' as const },
     { name: 'Frex Sans GB', data: semibold, weight: 600 as const, style: 'normal' as const },
@@ -87,10 +48,10 @@ export async function coverDataUri(publicSrc: string): Promise<string> {
     throw new Error('Invalid OG cover path')
   }
 
-  const file = path.join(process.cwd(), 'content', relativePath)
-  const ext = (file.split('.').pop() ?? 'png').toLowerCase()
-  const data = await readFile(file)
-  return `data:${MIME[ext] ?? 'image/png'};base64,${data.toString('base64')}`
+  const asset = bundledAssets[publicSrc as keyof typeof bundledAssets]
+  if (!asset) throw new Error(`Unbundled OG cover: ${publicSrc}`)
+  const ext = (relativePath.split('.').pop() ?? 'png').toLowerCase()
+  return `data:${MIME[ext] ?? 'image/png'};base64,${asset}`
 }
 
 export async function publicImageDataUri(publicSrc: string): Promise<string> {
@@ -103,10 +64,10 @@ export async function publicImageDataUri(publicSrc: string): Promise<string> {
     throw new Error('Invalid public image path')
   }
 
-  const file = path.join(process.cwd(), 'public', relativePath)
-  const ext = (file.split('.').pop() ?? 'png').toLowerCase()
-  const data = await readFile(file)
-  return `data:${MIME[ext] ?? 'image/png'};base64,${data.toString('base64')}`
+  const asset = bundledAssets[publicSrc as keyof typeof bundledAssets]
+  if (!asset) throw new Error(`Unbundled public OG asset: ${publicSrc}`)
+  const ext = (relativePath.split('.').pop() ?? 'png').toLowerCase()
+  return `data:${MIME[ext] ?? 'image/png'};base64,${asset}`
 }
 
 // The drafting sheet: page background plus the boxed guides from the

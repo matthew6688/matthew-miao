@@ -8,6 +8,20 @@ import { records } from '~/lib/personal'
 
 import { sleeveFinish, VinylShelf } from './vinyl-shelf'
 
+vi.mock('~/lib/personal', () => ({
+  records: [
+    { artist: 'Avicii', album: 'TIM', year: 2019, genre: 'Dance', spineColor: '#888', spineInk: '#111', url: 'https://example.com/1' },
+    { artist: 'NF', album: 'HOPE', year: 2023, genre: 'Rap', spineColor: '#354040', spineInk: '#fff', url: 'https://example.com/2' },
+    { artist: 'twenty one pilots', album: 'Trench', year: 2018, genre: 'Alternative', spineColor: '#38351e', spineInk: '#fff', url: 'https://example.com/3' },
+    { artist: 'twenty one pilots', album: 'Clancy', year: 2024, genre: 'Alternative', spineColor: '#af5833', spineInk: '#111', url: 'https://example.com/4' },
+    { artist: 'twenty one pilots', album: 'Breach', year: 2025, genre: 'Alternative', spineColor: '#762b27', spineInk: '#fff', url: 'https://example.com/5' },
+    { artist: 'The Weeknd', album: 'Starboy', year: 2016, genre: 'R&B', spineColor: '#451b2c', spineInk: '#fff', url: 'https://example.com/6' },
+    { artist: 'The Weeknd', album: 'After Hours', year: 2020, genre: 'R&B', spineColor: '#423427', spineInk: '#fff', url: 'https://example.com/7' },
+    { artist: 'The Weeknd', album: 'Hurry Up Tomorrow', year: 2025, genre: 'R&B', spineColor: '#3f2316', spineInk: '#fff', url: 'https://example.com/8' },
+    { artist: 'Daft Punk', album: 'Random Access Memories', year: 2013, genre: 'Pop', spineColor: '#303134', spineInk: '#fff', url: 'https://example.com/9' },
+  ],
+}))
+
 vi.mock('next/image', () => ({
   default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
     // eslint-disable-next-line @next/next/no-img-element

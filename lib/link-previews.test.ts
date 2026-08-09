@@ -50,10 +50,8 @@ describe('link media proxy allowlist', () => {
     )
   })
 
-  it('serves chrome favicons outside prose', () => {
-    expect(upstreamLinkMediaUrl('favicon', 'https://zolplay.com')).toBe(
-      'https://og.zolplay.com/favicon/https%3A%2F%2Fzolplay.com%2F',
-    )
+  it('rejects removed upstream chrome identities', () => {
+    expect(upstreamLinkMediaUrl('favicon', 'https://zolplay.com')).toBeNull()
   })
 
   it('rejects everything else', () => {

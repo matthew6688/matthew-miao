@@ -271,7 +271,7 @@ export function createTencentMeetingAdapter(
       params: {
         protocolVersion: MCP_PROTOCOL_VERSION,
         capabilities: {},
-        clientInfo: { name: 'cali.so', version: '3.0.0' },
+        clientInfo: { name: 'matthew-miao.com', version: '3.0.0' },
       },
     })
     if (!response.ok) providerUnavailable()

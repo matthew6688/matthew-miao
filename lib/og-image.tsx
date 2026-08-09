@@ -356,7 +356,7 @@ async function renderNewsletterOgImage(newsletter: NewsletterOgInput, locale: Lo
     locale === 'en'
       ? `${siteProfile.name.displayEn} · Archive ${newsletter.id.padStart(3, '0')}`
       : `${siteProfile.name.zh} · 存档 ${newsletter.id.padStart(3, '0')}`
-  const cover = await coverDataUri('/images/matthew-placeholder-light.svg')
+  const cover = await publicImageDataUri('/images/matthew-placeholder-light.svg')
 
   return new ImageResponse(
     (

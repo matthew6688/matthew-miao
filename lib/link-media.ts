@@ -6,7 +6,7 @@ import { ogZolplayUrl } from '~/lib/og-zolplay.mjs'
 // that live outside prose — the proxy can never be aimed at an arbitrary
 // host. Links added to a post before the snapshot refreshes fall back to
 // the service directly (see lib/link-previews.ts).
-const EXTRA_FAVICON_ORIGINS = ['https://zolplay.com']
+const EXTRA_FAVICON_ORIGINS: string[] = []
 
 const snapshot = previews as Record<string, { hasImage?: boolean }>
 

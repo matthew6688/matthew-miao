@@ -165,7 +165,7 @@ describe('Tencent Meeting adapter', () => {
       params: {
         protocolVersion: '2025-06-18',
         capabilities: {},
-        clientInfo: { name: 'cali.so', version: '3.0.0' },
+        clientInfo: { name: 'matthew-miao.com', version: '3.0.0' },
       },
     })
     expect(requestBody(fetchMock, 1)).toEqual({

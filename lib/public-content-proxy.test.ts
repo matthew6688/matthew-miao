@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 import type { NextFetchEvent } from 'next/server'
 import { describe, expect, it } from 'vitest'
 
-import { proxy, siteProxy } from '../proxy'
+import { middleware, siteProxy } from '../middleware'
 
 const event = {
   passThroughOnException() {},
@@ -30,7 +30,7 @@ describe('public content proxy', () => {
     '/newsletters/1',
     '/en/newsletters/1',
   ])('passes through a published content route without Clerk: %s', async (pathname) => {
-    const response = await proxy(
+    const response = await middleware(
       new NextRequest(`https://cali.so${pathname}`),
       event,
     )

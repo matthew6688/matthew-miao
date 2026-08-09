@@ -20,13 +20,13 @@ const config = {
 
 const contractEnvironment = {
   BUNNY_STORAGE_CONTRACT_ENVIRONMENT: 'non-production',
-  BUNNY_STORAGE_CONTRACT_ORIGIN: 'https://cali.so',
+  BUNNY_STORAGE_CONTRACT_ORIGIN: 'https://matthew-miao.com',
   BUNNY_STORAGE_CONTRACT_EDGE_TTL_SECONDS: '31536000',
   BUNNY_STORAGE_CONTRACT_BROWSER_TTL_SECONDS: '31536000',
 }
 
 const contractExpectations = {
-  origin: new URL('https://cali.so'),
+  origin: new URL('https://matthew-miao.com'),
   edgeTtlSeconds: 31_536_000,
   browserTtlSeconds: 31_536_000,
 }

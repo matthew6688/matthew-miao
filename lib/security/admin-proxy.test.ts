@@ -16,7 +16,7 @@ const previousClerkEnvironment = vi.hoisted(() => {
   return previous
 })
 
-import { siteProxy } from '../../proxy'
+import { siteProxy } from '../../middleware'
 import { securityHeaders } from './headers'
 
 const throughRealClerkMiddleware = clerkMiddleware((_auth, request) =>

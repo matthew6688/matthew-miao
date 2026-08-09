@@ -57,7 +57,7 @@ function expectedMutationOrigin(baseUrl) {
   if (process.env.SECURITY_BOUNDARY_BASE_URL) {
     return new URL(baseUrl).origin
   }
-  return new URL(process.env.SITE_URL ?? 'https://cali.so').origin
+  return new URL(process.env.SITE_URL ?? 'https://matthew-miao.com').origin
 }
 
 function rawHeaderValues(rawHeaders, name) {
