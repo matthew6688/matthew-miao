@@ -12,7 +12,8 @@ describe('public site origin', () => {
 
   it('keeps Staging discovery canonical to the public site', async () => {
     vi.stubEnv('NODE_ENV', 'production')
-    vi.stubEnv('SITE_URL', 'https://beta.cali.so')
+    vi.stubEnv('PUBLIC_SITE_URL', 'https://matthew-miao.com')
+    vi.stubEnv('SITE_URL', 'https://staging.matthew-miao.com')
 
     const { seo } = await import('./seo')
 
