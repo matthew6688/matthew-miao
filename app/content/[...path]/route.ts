@@ -1,6 +1,8 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
+import { bundledAssets } from '~/lib/generated-worker-content'
+
 // Serves colocated public-content images so content can live next to its MDX
 // (ADR-0001) without a public/ copy step.
 const ALLOWED =
@@ -22,9 +24,19 @@ export async function GET(
   const rel = (await params).path.join('/')
   if (!ALLOWED.test(rel)) return new Response('Not found', { status: 404 })
 
+  const ext = rel.split('.').pop()!
+  const bundled = bundledAssets[`/content/${rel}` as keyof typeof bundledAssets]
+  if (bundled) {
+    return new Response(Uint8Array.from(Buffer.from(bundled, 'base64')), {
+      headers: {
+        'Content-Type': MIME[ext],
+        'Cache-Control': 'public, max-age=31536000, immutable',
+      },
+    })
+  }
+
   try {
     const buf = await readFile(path.join(process.cwd(), 'content', rel))
-    const ext = rel.split('.').pop()!
     return new Response(new Uint8Array(buf), {
       headers: {
         'Content-Type': MIME[ext],

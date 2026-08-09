@@ -5,26 +5,34 @@ import { archivedNewsletterIds, publishedPostSlugs } from '../lib/public-content
 
 const root = process.cwd()
 const posts = {}
-const postCovers = new Map()
+const contentMedia = new Map()
+function collectMedia(kind, id, ...sources) {
+  for (const source of sources) {
+    for (const match of source.matchAll(/\.\/([A-Za-z0-9_.-]+\.(?:png|jpe?g|webp|gif|avif))/gi)) {
+      const file = match[1]
+      contentMedia.set(`/content/${kind}/${id}/${file}`, path.join('content', kind, id, file))
+    }
+  }
+}
 for (const slug of publishedPostSlugs) {
   const zh = await readFile(path.join(root, 'content/blog', slug, 'index.mdx'), 'utf8')
+  const en = await readFile(path.join(root, 'content/blog', slug, 'index.en.mdx'), 'utf8')
   posts[slug] = {
     zh,
-    en: await readFile(path.join(root, 'content/blog', slug, 'index.en.mdx'), 'utf8'),
+    en,
   }
-
-  const cover = zh.match(/^cover:\s*['"]?([^'"\n]+)['"]?\s*$/m)?.[1]?.trim()
-  if (cover) {
-    postCovers.set(`/content/blog/${slug}/${cover}`, path.join('content/blog', slug, cover))
-  }
+  collectMedia('blog', slug, zh, en)
 }
 
 const newsletters = {}
 for (const id of archivedNewsletterIds) {
+  const zh = await readFile(path.join(root, 'content/newsletters', id, 'index.mdx'), 'utf8')
+  const en = await readFile(path.join(root, 'content/newsletters', id, 'index.en.mdx'), 'utf8')
   newsletters[id] = {
-    zh: await readFile(path.join(root, 'content/newsletters', id, 'index.mdx'), 'utf8'),
-    en: await readFile(path.join(root, 'content/newsletters', id, 'index.en.mdx'), 'utf8'),
+    zh,
+    en,
   }
+  collectMedia('newsletters', id, zh, en)
 }
 
 const assets = {}
@@ -33,7 +41,7 @@ for (const [publicPath, file] of [
   ['/images/matthew-placeholder-light.svg', 'public/images/matthew-placeholder-light.svg'],
   ['/fonts/og-regular.ttf', 'app/_fonts/FrexSansGB-OG-Regular.ttf'],
   ['/fonts/og-semibold.ttf', 'app/_fonts/FrexSansGB-OG-SemiBold.ttf'],
-  ...postCovers,
+  ...contentMedia,
   ...generatedOgFiles.map((file) => [`/generated-og/${file}`, `public/generated-og/${file}`]),
 ]) {
   assets[publicPath] = (await readFile(path.join(root, file))).toString('base64')
