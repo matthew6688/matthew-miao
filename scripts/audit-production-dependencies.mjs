@@ -25,13 +25,34 @@ function collectDependencies(node) {
 for (const root of list) collectDependencies(root)
 
 const queries = [...packages.values()]
-const response = await fetch('https://api.osv.dev/v1/querybatch', {
-  method: 'POST',
-  headers: { 'content-type': 'application/json' },
-  body: JSON.stringify({ queries }),
-})
 
-if (!response.ok) {
+const requestBody = JSON.stringify({ queries })
+let response
+for (let attempt = 1; attempt <= 3; attempt += 1) {
+  response = await fetch('https://api.osv.dev/v1/querybatch', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'user-agent': 'matthew-miao-production-audit/1.0',
+    },
+    body: requestBody,
+  })
+  if (response.ok) break
+
+  const retryable = response.status === 403 || response.status === 429 || response.status >= 500
+  if (!retryable || attempt === 3) break
+
+  const retryAfter = Number(response.headers.get('retry-after'))
+  const delayMs = Number.isFinite(retryAfter)
+    ? Math.min(Math.max(retryAfter * 1_000, 250), 5_000)
+    : attempt * 1_000
+  console.warn(
+    `OSV dependency audit attempt ${attempt} returned HTTP ${response.status}; retrying`,
+  )
+  await new Promise((resolve) => setTimeout(resolve, delayMs))
+}
+
+if (!response?.ok) {
   throw new Error(`OSV dependency audit failed with HTTP ${response.status}`)
 }
 
