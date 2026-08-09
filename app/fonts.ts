@@ -27,8 +27,7 @@ const openRunde = localFont({
   adjustFontFallback: false,
 })
 
-// Shared CJK fallback: the public site keeps Geist, while Cali Baby uses
-// Open Runde for Latin glyphs.
+// Shared CJK fallback for the bilingual public site.
 const frexSansGB = localFont({
   src: [
     { path: './_fonts/FrexSansGB-Regular.woff2', weight: '400' },

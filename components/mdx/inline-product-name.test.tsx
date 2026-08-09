@@ -9,11 +9,8 @@ afterEach(cleanup)
 
 describe('InlineProductName', () => {
   it.each([
-    ['ATS', '/images/products/ats.svg'],
     ['App Store', '/images/products/app-store.svg'],
     ['Codex', '/images/codex.svg'],
-    ['Control', '/images/products/control.svg'],
-    ['Dex', '/images/products/dex.svg'],
     ['Slack', '/images/products/slack.svg'],
   ] as const)('renders %s with its decorative mark', (product, src) => {
     const { container } = render(<InlineProductName product={product} />)

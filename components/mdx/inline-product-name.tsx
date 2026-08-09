@@ -1,11 +1,8 @@
 import { ClaudeMark } from '~/components/product-marks'
 
 const PRODUCT_ICONS = {
-  ATS: '/images/products/ats.svg',
   'App Store': '/images/products/app-store.svg',
   Codex: '/images/codex.svg',
-  Control: '/images/products/control.svg',
-  Dex: '/images/products/dex.svg',
   Slack: '/images/products/slack.svg',
 } as const
 

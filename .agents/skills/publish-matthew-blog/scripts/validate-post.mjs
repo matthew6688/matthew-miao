@@ -2,6 +2,7 @@
 
 import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
+import sharp from 'sharp'
 
 const slug = process.argv[2]
 const fail = (message) => {
@@ -43,6 +44,33 @@ if (!slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
   if (source['index.en.mdx']) {
     const description = source['index.en.mdx'].match(/^description:\s*["'](.+)["']\s*$/mu)?.[1]
     if (description && description.length > 160) fail('English description exceeds 160 characters')
+  }
+
+  const checkedMedia = new Set()
+  for (const [edition, body] of Object.entries(source)) {
+    const markdownImages = [...body.matchAll(/!\[([^\]]*)\]\(([^)]+)\)/gu)]
+    for (const image of markdownImages) {
+      const alt = image[1].trim()
+      if (!alt) fail(`${edition} has an image without alt text`)
+      const media = image[2].match(/^\.\/([A-Za-z0-9_.-]+)#(\d+)x(\d+)(?:\s+"[^"]*")?$/u)
+      if (!media) {
+        fail(`${edition} image needs ./file.ext#WIDTHxHEIGHT format`)
+        continue
+      }
+      const [, file, declaredWidth, declaredHeight] = media
+      const target = path.join(directory, file)
+      if (!existsSync(target)) {
+        fail(`${edition} references missing media ${file}`)
+        continue
+      }
+      const key = `${file}:${declaredWidth}x${declaredHeight}`
+      if (checkedMedia.has(key)) continue
+      checkedMedia.add(key)
+      const metadata = await sharp(target).metadata()
+      if (metadata.width !== Number(declaredWidth) || metadata.height !== Number(declaredHeight)) {
+        fail(`${file} is ${metadata.width}x${metadata.height}, not ${declaredWidth}x${declaredHeight}`)
+      }
+    }
   }
 
   const routes = readFileSync(path.join(root, 'lib/public-content-routes.ts'), 'utf8')

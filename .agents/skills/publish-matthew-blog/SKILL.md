@@ -17,7 +17,8 @@ Create truthful bilingual posts without changing the inherited Cali visual syste
 6. Add a unique safe ID for the slug in `lib/view-transition-name.ts`. Keep existing IDs stable.
 7. Run `node .agents/skills/publish-matthew-blog/scripts/validate-post.mjs <slug>`.
 8. Run `corepack pnpm typecheck` and the relevant tests. For publication, run `corepack pnpm test:unit`.
-9. Review both language routes, headings, links, images, metadata, and mobile layout. Report any missing confirmation separately.
+9. Build before browser testing so cached MDX reflects the draft, then run the Chromium article/lightbox checks and WebKit smoke checks.
+10. Review both language routes, headings, links, images, metadata, and mobile layout. Show the diff, proposed URLs, SEO summaries, and missing confirmations before asking to publish.
 
 ## Editorial rules
 
@@ -29,6 +30,7 @@ Create truthful bilingual posts without changing the inherited Cali visual syste
 - Do not restore upstream Cali posts, photos, biography, clients, social identities, or Cali Baby material.
 - Do not publish placeholders, TODOs, fabricated testimonials, or unlicensed media.
 - Do not deploy, push, send newsletters, or enable payments unless the user explicitly asks.
+- Work on a draft branch by default. Never commit a new article directly to `main` unless Matthew explicitly requests publication.
 
 ## Editing existing posts
 
