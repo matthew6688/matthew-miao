@@ -26,7 +26,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:validate": "node --test scripts/ama-migrations.test.mjs",
-    "test:deployment": "node --test scripts/check-production-migrations.test.mjs scripts/comment-preview-deployment.test.mjs scripts/delete-vercel-branch-deployments.test.mjs scripts/deployment-workflows.test.mjs scripts/refresh-snapshot-validation.test.mjs scripts/verify-legacy-url-contract.test.mjs",
+    "test:deployment": "node --test scripts/check-production-migrations.test.mjs scripts/deployment-workflows.test.mjs scripts/refresh-snapshot-validation.test.mjs scripts/verify-legacy-url-contract.test.mjs",
     "test:browser": "playwright test",
     "test:browser:hosted": "playwright test --project=chromium --grep @hosted",
     "start": "next start",

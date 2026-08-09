@@ -59,7 +59,7 @@ jobs:
 
       - name: Deploy exact commit to Cloudflare Workers
         if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
-        run: pnpm exec opennextjs-cloudflare deploy --skip-build
+        run: pnpm exec opennextjs-cloudflare deploy
 
       - name: Report missing deployment credential
         if: ${{ env.CLOUDFLARE_API_TOKEN == '' }}
@@ -67,6 +67,10 @@ jobs:
           echo "::warning::Validation passed, but CLOUDFLARE_API_TOKEN is not configured in the production environment."
           echo "### Cloudflare deployment skipped" >> "$GITHUB_STEP_SUMMARY"
           echo "Add the production secret CLOUDFLARE_API_TOKEN to enable automatic deployment." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Install Playwright Chromium
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Verify production routes
         if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}

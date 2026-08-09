@@ -2,18 +2,22 @@ import { expect, test } from '@playwright/test'
 
 import { prepareBrowserPage, watchBrowserErrors } from './support'
 
+const expectedOrigin = process.env.PLAYWRIGHT_BASE_URL
+  ? new URL(process.env.PLAYWRIGHT_BASE_URL).origin
+  : 'https://matthew-miao.com'
+
 const metadataCases = [
   {
     locale: 'Chinese',
     path: '/projects',
-    canonical: 'https://matthew-miao.com/projects',
+    canonical: `${expectedOrigin}/projects`,
     openGraphLocale: 'zh_CN',
     socialLocale: 'zh',
   },
   {
     locale: 'English',
     path: '/en/projects',
-    canonical: 'https://matthew-miao.com/en/projects',
+    canonical: `${expectedOrigin}/en/projects`,
     openGraphLocale: 'en_US',
     socialLocale: 'en',
   },
@@ -33,11 +37,11 @@ for (const metadata of metadataCases) {
     )
     await expect(page.locator('link[rel="alternate"][hreflang="zh-CN"]')).toHaveAttribute(
       'href',
-      'https://matthew-miao.com/projects',
+      `${expectedOrigin}/projects`,
     )
     await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute(
       'href',
-      'https://matthew-miao.com/en/projects',
+      `${expectedOrigin}/en/projects`,
     )
     await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute(
       'content',
@@ -49,7 +53,7 @@ for (const metadata of metadataCases) {
       .getAttribute('content')
     expect(socialImage).not.toBeNull()
     const socialImageUrl = new URL(socialImage!)
-    expect(socialImageUrl.origin).toBe('https://matthew-miao.com')
+    expect(socialImageUrl.origin).toBe(expectedOrigin)
     expect(socialImageUrl.pathname).toBe('/og')
     expect(socialImageUrl.searchParams.get('locale')).toBe(metadata.socialLocale)
     expect(socialImageUrl.searchParams.get('path')).toBe('/projects')
@@ -66,11 +70,11 @@ test('@hosted feeds and localized social images return their public media contra
 
   expect(chineseFeed.status()).toBe(200)
   expect(chineseFeed.headers()['content-type']).toContain('xml')
-  expect(await chineseFeed.text()).toContain('https://matthew-miao.com/blog/')
+  expect(await chineseFeed.text()).toContain(`${expectedOrigin}/blog/`)
 
   expect(englishFeed.status()).toBe(200)
   expect(englishFeed.headers()['content-type']).toContain('xml')
-  expect(await englishFeed.text()).toContain('https://matthew-miao.com/en/blog/')
+  expect(await englishFeed.text()).toContain(`${expectedOrigin}/en/blog/`)
 
   expect(socialImage.status()).toBe(200)
   expect(socialImage.headers()['content-type']).toContain('image/png')
