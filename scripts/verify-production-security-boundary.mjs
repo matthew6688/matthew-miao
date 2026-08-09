@@ -118,7 +118,7 @@ async function verifyPublicPages(baseUrl) {
     undefined,
     { visibleContentOnly: true },
   )
-  assert.equal(response.status, 200)
+  assert.equal(response.status, 404, 'retired confirmation token status')
   assert.ok(
     !inspectedBody.includes('security-boundary-session-must-not-render'),
   )
@@ -127,6 +127,13 @@ async function verifyPublicPages(baseUrl) {
   // checked in verifyPublicAmaApiBoundary.
   const ama = await fetchBoundary(baseUrl, '/ama')
   assert.equal(ama.response.status, 200)
+}
+
+function hasClerkConfiguration() {
+  return Boolean(
+    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
+      process.env.CLERK_SECRET_KEY,
+  )
 }
 
 async function verifyAdminPages(baseUrl) {
@@ -145,6 +152,12 @@ async function verifyAdminPages(baseUrl) {
       },
     }
     const { response } = await fetchBoundary(baseUrl, path, documentRequest)
+    if (!hasClerkConfiguration()) {
+      assert.equal(response.status, 404, `${path} disabled owner boundary`)
+      assert.equal(response.headers.get('location'), null)
+      assert.equal(response.headers.get('set-cookie'), null)
+      continue
+    }
     assert.equal(response.status, 307, `${path} Clerk redirect status`)
     const location = new URL(response.headers.get('location'))
     assert.equal(location.protocol, 'https:')
@@ -190,6 +203,22 @@ async function verifyAdminApiSecurity(baseUrl) {
   const sameOriginHeaders = {
     origin: expectedMutationOrigin(baseUrl),
     'sec-fetch-site': 'same-origin',
+  }
+
+  if (!hasClerkConfiguration()) {
+    for (const path of [
+      '/api/admin/auth/logout',
+      '/api/admin/ama/availability',
+      '/api/admin/media/assets',
+    ]) {
+      const { response } = await fetchBoundary(baseUrl, path, {
+        method: path.endsWith('/assets') ? 'GET' : 'POST',
+        headers: sameOriginHeaders,
+      })
+      assert.equal(response.status, 404, `${path} disabled owner boundary`)
+      assert.equal(response.headers.get('set-cookie'), null)
+    }
+    return
   }
 
   for (const request of [
@@ -271,6 +300,15 @@ async function verifyProviderApiAuthentication(baseUrl) {
       init: { method: 'POST', headers: sameOriginHeaders },
     },
   ]
+
+  if (!hasClerkConfiguration()) {
+    for (const { path, init } of requests) {
+      const { response } = await fetchBoundary(baseUrl, path, init)
+      assert.equal(response.status, 404, `${path} disabled owner boundary`)
+      assert.equal(response.headers.get('set-cookie'), null)
+    }
+    return
+  }
 
   for (const { path, init } of requests) {
     const { response, body } = await fetchBoundary(baseUrl, path, init)
