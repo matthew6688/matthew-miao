@@ -21,6 +21,13 @@ upstream commit documented in `docs/research/upstream-source-audit.md`.
 
 ## Agent skills
 
+### Photos
+
+Use `.agents/skills/manage-matthew-photos/SKILL.md` for any photo import,
+publication, withdrawal, alt-text, or deletion task. Originals stay outside
+Git; permanent derivative deletion requires the Skill's exact confirmation
+gate.
+
 ### Issue tracker
 
 Project issues belong to `matthew6688/matthew-miao`. Upstream issues remain useful

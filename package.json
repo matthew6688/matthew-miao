@@ -37,6 +37,7 @@
     "test:unit": "vitest run app components db lib --exclude='**/*.live.test.ts'",
     "test:localization": "node --test scripts/localization.test.mjs",
     "test:blog-skill": "node --test .agents/skills/publish-matthew-blog/scripts/validate-post.test.mjs",
+    "test:photo-skill": "node --test .agents/skills/manage-matthew-photos/scripts/manage-photo.test.mjs && node .agents/skills/manage-matthew-photos/scripts/manage-photo.mjs validate",
     "test:media:catalog": "vitest run lib/media/catalog",
     "test:media:geocoding": "vitest run lib/media/geocoding",
     "test:media:alt-text": "vitest run lib/media/alt-text",

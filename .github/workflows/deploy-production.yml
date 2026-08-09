@@ -26,6 +26,7 @@ jobs:
       RATE_LIMIT_HASH_KEY: AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQE=
       CRON_SECRET: build-only-placeholder
       MEDIA_PUBLIC_BASE_URL: https://matthew-miao.com/media/
+      PHOTO_PUBLICATION_MODE: repository-bootstrap
       MEDIA_ENCRYPTION_KEY: AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI=
       SITE_URL: https://matthew-miao.com
       PUBLIC_SITE_URL: https://matthew-miao.com
@@ -52,6 +53,7 @@ jobs:
           pnpm typecheck
           pnpm test:unit
           pnpm test:blog-skill
+          pnpm test:photo-skill
           pnpm test:localization
           pnpm build:cloudflare
 

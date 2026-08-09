@@ -12,7 +12,8 @@
     "SITE_URL": "https://matthew-miao.com",
     "PUBLIC_SITE_URL": "https://matthew-miao.com",
     "ADMIN_EMAIL": "hi@fengtalk.ai",
-    "MEDIA_PUBLIC_BASE_URL": "https://matthew-miao.com/media/"
+    "MEDIA_PUBLIC_BASE_URL": "https://matthew-miao.com/media/",
+    "PHOTO_PUBLICATION_MODE": "repository-bootstrap"
   },
   "assets": {
     "directory": ".open-next/assets",
@@ -43,7 +44,8 @@
         "SITE_URL": "https://matthew-miao-staging.matthew6688.workers.dev",
         "PUBLIC_SITE_URL": "https://matthew-miao-staging.matthew6688.workers.dev",
         "ADMIN_EMAIL": "hi@fengtalk.ai",
-        "MEDIA_PUBLIC_BASE_URL": "https://matthew-miao-staging.matthew6688.workers.dev/media/"
+        "MEDIA_PUBLIC_BASE_URL": "https://matthew-miao-staging.matthew6688.workers.dev/media/",
+        "PHOTO_PUBLICATION_MODE": "repository-bootstrap"
       },
       "r2_buckets": [
         {
@@ -65,7 +67,8 @@
         "SITE_URL": "https://matthew-miao-preview.matthew6688.workers.dev",
         "PUBLIC_SITE_URL": "https://matthew-miao-preview.matthew6688.workers.dev",
         "ADMIN_EMAIL": "hi@fengtalk.ai",
-        "MEDIA_PUBLIC_BASE_URL": "https://matthew-miao-preview.matthew6688.workers.dev/media/"
+        "MEDIA_PUBLIC_BASE_URL": "https://matthew-miao-preview.matthew6688.workers.dev/media/",
+        "PHOTO_PUBLICATION_MODE": "repository-bootstrap"
       },
       "r2_buckets": [
         {

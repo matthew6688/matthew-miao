@@ -18,11 +18,14 @@ Current as of 2026-08-09.
 - Upstream baseline: `CaliCastle/cali.so@9d9b492`
 - Chinese is unprefixed; English uses `/en`.
 
-Public home, blog, bilingual article, projects, photos empty state, sitemap, RSS,
+Public home, blog, bilingual article, projects, five-photo publication, sitemap, RSS,
 dynamic OG routes, and the Cal.com booking handoff have passed live HTTP smoke checks. The site now uses Matthew's approved creek-side portrait, published
 as a metadata-stripped WebP through the existing interactive halftone treatment.
-Four additional approved photos are available for the future media catalog;
-their originals remain outside Git until the owner upload pipeline is enabled.
+Five approved photos now publish through ADR-0015's Repository Photo
+Publication; all Originals remain outside Git. Use
+`.agents/skills/manage-matthew-photos/SKILL.md` for future import, withdrawal,
+or confirmed derivative deletion. A future database publication requires an explicit
+mode switch after its active selection is verified; database mode fails closed.
 
 ## Content ownership
 
