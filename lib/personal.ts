@@ -1,3 +1,5 @@
+import { siteProfile } from './site-profile'
+
 // The personal registry — the one file to edit when life moves on.
 // Sources: Matthew's content intake; see docs/content/site-profile-draft.md.
 
@@ -12,8 +14,7 @@ export interface Experience {
 }
 
 export const experience: Experience[] = [
-  { company: 'FengTalk.ai', companyEn: 'FengTalk.ai', role: '创始人', roleEn: 'Founder', from: 2024, url: 'https://fengtalk.ai' },
-  { company: 'UChat', companyEn: 'UChat', role: '首席营销官', roleEn: 'Chief Marketing Officer', from: 2020, url: 'https://uchat.au' },
+  { company: 'UChat', companyEn: 'UChat', role: '首席营销官', roleEn: 'Chief Marketing Officer', from: 2020, url: siteProfile.links.uchat },
 ]
 
 export interface Record_ {

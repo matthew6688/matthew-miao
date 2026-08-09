@@ -6,6 +6,7 @@ import { AmbientBackground } from '~/components/ambient-background'
 import { ThemeProvider } from '~/components/theme-provider'
 import { PREPAINT_SCRIPT } from '~/lib/security/inline-scripts'
 import { cn } from '~/lib/utils'
+import { siteProfile } from '~/lib/site-profile'
 
 import { fontVariablesForLocale } from './fonts'
 import { ErrorPageView, type ErrorBoundaryProps } from './_views/error-page'
@@ -18,7 +19,7 @@ export default function GlobalError({ retry }: ErrorBoundaryProps) {
       className={cn('font-sans', fontVariablesForLocale('zh'))}
     >
       <head>
-        <title>Something went wrong | Cali Castle</title>
+        <title>{`Something went wrong | ${siteProfile.name.en}`}</title>
         <script dangerouslySetInnerHTML={{ __html: PREPAINT_SCRIPT }} />
       </head>
       <body className="antialiased">

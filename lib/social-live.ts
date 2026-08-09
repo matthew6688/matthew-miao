@@ -24,11 +24,11 @@ export async function getGitHub(): Promise<GitHubSnapshot> {
 
   try {
     const [contrib, user] = await Promise.all([
-      fetch(`https://github-contributions-api.jogruber.de/v4/${siteProfile.links.github}?y=last`).then((r) => {
+      fetch(`https://github-contributions-api.jogruber.de/v4/${siteProfile.links.githubUsername}?y=last`).then((r) => {
         if (!r.ok) throw new Error(`contributions ${r.status}`)
         return r.json()
       }),
-      fetch(`https://api.github.com/users/${siteProfile.links.github}`, {
+      fetch(`https://api.github.com/users/${siteProfile.links.githubUsername}`, {
         headers: { accept: 'application/vnd.github+json', 'user-agent': siteProfile.domain },
       }).then((r) => {
         if (!r.ok) throw new Error(`user ${r.status}`)
@@ -37,7 +37,7 @@ export async function getGitHub(): Promise<GitHubSnapshot> {
     ])
     const days: Array<{ date: string; level: number }> = contrib.contributions
     return {
-      user: siteProfile.links.github,
+      user: siteProfile.links.githubUsername,
       followers: user.followers,
       total: contrib.total.lastYear,
       to: days[days.length - 1].date,

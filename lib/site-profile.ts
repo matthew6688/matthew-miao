@@ -15,8 +15,11 @@ export const siteProfile = {
     longitude: '153.0251° E',
   },
   links: {
-    github: 'matthew6688',
+    githubUsername: 'matthew6688',
     fengtalk: 'https://fengtalk.ai',
     uchat: 'https://uchat.au',
+  },
+  features: {
+    personalShelves: false,
   },
 } as const

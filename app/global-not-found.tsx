@@ -8,12 +8,13 @@ import {
   nonPublicRobots,
 } from '~/lib/non-public-metadata'
 import { cn } from '~/lib/utils'
+import { siteProfile } from '~/lib/site-profile'
 
 import { fontVariablesForLocale } from './fonts'
 import { NotFoundPageView } from './_views/not-found-page'
 
 export const metadata: Metadata = {
-  title: '404 | Cali Castle',
+  title: `404 | ${siteProfile.name.en}`,
   description: nonPublicDescriptions.notFound,
   robots: nonPublicRobots,
 }

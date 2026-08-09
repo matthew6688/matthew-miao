@@ -74,10 +74,10 @@ export async function HomePageView({ locale }: { locale: Locale }) {
             }
           >
             <HalftonePortrait
-              srcLight="/images/headshot.jpg"
-              srcDark="/images/portrait-square.jpg"
-              alt="Matthew 的半调网点肖像"
-              altEn="Matthew's halftone portrait"
+              srcLight="/images/matthew-placeholder-light.svg"
+              srcDark="/images/matthew-placeholder-dark.svg"
+              alt="Matthew 的抽象字母肖像占位图"
+              altEn="Abstract monogram placeholder for Matthew's portrait"
             />
           </PortraitHiddenStage>
         </div>
@@ -172,7 +172,7 @@ export async function HomePageView({ locale }: { locale: Locale }) {
         </ul>
       </section>
 
-      {records.length > 0 && (
+      {siteProfile.features.personalShelves && records.length > 0 && (
         <section className="mt-16">
           <SectionTitle index={nextSectionIndex()} delay={320}>
             <T zh="循环播放中" en="On rotation" />
@@ -183,7 +183,7 @@ export async function HomePageView({ locale }: { locale: Locale }) {
         </section>
       )}
 
-      {books.length > 0 && (
+      {siteProfile.features.personalShelves && books.length > 0 && (
         <section className="mt-16">
           <SectionTitle index={nextSectionIndex()} delay={380}>
             <T zh="珍藏书架" en="Books I Love" />

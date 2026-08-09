@@ -2848,13 +2848,13 @@ a:focus-visible .external-label .external-mark {
 
 .home-design-laptop,
 .home-design-sparkle,
-.home-zolplay-link .external-link > img {
+.home-studio-link .external-link > img {
   transform-box: fill-box;
   transform-origin: center;
 }
 
 .home-design-laptop,
-.home-zolplay-link .external-link > img {
+.home-studio-link .external-link > img {
   transition: transform 150ms var(--ease-swift);
 }
 
@@ -2908,12 +2908,12 @@ a:focus-visible .external-label .external-mark {
   animation-delay: 160ms;
 }
 
-.home-zolplay-link {
+.home-studio-link {
   white-space: nowrap;
   touch-action: manipulation;
 }
 
-.home-zolplay-link .external-link,
+.home-studio-link .external-link,
 .home-contact-link {
   color: var(--gray-10, var(--foreground));
   text-decoration-line: underline;
@@ -2924,7 +2924,7 @@ a:focus-visible .external-label .external-mark {
   text-decoration-skip-ink: auto;
 }
 
-.home-zolplay-link .external-link {
+.home-studio-link .external-link {
   transition: color 150ms ease, text-decoration-color 150ms ease;
 }
 
@@ -2938,22 +2938,22 @@ a:focus-visible .external-label .external-mark {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .home-zolplay-link .external-link:hover,
+  .home-studio-link .external-link:hover,
   .home-contact-link:hover {
     color: var(--gray-12, var(--foreground));
     text-decoration-color: currentColor;
   }
 }
 
-.home-zolplay-link:active .external-link > img {
+.home-studio-link:active .external-link > img {
   transform: translateY(-1px) rotate(-4deg);
 }
 
-.home-zolplay-link .external-mark {
+.home-studio-link .external-mark {
   transition: opacity 150ms ease, transform 180ms ease;
 }
 
-.home-zolplay-link:active .external-mark {
+.home-studio-link:active .external-mark {
   opacity: 0.95;
   transform: translate(1.5px, -1.5px);
 }
@@ -3002,7 +3002,7 @@ a:focus-visible .external-label .external-mark {
     animation: home-intro-twinkle 180ms 90ms var(--ease-swift);
   }
 
-  .home-zolplay-link:hover .external-link > img {
+  .home-studio-link:hover .external-link > img {
     transform: translateY(-1px) rotate(-4deg);
   }
 }
@@ -3058,7 +3058,7 @@ a:focus-visible .external-label .external-mark {
   .home-design-laptop,
   .home-design-sparkle,
   .home-detail-unit,
-  .home-zolplay-link .external-link > img {
+  .home-studio-link .external-link > img {
     animation: none;
     transition: none;
     transform: none;
@@ -3070,14 +3070,14 @@ a:focus-visible .external-label .external-mark {
   .home-intro-trigger.home-intro-tap .home-design-laptop,
   .home-intro-trigger.home-intro-tap .home-design-sparkle,
   .home-intro-trigger.home-intro-tap .home-detail-unit,
-  .home-zolplay-link:is(:hover, :active) .external-link > img,
-  .home-zolplay-link:is(:hover, :active) .external-mark {
+  .home-studio-link:is(:hover, :active) .external-link > img,
+  .home-studio-link:is(:hover, :active) .external-mark {
     animation: none;
     transition: none;
     transform: none;
   }
 
-  .home-zolplay-link {
+  .home-studio-link {
     transition: none;
   }
 

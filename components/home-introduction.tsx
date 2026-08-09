@@ -135,7 +135,7 @@ function DetailsPhrase({ children }: { children: React.ReactNode }) {
 
 function FengTalkLink({ children }: { children: React.ReactNode }) {
   return (
-    <span className="home-zolplay-link">
+    <span className="home-studio-link">
       <ExternalLink
         href={FENGTALK_URL}
         favicon={FENGTALK_FAVICON_SRC}
