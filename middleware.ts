@@ -6,6 +6,20 @@ import {
   isArchivedNewsletterId,
   isPublishedPostSlug,
 } from './lib/public-content-routes'
+import { securityHeaders } from './lib/security/headers'
+
+function retiredConfirmationResponse() {
+  const headers = new Headers(
+    securityHeaders.map(({ key, value }) => [key, value]),
+  )
+  headers.set('content-type', 'text/plain; charset=utf-8')
+  headers.set(
+    'cache-control',
+    'private, no-cache, no-store, max-age=0, must-revalidate',
+  )
+
+  return new NextResponse('Not found', { status: 404, headers })
+}
 
 function missingPublicContent(pathname: string) {
   const postMatch = pathname.match(/^\/(?:en\/)?blog\/([^/]+)\/?$/)
@@ -63,10 +77,7 @@ export function siteProxy(request: NextRequest) {
   }
 
   if (/^\/(?:en\/)?confirm\//.test(pathname)) {
-    return new NextResponse('Not found', {
-      status: 404,
-      headers: { 'content-type': 'text/plain; charset=utf-8' },
-    })
+    return retiredConfirmationResponse()
   }
 
   if (missingPublicContent(pathname) || isUnavailableAmaFixture(pathname)) {
