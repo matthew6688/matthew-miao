@@ -15,7 +15,7 @@ import {
   mediaUploadIntents,
 } from '~/db/schema'
 
-import { createPublicRenditionUrl } from '../storage/bunny'
+import { createPublicMediaUrl } from '../storage/object-key'
 import { lockPhotoSelectionMutations } from '../catalog/lifecycle-locks'
 
 import type {
@@ -563,7 +563,7 @@ export function createPublicPhotoSelectionRepository(
   database: () => PhotoSelectionDatabase,
   cdnBaseUrl: URL,
 ) {
-  const publicRenditionUrl = createPublicRenditionUrl(cdnBaseUrl)
+  const publicRenditionUrl = createPublicMediaUrl(cdnBaseUrl)
   return {
     async getPublishedSelection(): Promise<PublicPhotoSelection | null> {
       const [active] = await database()

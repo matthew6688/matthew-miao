@@ -32,8 +32,8 @@ import { createMediaPurgeRepository } from '../purge/repository'
 import { createMediaPurgeService } from '../purge/service'
 import { createMediaReconciliationRepository } from '../reconciliation/repository'
 import { createMediaReconciliationService } from '../reconciliation/service'
-import { createPublicRenditionUrl } from '../storage/bunny'
-import { parseBunnyMediaCdnEnv } from '../storage/config'
+import { parseMediaPublicBaseUrl } from '../storage/config'
+import { createPublicMediaUrl } from '../storage/object-key'
 import { getMediaStorage } from '../storage/server'
 import { createMediaTransferRepository } from '../transfer/repository'
 import { createMediaTransferService } from '../transfer/service'
@@ -61,9 +61,9 @@ function createCatalogServices(publicRenditionUrl: (key: string) => string) {
 }
 
 function createPageServices() {
-  const cdnBaseUrl = parseBunnyMediaCdnEnv(process.env)
+  const publicBaseUrl = parseMediaPublicBaseUrl(process.env)
   const { database, review, selection } = createCatalogServices(
-    createPublicRenditionUrl(cdnBaseUrl),
+    createPublicMediaUrl(publicBaseUrl),
   )
   const transferRepository = createMediaTransferRepository(database)
   return {

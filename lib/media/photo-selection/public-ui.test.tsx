@@ -58,7 +58,7 @@ afterEach(() => {
 })
 
 describe('Published Photo Selection UI', () => {
-  it('renders natural-aspect Bunny images with localized Alt Text and summaries', () => {
+  it('renders natural-aspect media images with localized Alt Text and summaries', () => {
     const html = renderToStaticMarkup(
       <PublishedPhotoWall selection={selection(1)} />,
     )

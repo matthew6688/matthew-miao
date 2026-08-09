@@ -5,11 +5,7 @@ vi.mock('server-only', () => ({}))
 import { getMediaAdminPageServices } from './server'
 
 const mediaEnvironmentNames = [
-  'BUNNY_MEDIA_REGION',
-  'BUNNY_MEDIA_ZONE',
-  'BUNNY_MEDIA_PASSWORD',
-  'BUNNY_MEDIA_CDN_URL',
-  'BUNNY_CDN_API_KEY',
+  'MEDIA_PUBLIC_BASE_URL',
   'MEDIA_ENCRYPTION_KEY',
 ] as const
 
@@ -28,7 +24,7 @@ afterEach(() => {
 describe('Media admin page services', () => {
   it('does not initialize write-only secrets while listing assets', () => {
     for (const name of mediaEnvironmentNames) delete process.env[name]
-    process.env.BUNNY_MEDIA_CDN_URL = 'https://media.cali.so'
+    process.env.MEDIA_PUBLIC_BASE_URL = 'https://matthew-miao.com/media/'
 
     const services = getMediaAdminPageServices()
 

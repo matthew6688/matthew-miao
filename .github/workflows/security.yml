@@ -32,11 +32,7 @@ jobs:
       GOOGLE_CLIENT_SECRET: ci-google-secret
       SITE_URL: https://matthew-miao.com
       PUBLIC_SITE_URL: https://matthew-miao.com
-      BUNNY_MEDIA_REGION: sg
-      BUNNY_MEDIA_ZONE: matthew-ci-media
-      BUNNY_MEDIA_PASSWORD: ci-media-password
-      BUNNY_MEDIA_CDN_URL: https://media-ci.example.com
-      BUNNY_CDN_API_KEY: ci-cdn-api-key
+      MEDIA_PUBLIC_BASE_URL: https://matthew-miao.com/media/
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

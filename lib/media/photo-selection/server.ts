@@ -10,7 +10,7 @@ import {
   type PublicPhotoSelection,
 } from './repository'
 import { devPhotoSelectionFixture } from './dev-fixtures'
-import { parseBunnyMediaCdnEnv } from '../storage/config'
+import { parseMediaPublicBaseUrl } from '../storage/config'
 
 type CachedPublicPhoto = Omit<
   PublicPhotoSelection['items'][number],
@@ -73,10 +73,10 @@ async function readPublishedPhotoSelection() {
   cacheTag(PUBLIC_PHOTO_SELECTION_CACHE_TAG)
   cacheLife('max')
   try {
-    const cdnBaseUrl = parseBunnyMediaCdnEnv(process.env)
+    const publicBaseUrl = parseMediaPublicBaseUrl(process.env)
     return await createPublicPhotoSelectionRepository(
       () => getDatabase(),
-      cdnBaseUrl,
+      publicBaseUrl,
     ).getPublishedSelection()
   } catch (error) {
     // An error thrown inside the 'use cache' scope aborts a prerender even

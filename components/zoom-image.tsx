@@ -92,8 +92,8 @@ export function ZoomImage({
   }, [state])
 
   const expandedSrc = largestRendition(renditions)?.src ?? src
-  // Next Image owns responsive selection and layout, while Bunny remains the
-  // encoder/cache layer. Selecting an immutable Rendition here avoids a second
+  // Next Image owns responsive selection and layout, while R2 remains the
+  // storage layer. Selecting an immutable Rendition here avoids a second
   // quality pass through Next's optimizer.
   const renditionLoader = useCallback<ImageLoader>(
     ({ width: requestedWidth }) =>

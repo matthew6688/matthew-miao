@@ -204,7 +204,7 @@ describe('same-origin Original upload transfer', () => {
       422,
     ],
   ])(
-    'rejects a mismatched %s without writing to Bunny',
+    'rejects a mismatched %s without writing to media storage',
     async (_label, headers, uploadExpectation, body, status) => {
       const f = fixture()
 
@@ -239,7 +239,7 @@ describe('same-origin Original upload transfer', () => {
     expect(f.storage.storeOriginalChunk).not.toHaveBeenCalled()
   })
 
-  it('returns a retryable safe response when Bunny is unavailable', async () => {
+  it('returns a retryable safe response when media storage is unavailable', async () => {
     const f = fixture()
     f.storage.storeOriginalChunk.mockRejectedValue(
       new Error('originals-zone-password raw provider detail'),

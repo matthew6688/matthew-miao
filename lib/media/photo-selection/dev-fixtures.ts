@@ -1,7 +1,7 @@
 import type { PublicPhotoSelection } from './repository'
 
 // Local development stand-ins for the Published Photo Selection, so the
-// photos surfaces render without Bunny/database credentials. Each "photo"
+// photos surfaces render without R2/database credentials. Each "photo"
 // is a generated calibration test card (data-URI SVG) — obviously a
 // fixture, but native to the technical-print register, and enough to
 // exercise the masonry, hover marks, lightbox, and EXIF plate.

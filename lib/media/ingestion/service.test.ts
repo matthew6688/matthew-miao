@@ -14,7 +14,7 @@ import {
 } from './service'
 import { MediaImageError } from '../processing/image'
 import { CaptureLocationError } from '../privacy/capture-location'
-import { BunnyStorageError } from '../storage/bunny'
+import { MediaStorageError } from '../storage/errors'
 import { MAX_ORIGINAL_UPLOAD_CHUNK_BYTES } from '../storage/transfer'
 
 const originalBytes = new TextEncoder().encode('approved original bytes')
@@ -196,7 +196,7 @@ function fixture() {
   }
   const storage = {
     inspectOriginal: vi.fn(async () => {
-      if (originalMissing) throw new BunnyStorageError('not_found')
+      if (originalMissing) throw new MediaStorageError('not_found')
       return {
         byteSize: originalReportedByteSize ?? readableOriginal.byteLength,
         contentType: originalContentType,
@@ -213,7 +213,7 @@ function fixture() {
     }),
     readOriginalChunk: vi.fn(async (_originalKey: string, chunkIndex: number) => {
       const chunk = originalChunks.get(chunkIndex)
-      if (!chunk) throw new BunnyStorageError('not_found')
+      if (!chunk) throw new MediaStorageError('not_found')
       return chunk
     }),
     deleteOriginalChunk: vi.fn(async (_originalKey: string, chunkIndex: number) => {
@@ -239,12 +239,12 @@ function fixture() {
     }),
     inspectRendition: vi.fn(async (key: string) => {
       const stored = storedRenditions.get(key)
-      if (!stored) throw new BunnyStorageError('not_found')
+      if (!stored) throw new MediaStorageError('not_found')
       return stored
     }),
     readRendition: vi.fn(async (key: string) => {
       const stored = storedRenditions.get(key)
-      if (!stored) throw new BunnyStorageError('not_found')
+      if (!stored) throw new MediaStorageError('not_found')
       return stored.bytes
     }),
   }
@@ -471,7 +471,7 @@ describe('Media Library ingestion service', () => {
       })
       f.setOriginalMissing(true)
       f.storage.readOriginalChunk.mockRejectedValueOnce(
-        new BunnyStorageError(code),
+        new MediaStorageError(code),
       )
 
       await expect(

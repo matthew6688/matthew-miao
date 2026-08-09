@@ -62,7 +62,7 @@ function Print({
     >
       <span className="polaroid-photo photo-frame relative aspect-square overflow-hidden">
         {asset?.previewRendition ? (
-          // Bunny is the delivery and cache layer for Renditions.
+          // The read-only media route delivers immutable R2 Renditions.
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={asset.previewRendition.src}

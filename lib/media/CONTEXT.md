@@ -2,7 +2,7 @@
 
 ## Status
 
-Implemented end to end for Bunny storage, catalog persistence, image
+Implemented end to end for Cloudflare R2 storage, catalog persistence, image
 processing, privacy boundaries, resumable ingestion, owner review, and photo
 curation. The owner admin manages Media Assets and Draft Photo Selections;
 `/photos` and the homepage consume the active Published Photo Selection. The
@@ -95,7 +95,7 @@ repair required. It is separate from Catalog State.
 _Avoid_: Lifecycle, upload status
 
 Every processing write records its deterministic Rendition manifest before
-the Bunny side effect. Processing, Discard, and Purge use the same per-asset
+the R2 side effect. Processing, Discard, and Purge use the same per-asset
 lock; Photo Selection mutations use one owner-scoped lock before Media Asset
 locks. These orders are part of the persistence contract, not UI behavior.
 

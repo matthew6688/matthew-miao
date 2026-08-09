@@ -13,7 +13,7 @@ provider-backed or personal-content requirements.
 | 1.5 — Cloudflare spike | Pass for public runtime; partial for providers | Workers/OpenNext build and real Production, Staging and Preview deployments; Worker-safe MDX/media/OG bundles; R2 cache and Images bindings | Hyperdrive transaction, Clerk refresh, Stripe raw-body, Cron and HEIC load tests require real provider environments |
 | 2 — de-identification | Pass | `lib/site-profile.ts`; identity scans; Cali articles, portraits, personal shelves and product assets removed; unconfirmed material renders as an explicit empty state | Internal legacy adapter names are non-public and retained only where they describe the upstream service contract |
 | 3 — Matthew content | Partial | Confirmed name, email, location, UChat role, FengTalk project and bilingual biography are published | Matthew portrait/photos, confirmed social links, additional projects and optional books/music lists have not been supplied; neutral unpublished states remain |
-| 4 — service environments | Blocked on operator accounts | Provider boundaries fail closed; Cloudflare Production/Staging/Preview and R2 exist | Neon/Hyperdrive, Clerk owner, Stripe, Google Calendar, Resend, Bunny, Upstash and optional AI/provider credentials are absent |
+| 4 — service environments | Blocked on operator accounts | Provider boundaries fail closed; Cloudflare Production/Staging/Preview and isolated R2 media buckets exist | R2 still needs an actual upload/process/publish/delete acceptance; Neon/Hyperdrive, Clerk owner, remaining payment/email integrations, Upstash and optional AI/provider credentials require acceptance |
 | 5 — CI/CD | Partial | Cloudflare workflows validate Preview, Staging and Production; migration safety checks pass; `main` is protected | GitHub environments do not contain `CLOUDFLARE_API_TOKEN`, so CI validates and safely skips automatic deployment; Preview database branches and Cron are provider-blocked |
 | 6 — domain launch | Pass for public site; partial for integrations | `https://matthew-miao.com`; apex and `www` custom domains; `www` 308; TLS, security headers, canonical, feeds, sitemap, robots and OG checks | Mail DNS and real Google/Stripe/Clerk callbacks cannot be accepted before those providers are configured |
 | 7 — blog Agent Skill | Pass for repository workflow | `.agents/skills/publish-matthew-blog/SKILL.md`, validator, paired bilingual article, owned article artwork, Preview and browser validation | No fake test article is kept in Production; the real bilingual article exercises the same publishing contract |
@@ -33,8 +33,9 @@ until their provider rows above have passed acceptance.
 3. AMA duration, currency/price, availability, cancellation/refund policy and
    whether paid booking should launch.
 4. Authorization or credentials entered directly into the relevant dashboards
-   for Cloudflare API deployment, Neon, Clerk, Stripe, Google, Resend, Bunny and
-   Upstash.
+   for Cloudflare API deployment, Neon, Clerk, remaining Stripe/Google/Resend
+   integrations and Upstash. R2 uses Worker bindings and requires no separate
+   provider credential.
 
 The active goal must remain incomplete until either these inputs are supplied
 and accepted or the user explicitly removes the corresponding features and

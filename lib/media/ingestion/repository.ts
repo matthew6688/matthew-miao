@@ -372,7 +372,7 @@ export function createMediaIngestionRepository(
           return { status: 'active' as const, value }
         } catch (error) {
           // The callback may have inserted a deterministic Rendition manifest
-          // before a Bunny failure. Return the error as data so the transaction
+          // before a storage failure. Return the error as data so the transaction
           // commits that cleanup record, then rethrow outside the transaction.
           return { status: 'failed' as const, error }
         }

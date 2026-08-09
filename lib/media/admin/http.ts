@@ -755,7 +755,7 @@ export function createMediaOriginalUploadHandler(
     })
     if (response.status !== 204) return response
 
-    // A Discard can win after the first claim but before Bunny finishes the
+    // A Discard can win after the first claim but before R2 finishes the
     // write. Re-claim after storage commits; if the intent expired, was
     // discarded, or disappeared, remove this just-written chunk so no orphan
     // survives the race.
