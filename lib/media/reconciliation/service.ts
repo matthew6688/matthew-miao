@@ -129,7 +129,7 @@ export function createMediaReconciliationService({
               claimedAt: now,
             })
             if (!claimed) continue
-            // Bunny deletion treats a missing key as success. Delete storage
+            // R2 deletion treats a missing key as success. Delete storage
             // first so a provider failure leaves the durable intent available
             // for another cleanup attempt instead of orphaning the object.
             await Promise.all([

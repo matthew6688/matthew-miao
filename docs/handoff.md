@@ -7,6 +7,8 @@ Current as of 2026-08-09.
 - Production: `https://matthew-miao.com`
 - Runtime: Cloudflare Workers through `@opennextjs/cloudflare`
 - Cache: `matthew-miao-next-cache` R2 bucket
+- Media: `matthew-miao-media` private R2 bucket; immutable public Renditions
+  are delivered only through `/media/renditions/*`
 - Production Worker: `matthew-miao`
 - Staging: `https://matthew-miao-staging.matthew6688.workers.dev`
 - Preview: `https://matthew-miao-preview.matthew6688.workers.dev`
@@ -35,8 +37,9 @@ corepack pnpm build:cloudflare
 corepack pnpm deploy:cloudflare
 ```
 
-`wrangler.jsonc` owns the production Worker, custom domains, R2 cache binding,
-and public runtime variables. Secrets are stored in Cloudflare, never in Git.
+`wrangler.jsonc` owns the production Worker, custom domains, R2 cache and media
+bindings, and public runtime variables. Secrets are stored in Cloudflare,
+never in Git.
 GitHub's Production environment can deploy automatically after
 `CLOUDFLARE_API_TOKEN` is configured; without it, CI validates and reports a
 safe deployment skip.
@@ -68,13 +71,14 @@ and credentials:
 - Clerk owner authentication
 - Stripe Checkout/refunds/webhook
 - Google Calendar/Meet and Resend mail
-- Bunny media storage and published photo selection
+- PostgreSQL-backed media catalog and published photo selection
 - Upstash production rate limiting
 - optional Tencent Meeting and AI providers
 
 Until Clerk is configured, Admin routes return a non-public 404 instead of a
-server error. Until the database and media provider are configured, Photos uses
-the designed empty state.
+server error. The R2 media provider is configured; until PostgreSQL and Clerk
+are configured, the owner upload UI remains fail-closed and Photos uses the
+designed empty state.
 
 ## Publishing with an agent
 

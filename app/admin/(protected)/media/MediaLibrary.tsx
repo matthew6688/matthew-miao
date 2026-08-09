@@ -517,7 +517,7 @@ function Inspector({
             aria-label={localize(locale, '设置焦点', 'Set Focal Point')}
             className="relative mt-4 block w-full overflow-hidden rounded-md bg-surface-1 outline-none disabled:opacity-70 focus-visible:ring-1 focus-visible:ring-foreground"
           >
-            {/* Bunny is the delivery and cache layer for Renditions. */}
+            {/* The read-only media route delivers immutable R2 Renditions. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={asset.previewRendition.src}
@@ -1329,7 +1329,7 @@ export function MediaLibrary({
                   className="group photo-frame relative block aspect-square w-full overflow-hidden bg-surface-1 outline-none focus-visible:ring-1 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   {asset.previewRendition ? (
-                    // Bunny is the delivery and cache layer for Renditions.
+                    // The read-only media route delivers immutable R2 Renditions.
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={asset.previewRendition.src}

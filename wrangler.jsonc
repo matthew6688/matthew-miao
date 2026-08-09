@@ -12,9 +12,7 @@
     "SITE_URL": "https://matthew-miao.com",
     "PUBLIC_SITE_URL": "https://matthew-miao.com",
     "ADMIN_EMAIL": "hi@fengtalk.ai",
-    "BUNNY_MEDIA_REGION": "sg",
-    "BUNNY_MEDIA_ZONE": "matthew-miao-media",
-    "BUNNY_MEDIA_CDN_URL": "https://media.matthew-miao.com"
+    "MEDIA_PUBLIC_BASE_URL": "https://matthew-miao.com/media/"
   },
   "assets": {
     "directory": ".open-next/assets",
@@ -27,6 +25,10 @@
     {
       "binding": "NEXT_INC_CACHE_R2_BUCKET",
       "bucket_name": "matthew-miao-next-cache"
+    },
+    {
+      "binding": "MEDIA_R2_BUCKET",
+      "bucket_name": "matthew-miao-media"
     }
   ],
   "observability": {
@@ -41,14 +43,16 @@
         "SITE_URL": "https://matthew-miao-staging.matthew6688.workers.dev",
         "PUBLIC_SITE_URL": "https://matthew-miao-staging.matthew6688.workers.dev",
         "ADMIN_EMAIL": "hi@fengtalk.ai",
-        "BUNNY_MEDIA_REGION": "sg",
-        "BUNNY_MEDIA_ZONE": "matthew-miao-media",
-        "BUNNY_MEDIA_CDN_URL": "https://media.matthew-miao.com"
+        "MEDIA_PUBLIC_BASE_URL": "https://matthew-miao-staging.matthew6688.workers.dev/media/"
       },
       "r2_buckets": [
         {
           "binding": "NEXT_INC_CACHE_R2_BUCKET",
           "bucket_name": "matthew-miao-staging-next-cache"
+        },
+        {
+          "binding": "MEDIA_R2_BUCKET",
+          "bucket_name": "matthew-miao-staging-media"
         }
       ],
       "images": { "binding": "IMAGES" }
@@ -61,14 +65,16 @@
         "SITE_URL": "https://matthew-miao-preview.matthew6688.workers.dev",
         "PUBLIC_SITE_URL": "https://matthew-miao-preview.matthew6688.workers.dev",
         "ADMIN_EMAIL": "hi@fengtalk.ai",
-        "BUNNY_MEDIA_REGION": "sg",
-        "BUNNY_MEDIA_ZONE": "matthew-miao-media",
-        "BUNNY_MEDIA_CDN_URL": "https://media.matthew-miao.com"
+        "MEDIA_PUBLIC_BASE_URL": "https://matthew-miao-preview.matthew6688.workers.dev/media/"
       },
       "r2_buckets": [
         {
           "binding": "NEXT_INC_CACHE_R2_BUCKET",
           "bucket_name": "matthew-miao-staging-next-cache"
+        },
+        {
+          "binding": "MEDIA_R2_BUCKET",
+          "bucket_name": "matthew-miao-staging-media"
         }
       ],
       "images": { "binding": "IMAGES" }

@@ -1,11 +1,14 @@
 const isDevelopment = process.env.NODE_ENV === 'development'
 
 function optionalMediaImageSource() {
-  const value = process.env.BUNNY_MEDIA_CDN_URL
+  const value = process.env.MEDIA_PUBLIC_BASE_URL
   if (!value) return ''
   try {
     const url = new URL(value)
-    return url.protocol === 'https:' && !url.username && !url.password
+    return url.protocol === 'https:' &&
+      !url.username &&
+      !url.password &&
+      url.origin !== process.env.SITE_URL
       ? ` ${url.origin}`
       : ''
   } catch {

@@ -8,7 +8,7 @@ import {
   RENDITION_PROFILE_WIDTHS,
 } from '../processing/image'
 import { CaptureLocationError } from '../privacy/capture-location'
-import { BunnyStorageError } from '../storage/bunny'
+import { MediaStorageError } from '../storage/errors'
 import {
   MAX_ORIGINAL_UPLOAD_BYTES,
   originalUploadChunkByteLength,
@@ -269,7 +269,7 @@ async function verifyOriginal(
   try {
     object = await storage.inspectOriginal(intent.originalKey)
   } catch (error) {
-    if (!(error instanceof BunnyStorageError) || error.code !== 'not_found') {
+    if (!(error instanceof MediaStorageError) || error.code !== 'not_found') {
       throw error
     }
     const chunkCount = originalUploadChunkCount(intent.byteSize)
@@ -280,7 +280,7 @@ async function verifyOriginal(
       try {
         chunk = await storage.readOriginalChunk(intent.originalKey, chunkIndex)
       } catch (error) {
-        if (recoverIncompleteTransfer && error instanceof BunnyStorageError) {
+        if (recoverIncompleteTransfer && error instanceof MediaStorageError) {
           throw new MediaIngestionError('original_mismatch')
         }
         throw error
@@ -346,7 +346,7 @@ async function inspectOptionalRendition(
   try {
     return await storage.inspectRendition(key)
   } catch (error) {
-    if (error instanceof BunnyStorageError && error.code === 'not_found') {
+    if (error instanceof MediaStorageError && error.code === 'not_found') {
       return null
     }
     throw error
@@ -411,7 +411,7 @@ function safeFailure(error: unknown) {
       processingErrorCode: 'capture_location_invalid',
     }
   }
-  if (error instanceof BunnyStorageError) {
+  if (error instanceof MediaStorageError) {
     if (error.code === 'not_found') {
       return {
         processingState: 'repair_required' as const,
@@ -576,7 +576,7 @@ export function createMediaIngestionService({
                 throw new MediaIngestionError('rendition_mismatch')
               }
 
-              // Persist the deterministic manifest before Bunny. If the
+              // Persist the deterministic manifest before R2. If the
               // provider fails or the process exits after the write, Purge
               // still knows the exact object key it must remove.
               const recorded =

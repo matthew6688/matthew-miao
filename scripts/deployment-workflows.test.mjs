@@ -31,6 +31,29 @@ test('Vercel Git integration cannot race the deployment workflows', async () => 
   assert.equal(config.git?.deploymentEnabled, false)
 })
 
+test('Cloudflare environments bind isolated R2 media stores', async () => {
+  const config = JSON.parse(
+    await readFile(new URL('../wrangler.jsonc', import.meta.url), 'utf8'),
+  )
+  const binding = (environment) =>
+    environment.r2_buckets.find(({ binding }) => binding === 'MEDIA_R2_BUCKET')
+
+  assert.equal(binding(config).bucket_name, 'matthew-miao-media')
+  assert.equal(
+    binding(config.env.staging).bucket_name,
+    'matthew-miao-staging-media',
+  )
+  assert.equal(
+    binding(config.env.preview).bucket_name,
+    'matthew-miao-staging-media',
+  )
+  assert.equal(
+    config.vars.MEDIA_PUBLIC_BASE_URL,
+    'https://matthew-miao.com/media/',
+  )
+  assert.doesNotMatch(JSON.stringify(config), /BUNNY_MEDIA_/)
+})
+
 test('feature pushes deploy a validated Cloudflare Preview', async () => {
   const config = await workflow('deploy-preview')
   assert.deepEqual(config.on.push['branches-ignore'], ['main', 'dev'])

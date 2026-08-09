@@ -8,6 +8,10 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3'
 
+import { MediaStorageError } from './errors'
+
+export { MediaStorageError as BunnyStorageError } from './errors'
+
 export const BUNNY_STORAGE_REGIONS = [
   'de',
   'ny',
@@ -31,21 +35,7 @@ export type BunnyStorageConfig = {
   cdnApiKey: string
 }
 
-export type BunnyStorageErrorCode =
-  | 'not_found'
-  | 'invalid_response'
-  | 'provider_unavailable'
-
-export class BunnyStorageError extends Error {
-  constructor(readonly code: BunnyStorageErrorCode) {
-    super(
-      code === 'not_found'
-        ? 'Media object was not found.'
-        : 'Media storage is temporarily unavailable.',
-    )
-    this.name = 'BunnyStorageError'
-  }
-}
+const BunnyStorageError = MediaStorageError
 
 type BunnyStorageDependencies = {
   client?: S3Client

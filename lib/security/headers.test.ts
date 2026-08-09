@@ -75,10 +75,10 @@ describe('site security headers', () => {
     expect(adminSecurityHeader.value).toContain("connect-src 'self'; ")
   })
 
-  it('allows only the configured Bunny Media origin for images', async () => {
+  it('allows only a configured external Media origin for images', async () => {
     vi.stubEnv(
-      'BUNNY_MEDIA_CDN_URL',
-      'https://media.example.com/private/path?ignored=true',
+      'MEDIA_PUBLIC_BASE_URL',
+      'https://media.example.com/media/',
     )
     const { securityHeaders: configuredHeaders } = await import('./headers')
     const policy = configuredHeaders.find(
@@ -86,7 +86,6 @@ describe('site security headers', () => {
     )?.value
 
     expect(policy).toContain(' https://media.example.com')
-    expect(policy).not.toContain('/private/path')
-    expect(policy).not.toContain('ignored=true')
+    expect(policy).not.toContain('/media/')
   })
 })

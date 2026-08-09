@@ -25,11 +25,7 @@ jobs:
       AMA_ENCRYPTION_KEY: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
       RATE_LIMIT_HASH_KEY: AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQE=
       CRON_SECRET: build-only-placeholder
-      BUNNY_MEDIA_REGION: sg
-      BUNNY_MEDIA_ZONE: matthew-miao-media
-      BUNNY_MEDIA_PASSWORD: build-only-placeholder
-      BUNNY_MEDIA_CDN_URL: https://media.matthew-miao.com
-      BUNNY_CDN_API_KEY: build-only-placeholder
+      MEDIA_PUBLIC_BASE_URL: https://matthew-miao.com/media/
       MEDIA_ENCRYPTION_KEY: AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI=
       SITE_URL: https://matthew-miao.com
       PUBLIC_SITE_URL: https://matthew-miao.com

@@ -178,7 +178,7 @@ Skill 支持：
 
 这不应阻塞首发，也不应与内容替换同时进行。建议顺序：
 
-1. 将 Bunny storage adapter 抽象为 R2 adapter，但保留 rendition 路径与权限合同。
+1. ✅ 已将 Bunny storage adapter 替换为 R2 adapter，并保留 rendition 路径与权限合同；Production 与 Staging 使用独立媒体 bucket，只有 `/media/renditions/*` 可公开读取。
 2. 评估 Upstash 到 Durable Objects 的严格等价限流。
 3. 继续使用 Neon PostgreSQL + Hyperdrive；不为“纯 Cloudflare”提前牺牲 PostgreSQL并发正确性。
 4. 把 Sharp/HEIC 处理移到 Cloudflare Containers、Workflows、队列消费者或独立图像服务；不在普通 request Worker 内强行等价实现。

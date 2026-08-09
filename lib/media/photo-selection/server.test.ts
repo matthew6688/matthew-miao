@@ -19,7 +19,7 @@ vi.mock('./repository', () => ({
   }),
 }))
 vi.mock('../storage/config', () => ({
-  parseBunnyMediaCdnEnv: () => new URL('https://media.example.com'),
+  parseMediaPublicBaseUrl: () => new URL('https://matthew-miao.com/media/'),
 }))
 
 import { getPublishedPhotoSelection } from './server'
