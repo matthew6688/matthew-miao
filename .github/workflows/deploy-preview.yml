@@ -38,7 +38,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Validate application
-        run: pnpm typecheck && pnpm test:localization && pnpm build:cloudflare
+        run: pnpm typecheck && pnpm test:blog-skill && pnpm test:localization && pnpm build:cloudflare
       - name: Deploy exact commit to Cloudflare Preview
         if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
         run: pnpm exec opennextjs-cloudflare deploy --env preview

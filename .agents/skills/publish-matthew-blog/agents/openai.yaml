@@ -1,4 +1,4 @@
 interface:
   display_name: "Publish Matthew Blog"
-  short_description: "Publish bilingual Matthew blog posts safely"
-  default_prompt: "Use $publish-matthew-blog to draft and publish a bilingual article on Matthew’s website."
+  short_description: "Publish bilingual, media-rich blog posts safely"
+  default_prompt: "Use $publish-matthew-blog to create and publish a bilingual article with verified links, cover art, illustrations, and video."

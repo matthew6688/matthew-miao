@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { securityHeaders } from './headers'
+import { blogSecurityHeader, securityHeaders } from './headers'
 
 afterEach(() => {
   vi.unstubAllEnvs()
@@ -18,6 +18,10 @@ describe('site security headers', () => {
     expect(headers['content-security-policy']).toContain("object-src 'none'")
     expect(headers['content-security-policy']).toContain("base-uri 'self'")
     expect(headers['content-security-policy']).toContain("form-action 'self'")
+    expect(blogSecurityHeader.value).toContain(
+      'frame-src https://www.youtube-nocookie.com https://player.vimeo.com https://*.cloudflarestream.com',
+    )
+    expect(headers['content-security-policy']).toContain("frame-src 'none'")
     expect(headers['content-security-policy']).toContain("script-src 'self' 'unsafe-inline'")
     expect(headers['content-security-policy']).toContain('https://og.zolplay.com')
     expect(headers['content-security-policy']).not.toContain('https://www.google.com')
@@ -63,6 +67,7 @@ describe('site security headers', () => {
       "form-action 'self' https://accounts.google.com",
     )
     expect(publicPolicy).not.toContain('clerk')
+    expect(adminSecurityHeader.value).toContain("frame-src 'none'")
   })
 
   it('omits Clerk origins when the publishable key is missing or malformed', async () => {

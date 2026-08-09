@@ -49,9 +49,11 @@ function contentSecurityPolicy(
   {
     formActionSources = "'self'",
     connectSources = '',
+    frameSources = "'none'",
   }: {
     formActionSources?: string
     connectSources?: string
+    frameSources?: string
   } = {},
 ) {
   return [
@@ -68,7 +70,7 @@ function contentSecurityPolicy(
     `connect-src 'self'${connectSources}`,
     "media-src 'self' blob:",
     "worker-src 'self' blob:",
-    "frame-src 'none'",
+    `frame-src ${frameSources}`,
     "manifest-src 'self'",
   ].join('; ')
 }
@@ -81,6 +83,20 @@ const publicContentSecurityPolicy = contentSecurityPolicy(
   "'self' 'unsafe-inline'",
   { connectSources: optionalCloudflareAnalyticsConnectSource() },
 )
+
+const blogContentSecurityPolicy = contentSecurityPolicy(
+  `'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''}${optionalCloudflareAnalyticsSource()}`,
+  "'self' 'unsafe-inline'",
+  {
+    connectSources: optionalCloudflareAnalyticsConnectSource(),
+    frameSources: 'https://www.youtube-nocookie.com https://player.vimeo.com https://*.cloudflarestream.com',
+  },
+)
+
+export const blogSecurityHeader = {
+  key: 'Content-Security-Policy',
+  value: blogContentSecurityPolicy,
+} as const
 
 // Admin pages ship clerk-js so the 60-second Clerk session token keeps
 // refreshing in the background (July 2026). The script and Frontend API
