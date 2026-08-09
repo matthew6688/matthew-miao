@@ -3,6 +3,7 @@ import type { NextFetchEvent } from 'next/server'
 import { describe, expect, it } from 'vitest'
 
 import { middleware, siteProxy } from '../middleware'
+import { securityHeaders } from './security/headers'
 
 const event = {
   passThroughOnException() {},
@@ -34,6 +35,23 @@ describe('public content proxy', () => {
       'https://cali.so/_not-found',
     )
   })
+
+  it.each(['/confirm/legacy-token', '/en/confirm/legacy-token'])(
+    'returns a hardened 404 for a retired confirmation route: %s',
+    (pathname) => {
+      const response = siteProxy(
+        new NextRequest(`https://matthew-miao.com${pathname}`),
+      )
+
+      expect(response.status).toBe(404)
+      expect(response.headers.get('content-type')).toBe(
+        'text/plain; charset=utf-8',
+      )
+      for (const { key, value } of securityHeaders) {
+        expect(response.headers.get(key)).toBe(value)
+      }
+    },
+  )
 
   it.each([
     '/blog/building-in-public-with-ai-agents',
