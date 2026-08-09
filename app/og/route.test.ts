@@ -1,9 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
 
-const { createCaliBabyOgImage } = vi.hoisted(() => ({
-  createCaliBabyOgImage: vi.fn(async () => new Response('image')),
-}))
-
 vi.mock('~/lib/content', () => ({
   getPost: vi.fn(),
   isPostSlug: vi.fn(() => false),
@@ -15,7 +11,6 @@ vi.mock('~/lib/newsletters', () => ({
 }))
 
 vi.mock('~/lib/og-image', () => ({
-  createCaliBabyOgImage,
   createHomeOgImage: vi.fn(),
   createNewsletterOgImage: vi.fn(),
   createPostOgImage: vi.fn(),
@@ -24,17 +19,17 @@ vi.mock('~/lib/og-image', () => ({
 
 import { GET } from './route'
 
-describe('Cali Baby OG image route', () => {
+describe('retired product OG image route', () => {
   it.each(['zh', 'en'] as const)(
-    'uses the %s App Store badge for Cali Baby pages',
+    'returns 404 for the retired %s Cali Baby page',
     async (locale) => {
-      await GET(
+      const response = await GET(
         new Request(
           `https://cali.so/og?locale=${locale}&path=%2Fcalibaby`,
         ),
       )
 
-      expect(createCaliBabyOgImage).toHaveBeenLastCalledWith(locale)
+      expect(response.status).toBe(404)
     },
   )
 })

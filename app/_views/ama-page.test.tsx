@@ -91,9 +91,9 @@ describe('AmaPageView', () => {
     }
 
     expect(zh.container.textContent).toContain('software factory')
-    expect(zh.container.textContent).toContain('OpenClaw')
-    expect(zh.container.textContent).toContain('PM、财务和日常运营')
-    expect(zh.container.textContent).toContain('佐玩不是一人公司')
+    expect(zh.container.textContent).toContain('UChat')
+    expect(zh.container.textContent).toContain('FengTalk')
+    expect(zh.container.textContent).toContain('agents 负责调研、整理知识和执行流程')
     expect(zh.container.textContent).toContain('公司文化里少不了的一部分')
     for (const tool of ['Linear', 'Codex', 'Claude Code', 'Slack', 'Cursor']) {
       expect(zh.container.textContent).toContain(tool)
@@ -118,11 +118,9 @@ describe('AmaPageView', () => {
       expect(screen.getByText(enLabel)).toBeTruthy()
     }
 
-    expect(en.container.textContent).toContain('self-hosted OpenClaw')
-    expect(en.container.textContent).toContain('teams at Apple, Insta360')
-    expect(en.container.textContent).toContain('game studios in Seattle')
-    expect(en.container.textContent).toContain('Niantic, Microsoft, and Google')
-    expect(en.container.textContent).toContain('Zolplay isn’t a one-person company')
+    expect(en.container.textContent).toContain('CMO at UChat')
+    expect(en.container.textContent).toContain('founded FengTalk')
+    expect(en.container.textContent).toContain('knowledge organization')
     expect(en.container.textContent).not.toContain('one-person company (OPC)')
     expect(en.container.textContent).toContain('essential part of company culture')
     for (const tool of ['Linear', 'Codex', 'Claude Code', 'Slack', 'Cursor']) {
@@ -138,16 +136,11 @@ describe('AmaPageView', () => {
     ).toHaveLength(1)
   })
 
-  it('states the 24 hour policy and carries the testimonials', () => {
+  it('states the 24 hour policy without unconfirmed testimonials', () => {
     const zh = render(<AmaPageView locale="zh" />)
 
     expect(zh.container.textContent).toContain('离开始还有 24 小时以上')
-    expect(
-      screen.getByText(/目前我已经拿到了 3 个 offer，选择了一个/),
-    ).toBeTruthy()
-    expect(screen.getByText(/公司立刻把我转正/)).toBeTruthy()
-    expect(screen.getByText(/解答了我很多问题/)).toBeTruthy()
-    expect(screen.getByText('一位大学生，2026')).toBeTruthy()
+    expect(zh.container.textContent).not.toContain('聊过的人说')
     expect(zh.container.textContent).not.toContain('一位来访者，2026')
     expect(zh.container.textContent).not.toContain('这 300')
     expect(zh.container.textContent).not.toContain('¥300')
@@ -157,14 +150,8 @@ describe('AmaPageView', () => {
 
     expect(en.container.textContent).toContain('If we’re at least 24 hours out')
     expect(en.container.textContent).toContain('refunds are no longer automatic')
-    expect(
-      screen.getByText(/I have since received three offers and accepted one/),
-    ).toBeTruthy()
-    expect(
-      screen.getByText(/skipping the three month probation/),
-    ).toBeTruthy()
-    expect(screen.getAllByText('An engineer, 2023').length).toBe(2)
-    expect(screen.getByText('A university student, 2026')).toBeTruthy()
+    expect(en.container.textContent).not.toContain('What people said')
+    expect(en.container.textContent).not.toContain('three offers')
     expect(en.container.textContent).not.toContain('An AMA guest, 2026')
   })
 

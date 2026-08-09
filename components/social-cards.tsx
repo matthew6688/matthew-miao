@@ -137,7 +137,7 @@ export function XCardBody({ data }: { data: SocialSnapshot }) {
     <>
       <Identity
         data={data}
-        avatar="/images/headshot.jpg"
+        avatar="/images/matthew-placeholder-light.svg"
         service="x"
       />
       {(data.followers || data.following) && (
@@ -164,15 +164,15 @@ export function XiaohongshuCardBody() {
     <span className="xiaohongshu-card-content" data-profile-id="5cbba503000000001101b6a2">
       <span className="service-card-head">
         <Image
-          src="/images/headshot.jpg"
+          src="/images/matthew-placeholder-light.svg"
           alt=""
           width={40}
           height={40}
           className="service-card-avatar"
         />
         <span className="service-card-names">
-          <span className="service-card-name">Cali Castle</span>
-          <span className="service-card-sub">小红书号 calicastle</span>
+          <span className="service-card-name">Matthew Miao</span>
+          <span className="service-card-sub">账号待确认</span>
         </span>
         <span className="service-card-glyph xiaohongshu-card-wordmark" aria-hidden>
           <Image
@@ -184,16 +184,16 @@ export function XiaohongshuCardBody() {
         </span>
       </span>
       <span className="service-card-bio xiaohongshu-card-bio">
-        <span>设计工程师，Cali 宝宝 app 开发者设计师</span>
-        <span>@佐玩 Zolplay 创始人 CEO</span>
+        <span>Web coding、AI Agent 与自动化</span>
+        <span>FengTalk 创始人 · UChat CMO</span>
       </span>
       <span className="service-card-stat">
         <span>
-          <b>10+</b> 粉丝
+          <b>—</b> 粉丝
         </span>
         <span aria-hidden>·</span>
         <span>
-          <b>1千+</b> 获赞与收藏
+          <b>—</b> 获赞与收藏
         </span>
       </span>
     </span>
@@ -201,7 +201,7 @@ export function XiaohongshuCardBody() {
 }
 
 export function TelegramCardBody({ data }: { data: SocialSnapshot }) {
-  return <Identity data={data} avatar="/images/avatar.png" service="telegram" withBio={false} />
+  return <Identity data={data} avatar="/images/matthew-placeholder-light.svg" service="telegram" withBio={false} />
 }
 
 export function YouTubeCardBody({ data }: { data: SocialSnapshot }) {
@@ -209,7 +209,7 @@ export function YouTubeCardBody({ data }: { data: SocialSnapshot }) {
     <>
       <Identity
         data={data}
-        avatar="/images/headshot.jpg"
+        avatar="/images/matthew-placeholder-light.svg"
         service="youtube"
         withBio={false}
       />
@@ -367,7 +367,12 @@ export function EmailCard({
           </span>
           <span className="email-envelope-stamps">
             <span className="email-envelope-stamp email-envelope-stamp-portrait">
-              <Image src="/images/avatar.png" alt="" width={32} height={32} />
+              <Image
+                src="/images/matthew-placeholder-light.svg"
+                alt=""
+                width={32}
+                height={32}
+              />
               <span>老苗 · 20</span>
             </span>
             <span className="email-envelope-stamp email-envelope-stamp-mark">

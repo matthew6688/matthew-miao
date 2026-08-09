@@ -62,27 +62,6 @@ const STEPS = [
   },
 ] as const
 
-const TESTIMONIALS = [
-  {
-    zh: '感谢上次的在线聊天。目前我已经拿到了 3 个 offer，选择了一个。',
-    en: 'Thank you for the chat last time. I have since received three offers and accepted one.',
-    zhAttribution: '一位工程师，2023',
-    enAttribution: 'An engineer, 2023',
-  },
-  {
-    zh: '上线了一个 MVP 之后，公司立刻把我转正，不用三个月的试用期考察！',
-    en: 'After I shipped an MVP in my first week, the company converted me to full time right away, skipping the three month probation.',
-    zhAttribution: '一位工程师，2023',
-    enAttribution: 'An engineer, 2023',
-  },
-  {
-    zh: '非常感谢您今天 AMA 的分享，听完之后收获很多，也觉得您的经验和建议很真诚、很有启发，解答了我很多问题 😁😁',
-    en: 'Thank you so much for today’s AMA. I learned a lot, and your experience and advice felt sincere and insightful. You answered so many of my questions.',
-    zhAttribution: '一位大学生，2026',
-    enAttribution: 'A university student, 2026',
-  },
-] as const
-
 const AMA_TOPIC_PAGE_COPY: Record<
   AmaTopic,
   {
@@ -292,56 +271,52 @@ export function AmaPageView({ locale }: { locale: Locale }) {
           {locale === 'zh' ? (
             <div className="page-introduction flex flex-col gap-3">
               <p>
-                我是 Cali，佐玩（Zolplay）的创始人。Web、iOS、工程、产品设计和独立产品都亲手做过。通过佐玩，我也帮
-                Apple、Insta360 和多家 YC 创业公司做过策略、产品设计和产品落地。
+                我是 Matthew，也可以叫我老苗。我长期在折腾 Web、自动化、outreach 和 AI agents，
+                尤其关心它们怎样成为公司真正能用的工作系统。
               </p>
               <p>
-                更早之前，我在西雅图的游戏工作室参与过 Niantic、Microsoft 和 Google 的大型项目。
+                2020 年起，我在 UChat 担任 CMO；我也创办了 FengTalk，继续探索 AI agent、
+                company knowledge 和中国企业出海增长。
               </p>
               <p>
-                现在，我把产品判断、设计、工程和运营连成了一套 software factory。想法从{' '}
+                我在尝试把产品判断、开发、营销和运营连成一套 software factory。想法从{' '}
                 <AmaProductName name="Linear" /> 里的 issue 开始，
                 <AmaProductName name="Codex" />、<AmaProductName name="Claude Code" /> 和{' '}
                 <AmaProductName name="Cursor" /> 参与调研、拆 scope、实现和 review，最后回到{' '}
                 <AmaProductName name="Slack" />，跟团队继续推进。
               </p>
               <p>
-                我也自己部署了一套 OpenClaw，调度负责 PM、财务和日常运营的
-                agents。很多流程已经可以从头到尾自己跑完。
+                我喜欢把重复工作自动化，让 agents 负责调研、整理知识和执行流程，再由人做判断。
               </p>
               <p>
-                佐玩不是一人公司，但我会借用这套模式里好用的部分：把经验留进系统，把重复工作交给
-                agents，把人的注意力留给判断和品味。
+                AI 放大了一个喜欢折腾的人的能力。我希望更多人和企业也能获得这种杠杆。
               </p>
               <p>我相信，AI Native 最后会变成公司文化里少不了的一部分。</p>
             </div>
           ) : (
             <div className="page-introduction flex flex-col gap-4">
               <p>
-                I’m Cali, founder of Zolplay. My work spans web, iOS, engineering, product design,
-                and indie products. Through Zolplay, I’ve helped teams at Apple, Insta360, and
-                YC-backed startups with strategy, product design, and turning ideas into working
-                products.
+                I’m Matthew. I work across web coding, automation, outreach, and AI agents,
+                especially where they become practical operating systems for companies.
               </p>
               <p>
-                Before that, I worked at game studios in Seattle on large projects with Niantic,
-                Microsoft, and Google.
+                I have served as CMO at UChat since 2020, and I founded FengTalk to explore AI
+                agents, company knowledge, and international growth for Chinese businesses.
               </p>
               <p>
-                My software factory connects product judgment, design, engineering, and operations.
+                I am building a software factory that connects product judgment, development, marketing, and operations.
                 Ideas start in <AmaProductName name="Linear" />;{' '}
                 <AmaProductName name="Codex" />, <AmaProductName name="Claude Code" />, and{' '}
                 <AmaProductName name="Cursor" /> help with research, scoping, implementation, and
                 review; the work returns to <AmaProductName name="Slack" /> and the team.
               </p>
               <p>
-                I also run a self-hosted OpenClaw setup that orchestrates agents across PM, finance,
-                and day-to-day operations. Many processes now run end to end on their own.
+                I automate repetitive work and use agents for research, knowledge organization,
+                and execution, while keeping human judgment in the loop.
               </p>
               <p>
-                Zolplay isn’t a one-person company. But I borrow the useful part of that model: put
-                knowledge into systems, hand repetitive work to agents, and keep human attention
-                on judgment and taste.
+                AI amplifies what a curious builder can do. I want more people and companies to
+                gain that leverage.
               </p>
               <p>
                 I believe an AI-native approach will become an essential part of company culture.
@@ -427,35 +402,6 @@ export function AmaPageView({ locale }: { locale: Locale }) {
             'If we’re at least 24 hours out, you can reschedule or cancel for free. Cancellations are refunded automatically. Inside 24 hours, refunds are no longer automatic.',
           )}
         </p>
-      </section>
-
-      <section className="mt-12" aria-labelledby="ama-notes-heading">
-        <div id="ama-notes-heading">
-          <SectionHeading
-            index="05"
-            locale={locale}
-            zh="聊过的人说"
-            en="What people said"
-            delay={290}
-          />
-        </div>
-        <div className="mt-4 flex flex-col gap-6">
-          {TESTIMONIALS.map((testimonial, index) => (
-            // `.hairline-top` is unlayered, so a Tailwind `first:border-t-0`
-            // utility can't override it — apply the divider by index instead.
-            <figure
-              key={testimonial.en}
-              className={index === 0 ? '' : 'hairline-top pt-4'}
-            >
-              <blockquote className="text-sm leading-6">
-                {localize(locale, `「${testimonial.zh}」`, `"${testimonial.en}"`)}
-              </blockquote>
-              <figcaption className="mt-2 text-[13px] text-muted-foreground">
-                {localize(locale, testimonial.zhAttribution, testimonial.enAttribution)}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
       </section>
 
       <div

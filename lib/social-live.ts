@@ -53,20 +53,5 @@ export async function getSocial(): Promise<SocialData> {
   cacheLife({ stale: 43_200, revalidate: 43_200, expire: 604_800 })
   cacheTag('social-live')
 
-  const social = bakedSocial as SocialData
-  try {
-    const html = await fetch('https://www.youtube.com/@calicastle', {
-      headers: { 'accept-language': 'en-US' },
-    }).then((r) => {
-      if (!r.ok) throw new Error(`youtube ${r.status}`)
-      return r.text()
-    })
-    const match = html.match(/([\d.,]+[KM]?) subscribers/)
-    if (match) {
-      return { ...social, youtube: { ...social.youtube, followers: match[1] } }
-    }
-  } catch {
-    /* fall through to the baked seed */
-  }
-  return social
+  return bakedSocial as SocialData
 }

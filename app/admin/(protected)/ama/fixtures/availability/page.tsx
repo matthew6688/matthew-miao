@@ -125,7 +125,7 @@ function fixtureProps(scenario: Scenario): AmaSettingsProps {
       status,
       identity: {
         calendarId: 'fixture-owner@example.com',
-        summary: 'Cali Castle Fixture Calendar',
+        summary: 'Matthew Miao Fixture Calendar',
         email: 'fixture-owner@example.com',
       },
     },

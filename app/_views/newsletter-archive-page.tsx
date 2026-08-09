@@ -14,12 +14,14 @@ import {
 } from '~/lib/newsletters'
 
 function NewsletterImage({ src, alt }: { src?: string | Blob; alt?: string }) {
-  if (typeof src !== 'string' || !(src in archivedNewsletterImages)) {
+  if (typeof src !== 'string') {
     throw new Error(`Unknown newsletter image: ${String(src)}`)
   }
 
-  const dimensions =
-    archivedNewsletterImages[src as keyof typeof archivedNewsletterImages]
+  const dimensions = archivedNewsletterImages[src]
+  if (!dimensions) {
+    throw new Error(`Unknown newsletter image: ${src}`)
+  }
   const isCover = src.endsWith('/cover.png')
   return (
     <Image

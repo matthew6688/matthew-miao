@@ -17,32 +17,18 @@ import {
   publicPageMetadata,
   type PublicSection,
 } from './public-page-metadata'
+import { siteProfile } from './site-profile'
 
-const NAME = 'Cali Castle'
+const NAME = siteProfile.name.en
 const HOME_INTRODUCTIONS: Record<Locale, string> = {
   zh: publicPageMetadata.home.zh.ogDescription,
   en: publicPageMetadata.home.en.ogDescription,
 }
 
 const IMAGE_SIZE = { width: 1200, height: 630 } as const
-const CALIBABY_APP_STORE_BADGES = {
-  zh: {
-    src: '/images/calibaby/app-store-badge-zh-cn.svg',
-    width: 196,
-  },
-  en: {
-    src: '/images/calibaby/app-store-badge-en-us.svg',
-    width: 215,
-  },
-} as const
-const CALIBABY_PRODUCT_NAMES: Record<Locale, string> = {
-  zh: 'Cali 宝宝',
-  en: 'Cali Baby',
-}
-
 async function renderHomeOgImage(locale: Locale) {
   const introduction = HOME_INTRODUCTIONS[locale]
-  const portrait = await publicImageDataUri('/images/headshot.jpg')
+  const portrait = await publicImageDataUri('/images/matthew-placeholder-light.svg')
 
   return new ImageResponse(
     (
@@ -116,89 +102,6 @@ async function renderHomeOgImage(locale: Locale) {
 
 export async function createHomeOgImage(locale: Locale) {
   return renderHomeOgImage(locale)
-}
-
-async function renderCaliBabyOgImage(locale: Locale) {
-  const appStoreBadge = CALIBABY_APP_STORE_BADGES[locale]
-  const [icon, badge] = await Promise.all([
-    publicImageDataUri('/images/calibaby-app-icon.png'),
-    publicImageDataUri(appStoreBadge.src),
-  ])
-
-  return new ImageResponse(
-    (
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#f3f4f5',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 64,
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={icon}
-            alt=""
-            width={240}
-            height={240}
-            style={{
-              width: 240,
-              height: 240,
-              borderRadius: 56,
-            }}
-          />
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                color: '#242529',
-                fontSize: 76,
-                fontWeight: 600,
-                letterSpacing: '-0.035em',
-              }}
-            >
-              {CALIBABY_PRODUCT_NAMES[locale]}
-            </div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={badge}
-              alt=""
-              width={appStoreBadge.width}
-              height={72}
-              style={{
-                display: 'block',
-                width: appStoreBadge.width,
-                height: 72,
-                marginTop: 30,
-              }}
-            />
-          </div>
-        </div>
-      </div>
-    ),
-    {
-      ...IMAGE_SIZE,
-      fonts: await ogRuntimeFonts(),
-    },
-  )
-}
-
-export async function createCaliBabyOgImage(locale: Locale) {
-  return renderCaliBabyOgImage(locale)
 }
 
 function OgSectionMark({ section }: { section: PublicSection }) {
@@ -368,7 +271,7 @@ function OgSectionMark({ section }: { section: PublicSection }) {
 
 async function renderSectionOgImage(section: PublicSection, locale: Locale) {
   const copy = publicPageMetadata[section][locale]
-  const signature = 'Cali Castle'
+  const signature = locale === 'en' ? siteProfile.name.displayEn : siteProfile.name.zh
 
   return new ImageResponse(
     (
@@ -451,11 +354,9 @@ async function renderNewsletterOgImage(newsletter: NewsletterOgInput, locale: Lo
     locale === 'en' ? newsletter.descriptionEn : newsletter.description
   const archiveLabel =
     locale === 'en'
-      ? `Cali Castle · Archive ${newsletter.id.padStart(3, '0')}`
-      : `Cali Castle · 存档 ${newsletter.id.padStart(3, '0')}`
-  const cover = await coverDataUri(
-    `/content/newsletters/${newsletter.id}/cover.png`,
-  )
+      ? `${siteProfile.name.displayEn} · Archive ${newsletter.id.padStart(3, '0')}`
+      : `${siteProfile.name.zh} · 存档 ${newsletter.id.padStart(3, '0')}`
+  const cover = await coverDataUri('/images/matthew-placeholder-light.svg')
 
   return new ImageResponse(
     (

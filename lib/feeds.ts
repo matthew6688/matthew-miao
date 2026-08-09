@@ -11,7 +11,7 @@ export function buildChineseFeedXml() {
     feed_url: `${seo.url.href}feed.xml`,
     language: 'zh-CN',
     // RSS <image> wants a small square channel logo, not the 1200×630 OG
-    image_url: `${seo.url.href}images/avatar.png`,
+    image_url: `${seo.url.href}images/matthew-placeholder-light.svg`,
     generator: 'PHP 9.0',
   })
 
@@ -41,7 +41,7 @@ export function buildEnglishFeedXml() {
     site_url: siteUrl,
     feed_url: `${seoEn.url.href}feed.en.xml`,
     language: 'en-US',
-    image_url: `${seoEn.url.href}images/avatar.png`,
+    image_url: `${seoEn.url.href}images/matthew-placeholder-light.svg`,
     generator: 'PHP 9.0',
   })
 

@@ -42,7 +42,7 @@ export function AdminDockFallback() {
         goKey={adminGoKeyFor('/admin')}
       >
         <span className="dock-avatar">
-          <Image src="/images/avatar.png" alt="" width={26} height={26} />
+          <Image src="/images/matthew-placeholder-light.svg" alt="" width={26} height={26} />
         </span>
       </DockItem>
       <span className="dock-rule" aria-hidden />
@@ -119,7 +119,7 @@ export function AdminDock() {
         onNavigate={handleNavigate}
       >
         <span className="dock-avatar">
-          <Image src="/images/avatar.png" alt="" width={26} height={26} />
+          <Image src="/images/matthew-placeholder-light.svg" alt="" width={26} height={26} />
         </span>
       </DockItem>
       <span className="dock-rule" aria-hidden />

@@ -5,6 +5,7 @@ import { T } from '~/lib/i18n'
 import { localeRoutePair } from '~/lib/locale-metadata'
 import { localePath, type Locale } from '~/lib/locale-route'
 import { nonPublicRobots } from '~/lib/non-public-metadata'
+import { siteProfile } from '~/lib/site-profile'
 
 const retiredCopy = {
   zh: {
@@ -32,7 +33,7 @@ export function newsletterRetiredMetadata(locale: Locale): Metadata {
       description,
       type: 'website',
       locale: locale === 'en' ? 'en_US' : 'zh_CN',
-      siteName: 'Cali Castle',
+      siteName: locale === 'en' ? siteProfile.name.displayEn : siteProfile.name.zh,
       url: locale === 'en' ? pair.en : pair.zh,
     },
     twitter: { card: 'summary_large_image', title, description },
