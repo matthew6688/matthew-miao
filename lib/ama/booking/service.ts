@@ -4,6 +4,7 @@ import type { AvailabilityService } from '../availability/service'
 import type { StripeClient } from '../stripe/client'
 import { StripeError } from '../stripe/client'
 import type { StripeWebhookEvent } from '../stripe/webhook'
+import { siteProfile } from '../../site-profile'
 import type {
   DurableOperationsRepository,
 } from '../operations/repository'
@@ -364,8 +365,8 @@ export function createBookingService(dependencies: BookingServiceDependencies) {
           currency: AMA_SESSION_PRICE.currency,
           productName:
             intent.locale === 'en'
-              ? 'AMA Session with Cali (60 minutes)'
-              : 'Cali AMA Session（60 分钟）',
+              ? `AMA Session with ${siteProfile.name.displayEn} (60 minutes)`
+              : `${siteProfile.name.zh} AMA Session（60 分钟）`,
           customerEmail: intent.guestEmail,
           successUrl: confirmationUrl.toString(),
           cancelUrl: cancelUrl.toString(),
