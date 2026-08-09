@@ -12,6 +12,7 @@ assets, and unconfirmed social imagery are not part of this inventory.
 | `public/images/projects/fengtalk.svg` | Repository-authored neutral project tile for Matthew's confirmed FengTalk project |
 | `public/images/social/wechat-service-matthewmiao.png` | Lossless QR crop from the official WeChat Service Account promotional asset supplied by Matthew on 2026-08-10; search name `matthewmiao` |
 | `public/images/social/wechat-subscription-fengtalk.png` | Lossless QR crop from the official WeChat Official Account promotional asset supplied by Matthew on 2026-08-10; search name `fengtalk.ai` |
+| `public/images/photos/*/*.jpg` | Twenty metadata-stripped progressive JPEG Renditions derived from five Matthew-owned photos supplied and approved on 2026-08-10; Originals remain outside Git; provenance and publication state are recorded in `content/photos/catalog.json` |
 | `content/blog/building-in-public-with-ai-agents/automation-workflow.webp` | Generated for Matthew's site with OpenAI image generation on 2026-08-09; no people, logos, or third-party identity |
 | `public/images/codex.svg` | User-supplied Codex product mark, retained for editorial MDX references |
 | `public/images/products/slack.svg` | Slack's official site-navigation SVG, retained for editorial references; subject to [Slack brand terms](https://slack.com/terms-of-service/slack-brand) |

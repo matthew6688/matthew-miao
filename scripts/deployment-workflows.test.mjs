@@ -51,6 +51,15 @@ test('Cloudflare environments bind isolated R2 media stores', async () => {
     config.vars.MEDIA_PUBLIC_BASE_URL,
     'https://matthew-miao.com/media/',
   )
+  assert.equal(config.vars.PHOTO_PUBLICATION_MODE, 'repository-bootstrap')
+  assert.equal(
+    config.env.staging.vars.PHOTO_PUBLICATION_MODE,
+    'repository-bootstrap',
+  )
+  assert.equal(
+    config.env.preview.vars.PHOTO_PUBLICATION_MODE,
+    'repository-bootstrap',
+  )
   assert.doesNotMatch(JSON.stringify(config), /BUNNY_MEDIA_/)
 })
 
@@ -66,6 +75,7 @@ test('feature pushes deploy a validated Cloudflare Preview', async () => {
   assert.match(job.if, /matthew6688\/matthew-miao/)
   assert.equal(config.concurrency.group, 'cloudflare-preview')
   assert.equal(job.env.CLOUDFLARE_API_TOKEN, '${{ secrets.CLOUDFLARE_API_TOKEN }}')
+  assert.match(job.steps.find((step) => step.name === 'Validate application').run, /pnpm test:photo-skill/)
 
   const deploy = job.steps.find((step) => step.name === 'Deploy exact commit to Cloudflare Preview')
   assert.match(deploy.run, /opennextjs-cloudflare deploy --env preview/)
@@ -89,6 +99,7 @@ test('dev validates and deploys the persistent Cloudflare Staging environment', 
   const job = config.jobs['validate-and-deploy']
   assert.equal(job.environment, 'staging')
   assert.equal(job.env.CLOUDFLARE_API_TOKEN, '${{ secrets.CLOUDFLARE_API_TOKEN }}')
+  assert.match(job.steps.find((step) => step.name === 'Validate application').run, /pnpm test:photo-skill/)
   const deploy = job.steps.find((step) => step.name === 'Deploy exact commit to Cloudflare Staging')
   assert.match(deploy.run, /opennextjs-cloudflare deploy --env staging/)
   const browserCheck = job.steps.find(
@@ -143,6 +154,7 @@ test('main validates and deploys the exact commit to Cloudflare Workers', async 
   )
   assert.match(validate.run, /pnpm typecheck/)
   assert.match(validate.run, /pnpm test:unit/)
+  assert.match(validate.run, /pnpm test:photo-skill/)
   assert.match(validate.run, /pnpm test:localization/)
   assert.match(validate.run, /pnpm build:cloudflare/)
   const deploy = job.steps.find(
@@ -169,6 +181,10 @@ test('release pull requests reject unsafe migrations before merging to main', as
     (step) => step.name === 'Test browser release gate',
   )
   assert.match(browserCheck.run, /pnpm test:browser/)
+  assert.equal(
+    job.steps.find((step) => step.name === 'Test agent photo management gate').run,
+    'pnpm test:photo-skill',
+  )
   assertOrdered(job.steps, 'Build', 'Test browser release gate')
 })
 

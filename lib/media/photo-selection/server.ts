@@ -9,6 +9,7 @@ import {
   PUBLIC_PHOTO_SELECTION_CACHE_TAG,
   type PublicPhotoSelection,
 } from './repository'
+import { getRepositoryPhotoSelection } from './repository-publication'
 import { devPhotoSelectionFixture } from './dev-fixtures'
 import { parseMediaPublicBaseUrl } from '../storage/config'
 
@@ -65,7 +66,10 @@ function logReadFailure(scope: 'read' | 'public read', error: unknown) {
     )
     return
   }
-  console.error(`[photo-selection] ${scope} failed; rendering empty state`, error)
+  console.error(
+    `[photo-selection] ${scope} failed; rendering the fail-closed empty state`,
+    error,
+  )
 }
 
 async function readPublishedPhotoSelection() {
@@ -99,11 +103,14 @@ function devFallback(): PublicPhotoSelection | null {
 }
 
 export async function getPublishedPhotoSelection() {
+  if (process.env.PHOTO_PUBLICATION_MODE === 'repository-bootstrap') {
+    return getRepositoryPhotoSelection()
+  }
   try {
     const selection = restoreSelectionDates(
       (await readPublishedPhotoSelection()) as CachedPublicPhotoSelection | null,
     )
-    if (selection && selection.items.length > 0) return selection
+    if (selection) return selection
     return devFallback()
   } catch (error) {
     logReadFailure('public read', error)

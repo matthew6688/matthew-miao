@@ -62,6 +62,9 @@ jobs:
       - name: Test agent blog publishing gate
         run: pnpm test:blog-skill
 
+      - name: Test agent photo management gate
+        run: pnpm test:photo-skill
+
       - name: Validate database migrations
         run: pnpm db:validate
 

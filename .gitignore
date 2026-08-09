@@ -55,3 +55,5 @@ static/
 .react-email/
 /.idea
 .env*
+.photo-staging/
+.photo-catalog.lock

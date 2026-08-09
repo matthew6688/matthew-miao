@@ -139,9 +139,10 @@
 
 退出条件：Production smoke、SEO、Feed、OG、支付 webhook、登录和媒体访问全部通过，旧 URL 不泄漏。
 
-## Phase 7 — 博客 Agent Skill
+## Phase 7 — 内容与照片 Agent Skills
 
-交付：仓库内 `skills/matthew-blog/SKILL.md` 与安全脚本。
+交付：仓库内 `.agents/skills/publish-matthew-blog/SKILL.md`、
+`.agents/skills/manage-matthew-photos/SKILL.md` 与安全脚本。
 
 Skill 支持：
 
@@ -156,6 +157,8 @@ Skill 支持：
 - 明确禁止把 secret、私人照片原图位置、EXIF 或未授权素材写入公开内容
 
 同时更新根 `AGENTS.md`，告诉后续 Agent：先读 Site Profile、内容 schema、Design Language 和发布门禁；博客任务不得改变视觉组件。
+
+照片 Skill 负责把 Matthew 授权的 HEIC/HEIF/JPEG/PNG 原图转换为无 EXIF/GPS 的多尺寸衍生图，提供双语 alt text、Preview 验收、发布、下架和带精确确认短语的永久衍生图删除。原图始终留在 Git 之外，任何“从网站移除”默认解释为可恢复的下架。Repository Photo Publication 与后续 Owner Admin 共用同一个公开 Photo Selection 合同；切换到数据库是显式、验证后、fail-closed 的环境模式变更。
 
 退出条件：用 Skill 从零创建一篇双语测试文章，在 Preview 完成全套验证后安全撤回测试内容。
 

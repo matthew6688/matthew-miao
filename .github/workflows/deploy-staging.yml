@@ -26,6 +26,7 @@ jobs:
       AMA_ENCRYPTION_KEY: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
       RATE_LIMIT_HASH_KEY: AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQE=
       MEDIA_PUBLIC_BASE_URL: https://matthew-miao-staging.matthew6688.workers.dev/media/
+      PHOTO_PUBLICATION_MODE: repository-bootstrap
       MEDIA_ENCRYPTION_KEY: AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI=
       SITE_URL: https://matthew-miao-staging.matthew6688.workers.dev
       PUBLIC_SITE_URL: https://matthew-miao-staging.matthew6688.workers.dev
@@ -38,7 +39,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Validate application
-        run: pnpm typecheck && pnpm test:unit && pnpm test:blog-skill && pnpm test:localization && pnpm build:cloudflare
+        run: pnpm typecheck && pnpm test:unit && pnpm test:blog-skill && pnpm test:photo-skill && pnpm test:localization && pnpm build:cloudflare
       - name: Deploy exact commit to Cloudflare Staging
         if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
         run: pnpm exec opennextjs-cloudflare deploy --env staging

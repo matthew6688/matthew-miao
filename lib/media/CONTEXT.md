@@ -5,8 +5,11 @@
 Implemented end to end for Cloudflare R2 storage, catalog persistence, image
 processing, privacy boundaries, resumable ingestion, owner review, and photo
 curation. The owner admin manages Media Assets and Draft Photo Selections;
-`/photos` and the homepage consume the active Published Photo Selection. The
-retired static photo fallback is not part of v3. Originals and Renditions share
+`/photos` and the homepage consume the active Published Photo Selection. Until
+Owner Admin credentials are configured, ADR-0015 permits an owner-reviewed
+Repository Photo Publication through the same public contract while the
+explicit bootstrap mode is enabled. Database mode fails closed. Cali's retired static list remains
+removed. Originals and R2 Renditions share
 one Media Store, while only Renditions are available through public delivery.
 
 The Media Library owns reusable files, their safe descriptive metadata, and
@@ -132,3 +135,10 @@ Text, and Display Metadata, and changes only when the owner publishes a Draft
 Photo Selection, or when Archive or Purge withdraws one Media Asset without
 publishing unrelated Draft changes.
 _Avoid_: Live gallery, active photos
+
+**Repository Photo Publication**:
+An owner-approved, versioned publication manifest containing only safe website
+Renditions and bilingual Alt Text. It supplies the existing public selection
+contract only while `PHOTO_PUBLICATION_MODE=repository-bootstrap`. Originals
+remain outside Git; migration to database publication is an explicit fail-closed mode switch.
+_Avoid_: Static fallback, legacy photo list

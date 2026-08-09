@@ -1,0 +1,237 @@
+{
+  "version": 1,
+  "revision": "photos-20260809155149999",
+  "publishedAt": "2026-08-09T15:51:49.999Z",
+  "items": [
+    {
+      "id": "creek-side-portrait",
+      "published": true,
+      "width": 1279,
+      "height": 1706,
+      "altText": {
+        "zhHans": "Matthew 坐在林间溪流旁",
+        "en": "Matthew sitting beside a creek in the forest"
+      },
+      "rights": "owned",
+      "importedAt": "2026-08-09T15:51:16.913Z",
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "renditions": [
+        {
+          "profileWidth": 640,
+          "fileName": "creek-side-portrait-640.jpg",
+          "width": 640,
+          "height": 854,
+          "checksumSha256": "ad202a3d7e432eacf08324bbbeb529f5ff28341556caff5b127dadabca9e00b8"
+        },
+        {
+          "profileWidth": 1024,
+          "fileName": "creek-side-portrait-1024.jpg",
+          "width": 1024,
+          "height": 1366,
+          "checksumSha256": "a7af5173d34d471568a5dea5218994213e0f8df4df13397130d6e7b0551b08bd"
+        },
+        {
+          "profileWidth": 1600,
+          "fileName": "creek-side-portrait-1600.jpg",
+          "width": 1279,
+          "height": 1706,
+          "checksumSha256": "42bc27707a1620ee222a22f736f3bd590e18820d76e006f7265d99623ab415c8"
+        },
+        {
+          "profileWidth": 2560,
+          "fileName": "creek-side-portrait-2560.jpg",
+          "width": 1279,
+          "height": 1706,
+          "checksumSha256": "42bc27707a1620ee222a22f736f3bd590e18820d76e006f7265d99623ab415c8"
+        }
+      ]
+    },
+    {
+      "id": "sunny-park-with-dog",
+      "published": true,
+      "width": 3024,
+      "height": 4032,
+      "altText": {
+        "zhHans": "Matthew 在晴天的公园里牵着一只黑白色牧羊犬",
+        "en": "Matthew with a black-and-white sheepdog in a sunny park"
+      },
+      "rights": "owned",
+      "importedAt": "2026-08-09T15:51:48.508Z",
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "renditions": [
+        {
+          "profileWidth": 640,
+          "fileName": "sunny-park-with-dog-640.jpg",
+          "width": 640,
+          "height": 853,
+          "checksumSha256": "18883a68ee5670e1c8f853d2aa6434f87fa76ad1a36cc9a08de838dea41bc4e4"
+        },
+        {
+          "profileWidth": 1024,
+          "fileName": "sunny-park-with-dog-1024.jpg",
+          "width": 1024,
+          "height": 1365,
+          "checksumSha256": "05db12363a1dbedf6de29d4cf38ce947b6a659794b5414f131fc994365d0226a"
+        },
+        {
+          "profileWidth": 1600,
+          "fileName": "sunny-park-with-dog-1600.jpg",
+          "width": 1600,
+          "height": 2133,
+          "checksumSha256": "c0be37a40582452555bda08108088f3c71e0b1f5cfb71fd00dfe9e9843068eda"
+        },
+        {
+          "profileWidth": 2560,
+          "fileName": "sunny-park-with-dog-2560.jpg",
+          "width": 2560,
+          "height": 3413,
+          "checksumSha256": "03e7084c6322251677f26c75f69a462d58cfd7442f0a35a7703e6d0b31422114"
+        }
+      ]
+    },
+    {
+      "id": "backyard-gardening",
+      "published": true,
+      "width": 1706,
+      "height": 1279,
+      "altText": {
+        "zhHans": "Matthew 在修剪完树木的后院里微笑挥手",
+        "en": "Matthew smiling and waving in a backyard after pruning trees"
+      },
+      "rights": "owned",
+      "importedAt": "2026-08-09T15:51:48.744Z",
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "renditions": [
+        {
+          "profileWidth": 640,
+          "fileName": "backyard-gardening-640.jpg",
+          "width": 640,
+          "height": 480,
+          "checksumSha256": "0a38c6b2d7bcece3f462957e30dfd8e201d31464859851e195b554e2b632e964"
+        },
+        {
+          "profileWidth": 1024,
+          "fileName": "backyard-gardening-1024.jpg",
+          "width": 1024,
+          "height": 768,
+          "checksumSha256": "e8d35ace1318b19c0cc7422c0d6f028d32e5b844d9d0ecbe87cc8054472d7c86"
+        },
+        {
+          "profileWidth": 1600,
+          "fileName": "backyard-gardening-1600.jpg",
+          "width": 1600,
+          "height": 1200,
+          "checksumSha256": "059fa5d9fe76bd439a6d9d65e71049824ad75a2d780f5f57bcf3e9b95d549fd4"
+        },
+        {
+          "profileWidth": 2560,
+          "fileName": "backyard-gardening-2560.jpg",
+          "width": 1706,
+          "height": 1279,
+          "checksumSha256": "61983ad3911a5411af05a892a39d32f2ba7140f23cdbb3a54a48ef96aa368528"
+        }
+      ]
+    },
+    {
+      "id": "city-selfie",
+      "published": true,
+      "width": 2316,
+      "height": 3088,
+      "altText": {
+        "zhHans": "Matthew 在蓝天下拍摄的城市自拍",
+        "en": "Matthew taking a city selfie under a blue sky"
+      },
+      "rights": "owned",
+      "importedAt": "2026-08-09T15:51:49.389Z",
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "renditions": [
+        {
+          "profileWidth": 640,
+          "fileName": "city-selfie-640.jpg",
+          "width": 640,
+          "height": 853,
+          "checksumSha256": "b7c2c0e0db4663c67e82f34d62556086faeb4e02ef948b1d92358fd9bd4e235b"
+        },
+        {
+          "profileWidth": 1024,
+          "fileName": "city-selfie-1024.jpg",
+          "width": 1024,
+          "height": 1365,
+          "checksumSha256": "494bd19e86903aef88c64bac3b7cdadc678f7084cdfe0b78ddf0fd067834d615"
+        },
+        {
+          "profileWidth": 1600,
+          "fileName": "city-selfie-1600.jpg",
+          "width": 1600,
+          "height": 2133,
+          "checksumSha256": "753ca5d0da382a3e70eeeaa6bdf0fa51df21cd0cde89c25ed6905851de07612e"
+        },
+        {
+          "profileWidth": 2560,
+          "fileName": "city-selfie-2560.jpg",
+          "width": 2316,
+          "height": 3088,
+          "checksumSha256": "aa2accf993008acd16dacccd3579e513ec7f3e9129c0c4ebfb4e146c91747523"
+        }
+      ]
+    },
+    {
+      "id": "balcony-portrait",
+      "published": true,
+      "width": 2316,
+      "height": 3088,
+      "altText": {
+        "zhHans": "Matthew 在棕榈树前拍摄的阳台肖像",
+        "en": "Portrait of Matthew on a balcony in front of palm trees"
+      },
+      "rights": "owned",
+      "importedAt": "2026-08-09T15:51:49.998Z",
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "renditions": [
+        {
+          "profileWidth": 640,
+          "fileName": "balcony-portrait-640.jpg",
+          "width": 640,
+          "height": 853,
+          "checksumSha256": "72273773a5acf85468871ba494c7c5705ef370b14e78cf8c7706c84d59b05e7b"
+        },
+        {
+          "profileWidth": 1024,
+          "fileName": "balcony-portrait-1024.jpg",
+          "width": 1024,
+          "height": 1365,
+          "checksumSha256": "730100c77d06b62482c5de4393a39337dc2fb0a4684c9693b729bc01cd6f3394"
+        },
+        {
+          "profileWidth": 1600,
+          "fileName": "balcony-portrait-1600.jpg",
+          "width": 1600,
+          "height": 2133,
+          "checksumSha256": "2f78732fe7c2f7f1003b2cbf8cdcef4bfe927dbf7a0bcc10c1198362424f24c6"
+        },
+        {
+          "profileWidth": 2560,
+          "fileName": "balcony-portrait-2560.jpg",
+          "width": 2316,
+          "height": 3088,
+          "checksumSha256": "81fb0e468822082f53f0e884645a1cb737f57b2c4f29ca0e35e3ade492715268"
+        }
+      ]
+    }
+  ]
+}
