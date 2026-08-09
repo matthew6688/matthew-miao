@@ -13,9 +13,10 @@ import {
 } from '~/components/route-motion-controller'
 import { SiteFooter } from '~/components/site-footer'
 import { ThemeProvider } from '~/components/theme-provider'
-import { getGitHub, getSocial } from '~/lib/social-live'
+import { getGitHub } from '~/lib/social-live'
 import { PREPAINT_SCRIPT } from '~/lib/security/inline-scripts'
 import { seo } from '~/lib/seo'
+import { siteProfile } from '~/lib/site-profile'
 import type { Locale } from '~/lib/locale-route'
 import { cn } from '~/lib/utils'
 
@@ -24,8 +25,8 @@ import { fontVariablesForLocale } from '../fonts'
 export const rootMetadata: Metadata = {
   metadataBase: seo.url,
   title: {
-    default: 'Cali Castle',
-    template: '%s | Cali Castle',
+    default: siteProfile.name.en,
+    template: `%s | ${siteProfile.name.en}`,
   },
 }
 
@@ -73,7 +74,7 @@ export async function SiteDocument({
 
   // Live-but-cached social numbers (ISR via the fetch data cache) keep the
   // shared public chrome fresh without making any page request-bound.
-  const [social, github] = await Promise.all([getSocial(), getGitHub()])
+  const github = await getGitHub()
 
   return (
     <html
@@ -103,7 +104,7 @@ export async function SiteDocument({
                     CSS-named list → loading shell → article groups active. */}
                 <RouteViewTransition>{children}</RouteViewTransition>
               </main>
-              <SiteFooter social={social} github={github} locale={locale} />
+              <SiteFooter github={github} locale={locale} />
             </div>
             <Suspense fallback={<DockFallback locale={locale} />}>
               <Dock />

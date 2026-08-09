@@ -63,7 +63,7 @@ describe('localeMetadata', () => {
           url: new URL('/og?locale=en&path=%2Fblog%2Fa-post', seo.url),
           width: 1200,
           height: 630,
-          alt: 'A post · Cali Castle',
+          alt: 'A post · Matthew Miao',
           type: 'image/png',
         },
       ],

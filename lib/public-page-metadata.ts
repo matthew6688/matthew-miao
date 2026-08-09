@@ -1,32 +1,32 @@
 export const publicPageMetadata = {
   home: {
     zh: {
-      title: 'Cali Castle',
-      description: '设计工程师、Agent 指挥官、创意总监。',
-      ogDescription: '设计工程师、Agent 指挥官、创意总监。',
+      title: '老苗',
+      description: 'Web coding、AI Agent、自动化、outreach 与企业知识系统。',
+      ogDescription: 'Web coding、AI Agent、自动化、outreach 与企业知识系统。',
     },
     en: {
-      title: 'Cali Castle',
-      description: 'Design Engineer. Agent Orchestrator. Creative Director.',
-      ogDescription: 'Design Engineer. Agent Orchestrator. Creative Director.',
+      title: 'Matthew Miao',
+      description: 'Web coding, AI agents, automation, outreach, and company knowledge systems.',
+      ogDescription: 'Web coding, AI agents, automation, outreach, and company knowledge systems.',
     },
   },
   blog: {
     zh: {
       title: '写作',
-      description: 'Cali 关于设计、工程、产品，以及一路上在意的人和事的文章。',
+      description: '老苗关于 Web coding、AI Agent、自动化、outreach 与企业知识系统的实践记录。',
     },
     en: {
       title: 'Writing',
       description:
-        'Essays by Cali about design, engineering, products, and the people and ideas that matter along the way.',
+        'Notes by Matthew on web coding, AI agents, automation, outreach, and company knowledge systems.',
     },
   },
   photos: {
-    zh: { title: '照片', description: 'Cali 在工作、生活和旅途中留下的一些瞬间。' },
+    zh: { title: '照片', description: '老苗在工作、生活和旅途中留下的一些瞬间。' },
     en: {
       title: 'Photos',
-      description: 'Moments Cali has kept from work, life, and everywhere in between.',
+      description: 'Moments Matthew has kept from work, life, and everywhere in between.',
     },
   },
   projects: {

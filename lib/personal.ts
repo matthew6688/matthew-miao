@@ -1,5 +1,5 @@
 // The personal registry — the one file to edit when life moves on.
-// Sources: legacy site resume data + posts; see docs/handoff.md.
+// Sources: Matthew's content intake; see docs/content/site-profile-draft.md.
 
 export interface Experience {
   company: string
@@ -12,10 +12,8 @@ export interface Experience {
 }
 
 export const experience: Experience[] = [
-  { company: '佐玩 Zolplay', companyEn: 'Zolplay', role: '创始人 & 创意总监', roleEn: 'Founder & Creative Director', from: 2021, url: 'https://zolplay.com' },
-  { company: 'very very spaceship', companyEn: 'very very spaceship', role: '软件工程师 II', roleEn: 'Software Engineer II', from: 2018, to: 2020 },
-  { company: '8ninths', companyEn: '8ninths', role: '全栈与 AR 工程师', roleEn: 'Full-stack & AR Engineer', from: 2017, to: 2018 },
-  { company: 'Abletive 电子音乐社区', companyEn: 'Abletive', role: '创始人 & 独立开发者', roleEn: 'Founder & indie dev', from: 2014, to: 2016 },
+  { company: 'FengTalk.ai', companyEn: 'FengTalk.ai', role: '创始人', roleEn: 'Founder', from: 2024, url: 'https://fengtalk.ai' },
+  { company: 'UChat', companyEn: 'UChat', role: '首席营销官', roleEn: 'Chief Marketing Officer', from: 2020, url: 'https://uchat.au' },
 ]
 
 export interface Record_ {
@@ -67,7 +65,8 @@ export interface Book {
   url?: string
 }
 
-// 书架 — ordered by relevance to Cali's design, creative, and founder work.
+// Provisional shelf content retained to preserve the template's interaction
+// contract until Matthew supplies his own book list and licensed cover art.
 export const books: Book[] = [
   { title: 'Grid Systems in Graphic Design', spineTitle: 'Grid Systems', spineAuthor: 'JMB', author: 'Josef Müller-Brockmann', year: 1981, category: 'Graphic Design', spineColor: '#df6029', spineInk: '#171717', art: '/images/books/grid-systems.jpg', coverWidth: 411, coverHeight: 600, spine: 24, url: 'https://niggli.ch/en/products/rastersysteme-fur-die-visuelle-gestaltung' },
   { title: 'Refactoring UI', spineAuthor: 'AW+SS', author: 'Adam Wathan & Steve Schoger', year: 2018, category: 'UI Design', spineColor: '#2e3849', spineInk: '#f7f4ed', art: '/images/books/refactoring-ui.jpg', coverWidth: 758, coverHeight: 1014, spine: 24, url: 'https://refactoringui.com/' },

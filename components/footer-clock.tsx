@@ -2,16 +2,18 @@
 
 import { useEffect, useState } from 'react'
 
-const taipeiClockTime = new Intl.DateTimeFormat('en-GB', {
-  timeZone: 'Asia/Taipei',
+import { siteProfile } from '~/lib/site-profile'
+
+const brisbaneClockTime = new Intl.DateTimeFormat('en-GB', {
+  timeZone: siteProfile.location.timeZone,
   hourCycle: 'h23',
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',
 })
 
-const taipeiTimeLabel = new Intl.DateTimeFormat('en-US', {
-  timeZone: 'Asia/Taipei',
+const brisbaneTimeLabel = new Intl.DateTimeFormat('en-US', {
+  timeZone: siteProfile.location.timeZone,
   hour12: true,
   hour: 'numeric',
   minute: '2-digit',
@@ -21,7 +23,7 @@ function timeParts(date: Date | null) {
   if (!date) return { hour: 0, minute: 0, second: 0, label: '--:-- --' }
 
   const parts = Object.fromEntries(
-    taipeiClockTime
+    brisbaneClockTime
       .formatToParts(date)
       .filter((part) => part.type !== 'literal')
       .map((part) => [part.type, part.value]),
@@ -34,7 +36,7 @@ function timeParts(date: Date | null) {
     hour,
     minute,
     second,
-    label: taipeiTimeLabel.format(date),
+    label: brisbaneTimeLabel.format(date),
   }
 }
 
@@ -109,11 +111,13 @@ export function FooterClock() {
         <circle className="footer-clock-pin" cx="16" cy="16" r="1" />
       </svg>
       <span className="footer-time-readout">
-        <span>UTC+8</span>
+        <span>{siteProfile.location.utcLabel}</span>
         <time
           dateTime={now?.toISOString()}
           aria-label={
-            now ? `Current time in Taipei, UTC+8: ${label}` : 'Current time in Taipei, UTC+8'
+            now
+              ? `Current time in ${siteProfile.location.city}, ${siteProfile.location.utcLabel}: ${label}`
+              : `Current time in ${siteProfile.location.city}, ${siteProfile.location.utcLabel}`
           }
         >
           {label}

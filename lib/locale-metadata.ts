@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import type { Locale } from './locale-route'
 import { localePath } from './locale-route'
 import { seo } from './seo'
+import { siteProfile } from './site-profile'
 
 interface LocaleMetadataOptions {
   locale: Locale
@@ -57,8 +58,8 @@ export function localeMetadata({
       path === '/'
         ? `${title}${sentenceSeparator}${description}`
         : SECTION_IMAGE_PATHS.has(path)
-          ? `${title} · Cali Castle${sentenceSeparator}${description}`
-        : `${title} · Cali Castle`,
+          ? `${title} · ${siteProfile.name.en}${sentenceSeparator}${description}`
+        : `${title} · ${siteProfile.name.en}`,
     type: 'image/png',
   }
 
@@ -74,7 +75,7 @@ export function localeMetadata({
       description,
       type,
       locale: locale === 'en' ? 'en_US' : 'zh_CN',
-      siteName: 'Cali Castle',
+      siteName: siteProfile.name.en,
       url: canonical,
       images: [image],
     },

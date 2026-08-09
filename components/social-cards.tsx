@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ExternalLabel } from '~/components/external-mark'
 import { SitePreviewCard } from '~/components/preview-card-timing'
 import { T } from '~/lib/i18n'
+import { siteProfile } from '~/lib/site-profile'
 
 export interface SocialSnapshot {
   name: string
@@ -360,14 +361,14 @@ export function EmailCard({
           <span className="email-envelope-flap" />
           <span className="email-envelope-return">
             <span>FROM</span>
-            CALI CASTLE
+            {siteProfile.name.en.toUpperCase()}
             <br />
-            TAIPEI
+            {siteProfile.location.city.toUpperCase()}
           </span>
           <span className="email-envelope-stamps">
             <span className="email-envelope-stamp email-envelope-stamp-portrait">
               <Image src="/images/avatar.png" alt="" width={32} height={32} />
-              <span>CALI · 20</span>
+              <span>老苗 · 20</span>
             </span>
             <span className="email-envelope-stamp email-envelope-stamp-mark">
               <span className="email-envelope-stamp-star">✦</span>

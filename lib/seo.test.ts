@@ -16,7 +16,7 @@ describe('public site origin', () => {
 
     const { seo } = await import('./seo')
 
-    expect(seo.url.href).toBe('https://cali.so/')
+    expect(seo.url.href).toBe('https://matthew-miao.com/')
   })
 
   it('accepts an explicit public site origin independently of the runtime origin', async () => {

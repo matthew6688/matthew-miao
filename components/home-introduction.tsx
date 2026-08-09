@@ -1,18 +1,12 @@
 import { ExternalLink } from '~/components/external-link'
 import { HomeIntroReplay } from '~/components/home-intro-replay'
-import {
-  EmailCard,
-  GitHubCard,
-  type GitHubSnapshot,
-  type SocialSnapshot,
-  XCard,
-  XiaohongshuCard,
-} from '~/components/social-cards'
+import { EmailCard, GitHubCard, type GitHubSnapshot } from '~/components/social-cards'
 import { T } from '~/lib/i18n'
 import { faviconUrl, getLinkPreview } from '~/lib/link-previews'
+import { siteProfile } from '~/lib/site-profile'
 
-const ZOLPLAY_URL = 'https://zolplay.com'
-const ZOLPLAY_FAVICON_SRC = faviconUrl(ZOLPLAY_URL)!
+const FENGTALK_URL = siteProfile.links.fengtalk
+const FENGTALK_FAVICON_SRC = faviconUrl(FENGTALK_URL)!
 
 function DesignEngineerMark() {
   return (
@@ -139,13 +133,13 @@ function DetailsPhrase({ children }: { children: React.ReactNode }) {
   )
 }
 
-function ZolplayLink({ children }: { children: React.ReactNode }) {
+function FengTalkLink({ children }: { children: React.ReactNode }) {
   return (
     <span className="home-zolplay-link">
       <ExternalLink
-        href={ZOLPLAY_URL}
-        favicon={ZOLPLAY_FAVICON_SRC}
-        preview={getLinkPreview(ZOLPLAY_URL)}
+        href={FENGTALK_URL}
+        favicon={FENGTALK_FAVICON_SRC}
+        preview={getLinkPreview(FENGTALK_URL)}
       >
         {children}
       </ExternalLink>
@@ -153,23 +147,20 @@ function ZolplayLink({ children }: { children: React.ReactNode }) {
   )
 }
 
-function HomeContact({ social, github }: { social: SocialSnapshot; github: GitHubSnapshot }) {
+function HomeContact({ github }: { github: GitHubSnapshot }) {
   return (
     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
       <T
         zh={
           <>
-            可以在 <XCard data={social} trigger="@calicastle" triggerClassName="home-contact-link" />、
-            <GitHubCard data={github} triggerClassName="home-contact-link" /> 和
-            <XiaohongshuCard triggerClassName="home-contact-link" />找到我，也可以发邮件到{' '}
-            <EmailCard address="hi@cali.so" trigger="hi@cali.so" triggerClassName="home-contact-link" />。
+            可以在 <GitHubCard data={github} triggerClassName="home-contact-link" /> 找到我，也可以发邮件到{' '}
+            <EmailCard address={siteProfile.email} trigger={siteProfile.email} triggerClassName="home-contact-link" />。
           </>
         }
         en={
           <>
-            Find me at <XCard data={social} trigger="@calicastle" triggerClassName="home-contact-link" />,{' '}
-            <GitHubCard data={github} triggerClassName="home-contact-link" /> and{' '}
-            <EmailCard address="hi@cali.so" trigger="hi@cali.so" triggerClassName="home-contact-link" />
+            Find me on <GitHubCard data={github} triggerClassName="home-contact-link" /> or email me at{' '}
+            <EmailCard address={siteProfile.email} trigger={siteProfile.email} triggerClassName="home-contact-link" />.
           </>
         }
       />
@@ -177,15 +168,15 @@ function HomeContact({ social, github }: { social: SocialSnapshot; github: GitHu
   )
 }
 
-export function HomeIntroduction({ social, github }: { social: SocialSnapshot; github: GitHubSnapshot }) {
+export function HomeIntroduction({ github }: { github: GitHubSnapshot }) {
   return (
     <div className="home-introduction">
       <p className="text-sm leading-relaxed text-muted-foreground">
         <T
           zh={
             <>
-              我是 Cali，两个孩子的爸爸，也是一名
-              <DesignEngineerPhrase>设计工程师</DesignEngineerPhrase>。我也是 Agent 指挥官，热爱把细节做到
+              我是老苗，一个住在布里斯班、喜欢折腾新软件的
+              <DesignEngineerPhrase>自动化实践者</DesignEngineerPhrase>。我对 Web coding 和 AI Agent 着迷，也喜欢把流程做到
               <DetailsPhrase>
                 <span className="home-detail-units">
                   <span className="home-detail-unit">刚</span>
@@ -198,8 +189,8 @@ export function HomeIntroduction({ social, github }: { social: SocialSnapshot; g
           }
           en={
             <>
-              I’m Cali, a father of two and a <DesignEngineerPhrase>design engineer</DesignEngineerPhrase>. I’m also an
-              agent orchestrator, and I love getting the{' '}
+              I’m Matthew, a Brisbane-based <DesignEngineerPhrase>automation builder</DesignEngineerPhrase>. I’m drawn
+              to web coding and AI agents, and I love getting the{' '}
               <DetailsPhrase>
                 <span className="home-detail-units home-detail-words">
                   <span className="home-detail-unit">details</span>
@@ -218,24 +209,24 @@ export function HomeIntroduction({ social, github }: { social: SocialSnapshot; g
         <T
           zh={
             <>
-              我创办了<ZolplayLink>佐玩</ZolplayLink>，一家打造产品、品牌与数字体验的 AI 原生设计工作室。
+              我创办了<FengTalkLink>FengTalk.ai</FengTalkLink>，记录并实践 Web coding、AI Agent、outreach 与企业知识系统。
             </>
           }
           en={
             <>
-              I founded <ZolplayLink>Zolplay</ZolplayLink>, an AI-native design studio creating products, brands, and
-              digital experiences.
+              I founded <FengTalkLink>FengTalk.ai</FengTalkLink>, a platform for hands-on work in web coding, AI agents,
+              outreach, and company knowledge systems.
             </>
           }
         />
       </p>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
         <T
-          zh="我兴趣很杂，什么都爱试试。和团队一起做东西，我在意好点子、好细节，也在意玩得开心。"
-          en="Being a generalist is kind of my thing. I bring curiosity, craft, and a little fun to whatever the team is making."
+          zh="我喜欢把不同工具接到一起，把重复工作变成可靠的全自动流程。AI 放大了这种能力，也让更多人可以亲手创造过去只有大团队才能完成的东西。"
+          en="I enjoy connecting tools and turning repetitive work into dependable, end-to-end workflows. AI amplifies that instinct and helps more people build what once required a much larger team."
         />
       </p>
-      <HomeContact social={social} github={github} />
+      <HomeContact github={github} />
     </div>
   )
 }

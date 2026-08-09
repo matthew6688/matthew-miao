@@ -1,4 +1,45 @@
-# cali.so
+# matthew-miao.com
+
+Source for Matthew Miao's bilingual personal website and blog at
+`matthew-miao.com`.
+
+The visual system and application architecture are derived from
+[CaliCastle/cali.so](https://github.com/CaliCastle/cali.so) under its MIT
+license. The exact upstream baseline and content-rights boundary are recorded in
+[`docs/research/upstream-source-audit.md`](docs/research/upstream-source-audit.md).
+Matthew's identity, writing, media, projects, credentials, and service data are
+separate from the upstream author's personal content.
+
+## Project status
+
+Implementation follows [`docs/implementation-plan.md`](docs/implementation-plan.md).
+Confirmed copy and outstanding content are maintained in
+[`docs/content/site-profile-draft.md`](docs/content/site-profile-draft.md).
+
+## Local development
+
+Use the pinned pnpm version and Node 22 or newer:
+
+```bash
+corepack pnpm install --frozen-lockfile
+cp .env.example .env.local
+corepack pnpm dev
+```
+
+## Validation
+
+```bash
+corepack pnpm typecheck
+corepack pnpm test:unit
+corepack pnpm build
+```
+
+The full inherited validation and deployment notes remain below while the
+Cloudflare runtime adaptation is implemented.
+
+---
+
+## Upstream documentation
 
 Source for [Cali Castle's personal site](https://cali.so). The ground-up v3
 source release reached `main` on July 20, 2026. The 2024 site remains the

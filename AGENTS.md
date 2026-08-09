@@ -1,14 +1,30 @@
-# cali.so
+# matthew-miao.com
 
-Cali Castle's personal site. v3 is a ground-up rewrite starting from a clean slate.
+Matthew Miao's bilingual personal site, derived from cali.so v3 at the pinned
+upstream commit documented in `docs/research/upstream-source-audit.md`.
 
-**Picking up work?** Read `docs/handoff.md` first — current status, work queue, and gotchas.
+**Picking up work?** Read `docs/implementation-plan.md`,
+`docs/content/site-profile-draft.md`, and `docs/handoff.md` first.
+
+## Identity and content
+
+- `lib/site-profile.ts` is the canonical registry for Matthew's public identity,
+  domain, location, and confirmed links.
+- Never restore Cali's personal identity, writing, photos, product brands, social
+  accounts, or contact details while syncing upstream.
+- Unconfirmed social links and personal claims stay unpublished rather than using
+  placeholders that point to another person.
+- Blog content is bilingual MDX under `content/blog/<slug>/`. Preserve the existing
+  schema, accessibility contract, SEO routes, and colocated media behavior.
+- The visual and interaction contract is 1:1 with the pinned upstream site. Content
+  work must not redesign components, spacing, motion, color, typography, or routes.
 
 ## Agent skills
 
 ### Issue tracker
 
-Issues are tracked in GitHub Issues (CaliCastle/cali.so) via the `gh` CLI; external PRs are not a triage surface. See `docs/agents/issue-tracker.md`.
+Project issues belong to `matthew6688/matthew-miao`. Upstream issues remain useful
+evidence but are not Matthew's project tracker.
 
 ### Triage labels
 

@@ -3,6 +3,7 @@ import { cacheLife, cacheTag } from 'next/cache'
 import type { GitHubSnapshot, SocialSnapshot } from '~/components/social-cards'
 import bakedGithub from '~/content/github.json'
 import bakedSocial from '~/content/social.json'
+import { siteProfile } from '~/lib/site-profile'
 
 export interface SocialData {
   x: SocialSnapshot
@@ -23,12 +24,12 @@ export async function getGitHub(): Promise<GitHubSnapshot> {
 
   try {
     const [contrib, user] = await Promise.all([
-      fetch('https://github-contributions-api.jogruber.de/v4/CaliCastle?y=last').then((r) => {
+      fetch(`https://github-contributions-api.jogruber.de/v4/${siteProfile.links.github}?y=last`).then((r) => {
         if (!r.ok) throw new Error(`contributions ${r.status}`)
         return r.json()
       }),
-      fetch('https://api.github.com/users/CaliCastle', {
-        headers: { accept: 'application/vnd.github+json', 'user-agent': 'cali.so' },
+      fetch(`https://api.github.com/users/${siteProfile.links.github}`, {
+        headers: { accept: 'application/vnd.github+json', 'user-agent': siteProfile.domain },
       }).then((r) => {
         if (!r.ok) throw new Error(`user ${r.status}`)
         return r.json()
@@ -36,7 +37,7 @@ export async function getGitHub(): Promise<GitHubSnapshot> {
     ])
     const days: Array<{ date: string; level: number }> = contrib.contributions
     return {
-      user: 'CaliCastle',
+      user: siteProfile.links.github,
       followers: user.followers,
       total: contrib.total.lastYear,
       to: days[days.length - 1].date,
