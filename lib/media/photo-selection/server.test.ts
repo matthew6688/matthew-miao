@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mocks = vi.hoisted(() => ({
   getPublishedSelection: vi.fn(),
@@ -27,6 +27,10 @@ vi.mock('../storage/config', () => ({
 }))
 
 import { getPublishedPhotoSelection } from './server'
+
+beforeEach(() => {
+  vi.stubEnv('PHOTO_PUBLICATION_MODE', 'database')
+})
 
 afterEach(() => {
   vi.unstubAllEnvs()
