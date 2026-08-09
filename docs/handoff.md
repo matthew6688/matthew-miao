@@ -17,7 +17,7 @@ Current as of 2026-08-09.
 - Chinese is unprefixed; English uses `/en`.
 
 Public home, blog, bilingual article, projects, photos empty state, sitemap, RSS,
-and dynamic OG routes have passed live HTTP smoke checks. The site currently
+dynamic OG routes, and the Cal.com booking handoff have passed live HTTP smoke checks. The site currently
 uses a neutral Matthew monogram because no approved portrait or photo library
 has been supplied.
 
@@ -47,6 +47,19 @@ they also skip deployment safely until the repository secret is configured.
 
 ## Provider boundary
 
+The public AMA page keeps the pinned visual contract. Its Chinese and English
+booking routes redirect to `https://cal.com/matthew-miao/ama`; Cal.com owns the
+60-minute US$99 booking, Google Meet, email, rescheduling, and cancellation
+workflow. The Cal.com dashboard was configured with Stripe payment and a
+one-calendar-day refund policy on 2026-08-09, but a real paid booking, refund,
+and notification round trip remains a manual Production acceptance item.
+`CALCOM_API_KEY` is a GitHub Production environment secret used by
+`pnpm verify:calcom`; it is never sent to the Worker or browser. The automated
+gate verifies only fields exposed by Cal.com's Event Type API and cannot prove
+the payment-app connection or refund execution.
+The inherited self-hosted AMA provider routes remain fail-closed and are not the
+public booking system.
+
 The public site and repository-owned blog are live. These inherited provider
 features remain deliberately fail-closed until Matthew authorizes real accounts
 and credentials:
@@ -61,8 +74,7 @@ and credentials:
 
 Until Clerk is configured, Admin routes return a non-public 404 instead of a
 server error. Until the database and media provider are configured, Photos uses
-the designed empty state. AMA information may be viewed, but payments must not
-be represented as live.
+the designed empty state.
 
 ## Publishing with an agent
 

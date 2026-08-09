@@ -19,6 +19,7 @@ jobs:
     environment: production
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CALCOM_API_KEY: ${{ secrets.CALCOM_API_KEY }}
       DATABASE_URL: postgresql://build:build@127.0.0.1:5432/matthew
       ADMIN_EMAIL: hi@fengtalk.ai
       AMA_ENCRYPTION_KEY: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
@@ -56,6 +57,9 @@ jobs:
           pnpm test:unit
           pnpm test:localization
           pnpm build:cloudflare
+
+      - name: Verify Cal.com booking contract
+        run: pnpm verify:calcom
 
       - name: Deploy exact commit to Cloudflare Workers
         if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
