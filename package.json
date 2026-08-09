@@ -9,6 +9,7 @@
   },
   "pnpm": {
     "overrides": {
+      "@esbuild-kit/core-utils>esbuild": "0.25.12",
       "gray-matter>js-yaml": "3.15.1",
       "minimatch@10.2.5>brace-expansion": "5.0.9",
       "next>postcss": "8.5.26",
@@ -28,7 +29,7 @@
     "db:validate": "node --test scripts/ama-migrations.test.mjs",
     "test:deployment": "node --test scripts/check-production-migrations.test.mjs scripts/deployment-workflows.test.mjs scripts/refresh-snapshot-validation.test.mjs scripts/verify-legacy-url-contract.test.mjs",
     "test:browser": "playwright test",
-    "test:browser:hosted": "playwright test --project=chromium --grep @hosted",
+    "test:browser:hosted": "playwright test --project=chromium --grep @hosted --workers=1",
     "start": "next start",
     "test:ama": "vitest run lib/ama && pnpm db:validate",
     "test:security": "vitest run lib/security",
@@ -111,8 +112,8 @@
     "@types/react-dom": "^19.2.3",
     "@types/rss": "^0.0.32",
     "drizzle-kit": "^0.31.10",
-    "jsdom": "^29.1.1",
-    "shadcn": "^4.15.0",
+    "jsdom": "^30.0.1",
+    "shadcn": "^4.16.2",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10",

@@ -8,6 +8,10 @@ Current as of 2026-08-09.
 - Runtime: Cloudflare Workers through `@opennextjs/cloudflare`
 - Cache: `matthew-miao-next-cache` R2 bucket
 - Production Worker: `matthew-miao`
+- Staging: `https://matthew-miao-staging.matthew6688.workers.dev`
+- Preview: `https://matthew-miao-preview.matthew6688.workers.dev`
+- Staging cache: `matthew-miao-staging-next-cache` R2 bucket (shared by
+  staging and ephemeral preview builds)
 - Source: `matthew6688/matthew-miao`, branch `main`
 - Upstream baseline: `CaliCastle/cali.so@9d9b492`
 - Chinese is unprefixed; English uses `/en`.
@@ -36,6 +40,10 @@ and public runtime variables. Secrets are stored in Cloudflare, never in Git.
 GitHub's Production environment can deploy automatically after
 `CLOUDFLARE_API_TOKEN` is configured; without it, CI validates and reports a
 safe deployment skip.
+
+`dev` deploys to the persistent Staging Worker. Feature branches deploy to the
+Preview Worker. These workflows use the same validation gates as Production;
+they also skip deployment safely until the repository secret is configured.
 
 ## Provider boundary
 
