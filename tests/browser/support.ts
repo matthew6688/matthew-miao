@@ -43,8 +43,11 @@ export async function expectHealthyPublicDocument(
   page: Page,
   path: string,
   lang: 'en' | 'zh-CN',
+  options: { settleMs?: number } = {},
 ) {
   const response = await page.goto(path)
+
+  if (options.settleMs) await page.waitForTimeout(options.settleMs)
 
   expect(response?.status(), `Browser test route must return 200: ${path}`).toBe(200)
   await expect(page.locator('html')).toHaveAttribute('lang', lang)

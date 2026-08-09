@@ -30,6 +30,7 @@
     "test:deployment": "node --test scripts/check-production-migrations.test.mjs scripts/deployment-workflows.test.mjs scripts/refresh-snapshot-validation.test.mjs scripts/verify-legacy-url-contract.test.mjs",
     "test:browser": "playwright test",
     "test:browser:hosted": "playwright test --project=chromium --grep @hosted --workers=1",
+    "test:visual": "playwright test tests/browser/visual-matrix.spec.ts --project=chromium",
     "start": "next start",
     "test:ama": "vitest run lib/ama && pnpm db:validate",
     "test:security": "vitest run lib/security",
