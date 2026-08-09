@@ -125,7 +125,7 @@ export function PhotoNavCard({
                   className="nc-polaroid"
                   style={{ '--i': i } as React.CSSProperties}
                 >
-                  {/* Bunny is the public binary cache layer for Renditions. */}
+                  {/* The application media route serves immutable Renditions from R2. */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={rendition.src}
