@@ -188,13 +188,10 @@ add AMA_EMAIL_FROM
 add TENCENT_MEETING_MCP_URL
 add TENCENT_MEETING_MCP_TOKEN
 
-# Bunny media storage. Use the existing Rendition zone as the one production
-# Media zone; its Pull Zone blocks /originals/* and /transfer-chunks/*.
-add BUNNY_MEDIA_REGION
-add BUNNY_MEDIA_ZONE
-add BUNNY_MEDIA_PASSWORD
-add BUNNY_MEDIA_CDN_URL
-add BUNNY_CDN_API_KEY
+# Cloudflare R2 media storage is configured through the MEDIA_R2_BUCKET
+# binding in wrangler.jsonc. Only the application /media/renditions/* route is
+# public; Original and transfer-chunk namespaces remain private.
+add MEDIA_PUBLIC_BASE_URL
 
 # Media enrichment. Both capabilities are enabled by default.
 add GOOGLE_MAPS_GEOCODING_API_KEY
@@ -206,8 +203,9 @@ add MEDIA_ALT_TEXT_RATE_LIMIT_MAX_REQUESTS
 add MEDIA_ALT_TEXT_RATE_LIMIT_WINDOW_SECONDS
 ```
 
-The `BUNNY_STORAGE_CONTRACT_*` values are needed only for the live storage
-contract; consult `.env.example` and `docs/media/ai-provider-policy.md` first.
+R2 bucket bindings are not secrets. Verify their environment-specific names in
+`wrangler.jsonc` and consult `docs/media/ai-provider-policy.md` before enabling
+optional enrichment providers.
 
 ## 5. Dashboard-only checks
 

@@ -315,7 +315,7 @@ dates are intentionally omitted. An available Location Label joins the plate
 as a labeled cell. Capture labels are 10px and values are 12px so the plate
 preserves room for the photograph. The plate stays 0.75rem plus the device safe
 area from the screen's bottom edge on every viewport. Published photo tiles use
-`next/image` with the immutable Bunny Renditions as a custom responsive source
+`next/image` with immutable R2 Renditions as a custom responsive source
 set; the lightbox preloads and displays the largest available Rendition instead
 of enlarging the tile's selected source.
 

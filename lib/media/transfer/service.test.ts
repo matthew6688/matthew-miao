@@ -110,7 +110,7 @@ describe('Media Transfer service', () => {
 
   it('keeps the durable job when storage deletion fails', async () => {
     const f = fixture()
-    f.storage.deleteOriginal.mockRejectedValueOnce(new Error('Bunny offline'))
+    f.storage.deleteOriginal.mockRejectedValueOnce(new Error('R2 offline'))
 
     await expect(
       f.service.discard({ ownerUserId: 'owner_01', uploadIntentId }),

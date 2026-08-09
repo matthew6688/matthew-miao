@@ -101,7 +101,7 @@
 
 - Cloudflare：Workers/OpenNext runtime、Static Assets、Images、R2/DO/D1 Next cache、Hyperdrive、Cron Worker、Web Analytics、Production/Staging/Preview 环境
 - Neon：业务 PostgreSQL；独立 Production project、Staging project 与 preview branches
-- Bunny：单一 Media zone，Original/Rendition/Chunks 路径和保护规则
+- Cloudflare R2：Production 与非生产媒体 bucket；Original/Rendition/Chunks 路径和公开读取保护规则
 - Clerk：Matthew owner 用户与 `publicMetadata.siteOwner = "yes"`
 - Upstash：仅 Production 的 rate limit
 - Stripe：测试/生产 webhook、Checkout 与退款

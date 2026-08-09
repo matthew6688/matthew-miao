@@ -4,8 +4,8 @@ Status: completed in July 2026. This file preserves the two-photo migration
 inputs and the release boundary that removed the static fallback. It is not a
 current operating procedure. Current uploads use `/admin/media`, curation and
 publication use `/admin/photos`, and the active contract lives in
-`lib/media/CONTEXT.md`. Current storage and public-delivery release checks live
-in `docs/media/bunny-live-release-gate.md`.
+`lib/media/CONTEXT.md`. The current storage and public-delivery contract lives
+in `docs/adr/0014-cloudflare-r2-media-store.md`.
 
 ## Fixed inputs
 
