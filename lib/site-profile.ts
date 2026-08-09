@@ -27,7 +27,18 @@ export const siteProfile = {
     fengtalk: 'https://fengtalk.ai',
     uchat: 'https://uchat.au',
     calcomBooking: 'https://cal.com/matthew-miao/ama',
-    x: null,
+    x: {
+      handle: 'fengtalk_ai',
+      url: 'https://x.com/fengtalk_ai',
+    },
+    wechatService: {
+      searchName: 'matthewmiao',
+      qrImage: '/images/social/wechat-service-matthewmiao.png',
+    },
+    wechatSubscription: {
+      searchName: 'fengtalk.ai',
+      qrImage: '/images/social/wechat-subscription-fengtalk.png',
+    },
     youtube: null,
     telegram: null,
     xiaohongshu: null,

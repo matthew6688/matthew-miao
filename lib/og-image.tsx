@@ -28,7 +28,7 @@ const HOME_INTRODUCTIONS: Record<Locale, string> = {
 const IMAGE_SIZE = { width: 1200, height: 630 } as const
 async function renderHomeOgImage(locale: Locale) {
   const introduction = HOME_INTRODUCTIONS[locale]
-  const portrait = await publicImageDataUri('/images/matthew-placeholder-light.svg')
+  const portrait = await publicImageDataUri('/images/matthew-portrait.webp')
 
   return new ImageResponse(
     (
@@ -356,7 +356,7 @@ async function renderNewsletterOgImage(newsletter: NewsletterOgInput, locale: Lo
     locale === 'en'
       ? `${siteProfile.name.displayEn} · Archive ${newsletter.id.padStart(3, '0')}`
       : `${siteProfile.name.zh} · 存档 ${newsletter.id.padStart(3, '0')}`
-  const cover = await publicImageDataUri('/images/matthew-placeholder-light.svg')
+  const cover = await publicImageDataUri('/images/matthew-portrait.webp')
 
   return new ImageResponse(
     (

@@ -15,7 +15,7 @@ import { T } from '~/lib/i18n'
 import { localePath, type Locale } from '~/lib/locale-route'
 import { books, experience, records } from '~/lib/personal'
 import { projects } from '~/lib/projects'
-import { getGitHub } from '~/lib/social-live'
+import { getGitHub, getSocial } from '~/lib/social-live'
 import { getHomepagePhotoPreview } from '~/lib/media/photo-selection/repository'
 import { getPublishedPhotoSelection } from '~/lib/media/photo-selection/server'
 import { siteProfile } from '~/lib/site-profile'
@@ -44,7 +44,7 @@ function SectionTitle({
 }
 
 export async function HomePageView({ locale }: { locale: Locale }) {
-  const github = await getGitHub()
+  const [github, social] = await Promise.all([getGitHub(), getSocial()])
   const posts = getAllPosts()
   const latest = posts.slice(0, 5)
   const center = (latest.length - 1) / 2
@@ -62,7 +62,7 @@ export async function HomePageView({ locale }: { locale: Locale }) {
             <PixelCluster variant={2} className="shrink-0" />
           </div>
           <div className="mt-4">
-            <HomeIntroduction github={github} />
+            <HomeIntroduction github={github} x={social.x} />
           </div>
         </div>
         <div className="w-[9.35rem] shrink-0 sm:w-60">
@@ -74,10 +74,10 @@ export async function HomePageView({ locale }: { locale: Locale }) {
             }
           >
             <HalftonePortrait
-              srcLight="/images/matthew-placeholder-light.svg"
-              srcDark="/images/matthew-placeholder-dark.svg"
-              alt="Matthew 的抽象字母肖像占位图"
-              altEn="Abstract monogram placeholder for Matthew's portrait"
+              srcLight="/images/matthew-portrait.webp"
+              srcDark="/images/matthew-portrait.webp"
+              alt="Matthew 在溪流旁的肖像"
+              altEn="Portrait of Matthew beside a creek"
             />
           </PortraitHiddenStage>
         </div>

@@ -6,6 +6,9 @@ import {
   EmailCard,
   GitHubCard,
   type GitHubSnapshot,
+  type SocialSnapshot,
+  WeChatCard,
+  XCard,
 } from '~/components/social-cards'
 import { brailleText } from '~/lib/braille'
 import { T } from '~/lib/i18n'
@@ -43,9 +46,11 @@ async function CopyrightYear() {
 // column width (auto on mobile).
 export function SiteFooter({
   github,
+  x,
   locale = 'zh',
 }: {
   github: GitHubSnapshot
+  x: SocialSnapshot
   locale?: Locale
 }) {
   return (
@@ -54,6 +59,15 @@ export function SiteFooter({
         <Tree zh="联系" en="contact">
           <li>
             <GitHubCard data={github} />
+          </li>
+          <li>
+            <XCard data={x} />
+          </li>
+          <li>
+            <WeChatCard account="service" trigger={<T zh="微信服务号" en="WeChat Service" />} />
+          </li>
+          <li>
+            <WeChatCard account="subscription" trigger={<T zh="微信订阅号" en="WeChat Official" />} />
           </li>
           <li>
             <EmailCard address={siteProfile.email} />

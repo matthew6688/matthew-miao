@@ -4598,6 +4598,32 @@ a:focus-visible .external-label .external-mark {
   color: var(--foreground);
 }
 
+.wechat-card {
+  box-sizing: border-box;
+  height: 17.25rem;
+}
+
+.wechat-card-content {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.wechat-card-qr {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  border-radius: 2px;
+  object-fit: contain;
+}
+
+.wechat-card .service-card-stat {
+  margin-top: auto;
+}
+
 .xiaohongshu-card {
   box-sizing: border-box;
   /* fixed card dimensions; sized for the ruled stat foot */
