@@ -46,8 +46,10 @@ state and remaining provider work are recorded in
 
 AI agents should use
 [`publish-matthew-blog`](.agents/skills/publish-matthew-blog/SKILL.md) to create,
-translate, validate, and publish posts without changing the site's visual
-contract.
+translate, validate, and either deploy posts to the shared Cloudflare Preview
+for review or publish them through a protected Production PR. Preview is the
+default when publication intent is unclear; an explicit direct-publish request
+still keeps every validation and branch-protection gate.
 
 ## License and content rights
 

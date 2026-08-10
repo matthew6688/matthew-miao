@@ -1,5 +1,10 @@
 # Security verification
 
+> Historical upstream verification snapshot for the inherited Cali v3 system.
+> It is not the current Matthew deployment runbook. Current Cloudflare runtime,
+> provider boundaries and release checks are documented in
+> `docs/handoff.md`, `docs/security/baseline.md` and the committed workflows.
+
 Last checked: 2026-07-20. This note separates repository evidence from hosted
 settings. Do not paste credentials, scan findings, or exploit details here;
 use GitHub private vulnerability reporting.
