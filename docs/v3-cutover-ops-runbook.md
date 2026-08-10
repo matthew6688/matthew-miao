@@ -1,5 +1,9 @@
 # v3 cutover ops runbook
 
+> Historical upstream Cali/Vercel rebuild reference. Do not use it to operate
+> Matthew's current Cloudflare deployment. Use `docs/handoff.md`,
+> `docs/release/cutover-2026-08-09.md` and `.github/workflows/` instead.
+
 Maintainer-operated commands for the hosted blockers in
 `docs/v3-cutover-readiness.md`. Manual commands here change
 production-adjacent state and remain operator-controlled; the committed

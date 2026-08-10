@@ -152,6 +152,7 @@ Skill 支持：
 - 图片复制到文章同目录，生成稳定引用、尺寸和 alt text
 - 运行格式、链接、内容、OG、RSS、typecheck、unit 和文章页面 Playwright 检查
 - 默认创建草稿分支，不直接推送 `main`
+- 默认先临时注册到共享 Cloudflare Preview 并返回中英文审阅链接；明确“直接发布”时可跳过人工等待，但不能跳过验证、受保护 PR 或 Production hosted checks
 - 发布前展示 diff、URL、SEO 摘要和缺失项
 - 支持更新旧文、撤稿、重命名 slug，并维护 redirect/legacy manifest
 - 明确禁止把 secret、私人照片原图位置、EXIF 或未授权素材写入公开内容

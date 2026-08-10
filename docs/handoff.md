@@ -1,6 +1,6 @@
 # Matthew site handoff
 
-Current as of 2026-08-09.
+Current as of 2026-08-10.
 
 ## Live state
 
@@ -30,9 +30,10 @@ mode switch after its active selection is verified; database mode fails closed.
 ## Content ownership
 
 `lib/site-profile.ts` is the canonical public identity registry. Blog and
-newsletter content live in `content/`. Unconfirmed social accounts, shelves,
-photographs, and additional projects remain unpublished. Never restore upstream
-personal assets while syncing code.
+newsletter content live in `content/`. Confirmed GitHub, X and WeChat accounts,
+Matthew's portrait and five approved photographs are published. Unconfirmed
+social accounts, shelves and additional projects remain unpublished. Never
+restore upstream personal assets while syncing code.
 
 ## Cloudflare deployment
 
@@ -44,13 +45,15 @@ corepack pnpm deploy:cloudflare
 `wrangler.jsonc` owns the production Worker, custom domains, R2 cache and media
 bindings, and public runtime variables. Secrets are stored in Cloudflare,
 never in Git.
-GitHub's Production environment can deploy automatically after
-`CLOUDFLARE_API_TOKEN` is configured; without it, CI validates and reports a
-safe deployment skip.
+GitHub's Production environment deploys automatically with its encrypted
+`CLOUDFLARE_API_TOKEN`.
 
 `dev` deploys to the persistent Staging Worker. Feature branches deploy to the
 Preview Worker. These workflows use the same validation gates as Production;
-they also skip deployment safely until the repository secret is configured.
+Preview uses an encrypted, least-privilege `CLOUDFLARE_API_TOKEN` plus the
+non-secret `CLOUDFLARE_ACCOUNT_ID` environment variable. The exact Preview
+deployment and hosted browser gate passed on 2026-08-10. The Preview Worker is
+shared: the latest successful feature deployment replaces its prior contents.
 
 ## Provider boundary
 
@@ -75,20 +78,25 @@ and credentials:
 - Clerk owner authentication
 - Stripe Checkout/refunds/webhook
 - Google Calendar/Meet and Resend mail
-- PostgreSQL-backed media catalog and published photo selection
+- PostgreSQL-backed owner upload/catalog UI and database photo selection
 - Upstash production rate limiting
 - optional Tencent Meeting and AI providers
 
 Until Clerk is configured, Admin routes return a non-public 404 instead of a
 server error. The R2 media provider is configured; until PostgreSQL and Clerk
-are configured, the owner upload UI remains fail-closed and Photos uses the
-designed empty state.
+are configured, the owner upload UI remains fail-closed. Public Photos uses the
+verified Repository Photo Publication fallback and currently displays five
+approved, metadata-stripped derivatives.
 
 ## Publishing with an agent
 
 Read `.agents/skills/publish-matthew-blog/SKILL.md`. The skill creates paired
-Chinese/English MDX, validates frontmatter and media, runs release checks, and
-shows the final diff before publication.
+Chinese/English MDX, validates frontmatter and media, and supports two explicit
+delivery modes. Preview temporarily registers the draft on a feature branch,
+deploys the shared Cloudflare Preview, and returns both locale URLs for review.
+Publish uses a protected PR and waits for Production verification. “Direct
+publish” skips only the human Preview wait, never validation or branch
+protection.
 
 ## Required release checks
 
