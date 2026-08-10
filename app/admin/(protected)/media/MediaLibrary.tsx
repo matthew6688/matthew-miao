@@ -74,7 +74,7 @@ function uploadReplayStorageKey(input: {
   byteSize: number
   contentType: string
 }) {
-  return `cali:media-upload:v1:${input.checksumSha256}:${input.byteSize}:${input.contentType}`
+  return `matthew:media-upload:v1:${input.checksumSha256}:${input.byteSize}:${input.contentType}`
 }
 
 function durableUploadIdempotencyKey(input: {

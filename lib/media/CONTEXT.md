@@ -8,7 +8,7 @@ curation. The owner admin manages Media Assets and Draft Photo Selections;
 `/photos` and the homepage consume the active Published Photo Selection. Until
 Owner Admin credentials are configured, ADR-0015 permits an owner-reviewed
 Repository Photo Publication through the same public contract while the
-explicit bootstrap mode is enabled. Database mode fails closed. Cali's retired static list remains
+explicit bootstrap mode is enabled. Database mode fails closed. The retired upstream static list remains
 removed. Originals and R2 Renditions share
 one Media Store, while only Renditions are available through public delivery.
 

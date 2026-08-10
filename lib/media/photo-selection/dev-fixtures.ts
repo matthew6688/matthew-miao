@@ -63,7 +63,7 @@ const CARDS: Array<
     locationLabel: { zhHans: '蛇口', en: 'Shekou' },
     capturedAt: new Date('2026-05-08T02:00:00.000Z'),
     camera: {
-      make: 'Cali Labs',
+      make: 'Matthew Test Lab',
       model: 'Field Unit A7',
       lens: 'Fixture 35mm ƒ/2.0',
       focalLengthMillimeters: 35,
@@ -82,7 +82,7 @@ const CARDS: Array<
     locationLabel: { zhHans: '台北', en: 'Taipei' },
     capturedAt: new Date('2026-04-21T10:30:00.000Z'),
     camera: {
-      make: 'Cali Labs',
+      make: 'Matthew Test Lab',
       model: 'Field Unit A7',
       focalLengthMillimeters: 50,
       aperture: 1.8,
@@ -109,7 +109,7 @@ const CARDS: Array<
     locationLabel: { zhHans: '京都', en: 'Kyoto' },
     capturedAt: new Date('2026-02-14T23:45:00.000Z'),
     camera: {
-      make: 'Cali Labs',
+      make: 'Matthew Test Lab',
       model: 'Test Unit 02',
       lens: 'Fixture 23mm ƒ/2.8',
       focalLengthMillimeters: 23,
@@ -136,7 +136,7 @@ const CARDS: Array<
     altText: { zhHans: '测试卡 06', en: 'Test card 06' },
     capturedAt: new Date('2026-01-05T12:00:00.000Z'),
     camera: {
-      make: 'Cali Labs',
+      make: 'Matthew Test Lab',
       model: 'Field Unit A7',
       lens: 'Fixture 85mm ƒ/1.4',
       focalLengthMillimeters: 85,

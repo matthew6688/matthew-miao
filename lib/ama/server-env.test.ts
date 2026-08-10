@@ -11,7 +11,7 @@ const validEnvironment = {
   GOOGLE_CLIENT_SECRET: 'google-client-secret',
   UPSTASH_REDIS_REST_URL: 'https://example.upstash.io',
   UPSTASH_REDIS_REST_TOKEN: 'redis-secret',
-  SITE_URL: 'https://cali.so',
+  SITE_URL: 'https://matthew-miao.com',
   VERCEL_ENV: 'production',
 }
 
@@ -63,12 +63,12 @@ describe('AMA server environment', () => {
       ...validEnvironment,
       VERCEL_ENV: 'preview',
       VERCEL_URL: 'cali-preview-cali.vercel.app',
-      SITE_URL: 'https://beta.cali.so',
+      SITE_URL: 'https://matthew-miao-staging.matthew6688.workers.dev',
     })
 
-    expect(environment.SITE_URL.href).toBe('https://beta.cali.so/')
+    expect(environment.SITE_URL.href).toBe('https://matthew-miao-staging.matthew6688.workers.dev/')
     expect(environment.browserMutationBaseUrl.href).toBe(
-      'https://beta.cali.so/',
+      'https://matthew-miao-staging.matthew6688.workers.dev/',
     )
   })
 
@@ -113,7 +113,7 @@ describe('AMA server environment', () => {
       VERCEL_URL: 'cali-production-cali.vercel.app',
     })
 
-    expect(environment.browserMutationBaseUrl.href).toBe('https://cali.so/')
+    expect(environment.browserMutationBaseUrl.href).toBe('https://matthew-miao.com/')
   })
 
   it('rejects untrusted Vercel deployment host overrides', () => {
@@ -344,7 +344,7 @@ describe('AMA server environment', () => {
       STRIPE_SECRET_KEY: 'sk_test_secret',
       STRIPE_WEBHOOK_SECRET: 'whsec_secret',
       RESEND_API_KEY: 're_secret',
-      AMA_EMAIL_FROM: 'Cali Castle <ama@cali.so>',
+      AMA_EMAIL_FROM: 'Matthew Miao <hi@fengtalk.ai>',
       TENCENT_MEETING_MCP_URL: 'https://mcp.example.com/tencent',
       TENCENT_MEETING_MCP_TOKEN: 'tencent-token',
     })
@@ -427,12 +427,12 @@ describe('AMA server environment', () => {
     const environment = parseServerEnv({
       ...validEnvironment,
       RESEND_API_KEY: 're_secret',
-      AMA_EMAIL_FROM: 'Cali Castle <ama@cali.so>',
+      AMA_EMAIL_FROM: 'Matthew Miao <hi@fengtalk.ai>',
     })
     expect(environment.features.bookingFinalization).toBe(true)
-    expect(environment.AMA_EMAIL_FROM).toBe('Cali Castle <ama@cali.so>')
+    expect(environment.AMA_EMAIL_FROM).toBe('Matthew Miao <hi@fengtalk.ai>')
 
-    for (const malformed of ['@', '@cali.so', 'ama@', 'Cali <not-an-address>']) {
+    for (const malformed of ['@', '@example.com', 'ama@', 'Cali <not-an-address>']) {
       expect(() =>
         parseServerEnv({
           ...validEnvironment,
@@ -445,9 +445,9 @@ describe('AMA server environment', () => {
       parseServerEnv({
         ...validEnvironment,
         RESEND_API_KEY: 're_secret',
-        AMA_EMAIL_FROM: 'ama@cali.so',
+        AMA_EMAIL_FROM: 'hi@fengtalk.ai',
       }).AMA_EMAIL_FROM,
-    ).toBe('ama@cali.so')
+    ).toBe('hi@fengtalk.ai')
   })
 
   it('requires a complete secure Tencent MCP bridge configuration', () => {

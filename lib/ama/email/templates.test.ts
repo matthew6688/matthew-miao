@@ -27,7 +27,7 @@ function buildContext(overrides: Partial<BookingEmailContext> = {}): BookingEmai
     guestTimeZone: 'Asia/Taipei',
     meetingProvider: 'google-meet',
     meetingUrl: 'https://meet.google.com/abc-defg-hij',
-    manageUrl: 'https://cali.so/ama/manage/private-token-123',
+    manageUrl: 'https://matthew-miao.com/ama/manage/private-token-123',
     refund: null,
     ...overrides,
   }
@@ -89,8 +89,8 @@ describe('booking email templates', () => {
 
         it('includes the Manage Link when provided', () => {
           if (kind === 'cancelled') return
-          expect(email.text).toContain('https://cali.so/ama/manage/private-token-123')
-          expect(email.html).toContain('https://cali.so/ama/manage/private-token-123')
+          expect(email.text).toContain('https://matthew-miao.com/ama/manage/private-token-123')
+          expect(email.html).toContain('https://matthew-miao.com/ama/manage/private-token-123')
         })
 
         it('keeps the html table-free', () => {
@@ -153,9 +153,9 @@ describe('booking email templates', () => {
     const zh = renderBookingEmail(buildContext({ kind: 'needs_reschedule', locale: 'zh' }))
 
     expect(en.text).toContain('Your payment went through')
-    expect(en.text).toContain('https://cali.so/ama/manage/private-token-123')
+    expect(en.text).toContain('https://matthew-miao.com/ama/manage/private-token-123')
     expect(zh.text).toContain('付款已经成功')
-    expect(zh.text).toContain('https://cali.so/ama/manage/private-token-123')
+    expect(zh.text).toContain('https://matthew-miao.com/ama/manage/private-token-123')
   })
 
   it('confirms an automatic refund on cancellation', () => {

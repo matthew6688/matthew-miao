@@ -235,7 +235,7 @@ function fixture() {
         byteSize: input.bytes.byteLength,
         contentType: input.contentType,
       })
-      return `https://media-preview.cali.so/${input.key}`
+      return `https://matthew-miao-preview.matthew6688.workers.dev/media/${input.key}`
     }),
     inspectRendition: vi.fn(async (key: string) => {
       const stored = storedRenditions.get(key)

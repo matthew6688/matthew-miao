@@ -2,9 +2,9 @@
 
 状态：调研完成后的执行草案  
 初稿：2026-07-22；基线更新：2026-08-09  
-目标：以 `cali.so` v3 当前公开源码为基线，完整复制设计、交互、公开功能与 Owner Admin，只替换为 Matthew 的内容、资产、域名和服务账号。
+目标：以锁定的 MIT 上游源码为基线，完整复制设计、交互、公开功能与 Owner Admin，只替换为 Matthew 的内容、资产、域名和服务账号。
 
-当前锁定生产基线：[`CaliCastle/cali.so@9d9b492`](https://github.com/CaliCastle/cali.so/commit/9d9b4926e665a9b8f49135a2a7c5945bd9d87a7e)，使用 Next.js 16.3.0 正式版。Cali Baby 的产品页面、文案、图片和品牌资产不进入 Matthew 站点，但其共享框架修复、安全更新和通用交互改进保留。
+当前锁定生产基线记录在 `docs/research/upstream-source-audit.md`，使用 Next.js 16.3.0 正式版。上游产品页面、文案、图片和品牌资产不进入 Matthew 站点，但其共享框架修复、安全更新和通用交互改进保留。
 
 ## 决策摘要
 
@@ -20,7 +20,7 @@
 
 交付：可追溯、可同步上游的干净仓库。
 
-- 将 `CaliCastle/cali.so` 的锁定 commit 导入空仓库 `matthew6688/matthew-miao`
+- 将已审计的锁定 commit 导入空仓库 `matthew6688/matthew-miao`
 - 添加 `upstream` remote，`origin` 指向 Matthew 仓库
 - 建立 `main`、`dev` 和 feature branch 规则
 - 原样保留 MIT license 与内容例外说明
@@ -69,7 +69,7 @@
 
 - 建立类型化 Site Profile：姓名、简介、语言、所在地、坐标、时区、经历、社交、邮箱、域名、版权年份
 - 把 `lib/personal.ts`、`lib/projects.ts`、social snapshots、SEO、footer、OG、邮件和安全 AAD 中的身份常量迁入 Profile 或明确的版本化配置
-- 替换 `cali.so`、`CaliCastle`、`calicastle`、Zolplay 与旧账号引用
+- 替换全部上游域名、身份、品牌与旧账号引用
 - 删除上游文章、newsletter、照片、头像、肖像、个人插画和未授权项目资产
 - 为尚未提供的个人内容使用明确的 unpublished/empty state；不伪造 Matthew 的经历或项目
 - 保留书架/唱片组件结构；内容清单与封面由 Matthew 确认后注入

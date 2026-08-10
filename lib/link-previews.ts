@@ -1,9 +1,9 @@
 import previews from '~/content/link-previews.json'
 import { linkMediaPath, upstreamLinkMediaUrl } from '~/lib/link-media'
 import {
-  ogZolplayUrl,
+  linkPreviewProviderUrl,
   type LinkPreviewSnapshot,
-} from '~/lib/og-zolplay.mjs'
+} from '~/lib/link-preview-provider.mjs'
 
 export interface LinkPreview extends LinkPreviewSnapshot {}
 
@@ -31,10 +31,10 @@ export function faviconUrl(href: string): string | null {
     return null
   }
   if (upstreamLinkMediaUrl('favicon', origin)) return linkMediaPath('favicon', origin)
-  return ogZolplayUrl('favicon', origin)
+  return linkPreviewProviderUrl('favicon', origin)
 }
 
 export function ogImageUrl(href: string): string | null {
   if (upstreamLinkMediaUrl('image', href)) return linkMediaPath('image', href)
-  return ogZolplayUrl('image', href)
+  return linkPreviewProviderUrl('image', href)
 }

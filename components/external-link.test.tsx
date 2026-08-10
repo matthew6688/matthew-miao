@@ -27,7 +27,7 @@ describe('external link preview card', () => {
     const { getByRole } = render(
       <ExternalLink
         href={href}
-        favicon="https://og.zolplay.com/favicon/https%3A%2F%2Fexample.com%2F"
+        favicon="https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fexample.com&sz=64"
         preview={{
           domain: 'example.com',
           title: '设计文章',
@@ -53,7 +53,7 @@ describe('external link preview card', () => {
       expect(card?.textContent).not.toContain('An article about design.')
       const image = card?.querySelector('.link-card-image')
       expect(image?.getAttribute('src')).toBe(
-        'https://og.zolplay.com/image/https%3A%2F%2Fexample.com%2Farticles%2Fdesign',
+        'https://api.microlink.io/?url=https%3A%2F%2Fexample.com%2Farticles%2Fdesign&embed=image.url',
       )
       expect(image?.getAttribute('width')).toBe('236')
       expect(image?.getAttribute('height')).toBe('133')
@@ -65,7 +65,7 @@ describe('external link preview card', () => {
     const { getByRole } = render(
       <ExternalLink
         href="https://example.com/articles/design"
-        favicon="https://og.zolplay.com/favicon/https%3A%2F%2Fexample.com%2F"
+        favicon="https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fexample.com&sz=64"
         preview={{
           domain: 'example.com',
           titleEn: 'A design article',
@@ -92,7 +92,7 @@ describe('external link preview card', () => {
     const { getByRole } = render(
       <ExternalLink
         href="https://example.com/articles/design"
-        favicon="https://og.zolplay.com/favicon/https%3A%2F%2Fexample.com%2F"
+        favicon="https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fexample.com&sz=64"
         preview={{
           domain: 'example.com',
           titleEn: 'A design article',
@@ -124,7 +124,7 @@ describe('external link preview card', () => {
     const { getByRole } = render(
       <ExternalLink
         href="https://example.com"
-        favicon="https://og.zolplay.com/favicon/https%3A%2F%2Fexample.com%2F"
+        favicon="https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fexample.com&sz=64"
       >
         Example
       </ExternalLink>,

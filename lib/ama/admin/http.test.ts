@@ -23,10 +23,10 @@ function formRequest(
     if (typeof value === 'string') body.set(key, value)
     else for (const item of value) body.append(key, item)
   }
-  return new Request(`https://cali.so${path}`, {
+  return new Request(`https://matthew-miao.com${path}`, {
     method: 'POST',
     headers: {
-      origin: 'https://cali.so',
+      origin: 'https://matthew-miao.com',
       'sec-fetch-site': 'same-origin',
       ...(authenticated ? { cookie: 'owner=valid' } : {}),
     },
@@ -91,7 +91,7 @@ function fixture(rateLimitAllows = true) {
   }
   const securityEvents: SecurityAuditEvent[] = []
   const security = createAmaSecurity({
-    baseUrl: new URL('https://cali.so'),
+    baseUrl: new URL('https://matthew-miao.com'),
     features: {
       publicMutations: false,
       payments: false,
@@ -130,7 +130,7 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.availability,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const response = await handler(
@@ -156,7 +156,7 @@ describe('AMA admin HTTP contract', () => {
       },
       service: f.availability,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const response = await handler(
@@ -181,7 +181,7 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.availability,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const createResponse = await handler(
@@ -213,7 +213,7 @@ describe('AMA admin HTTP contract', () => {
     for (const response of [createResponse, updateResponse, deleteResponse]) {
       expect(response.status).toBe(303)
       expect(response.headers.get('location')).toBe(
-        'https://cali.so/admin/ama/settings?availability=saved',
+        'https://matthew-miao.com/admin/ama/settings?availability=saved',
       )
     }
   })
@@ -224,7 +224,7 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.availability,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const response = await handler(
@@ -248,7 +248,7 @@ describe('AMA admin HTTP contract', () => {
     ])
     expect(response.status).toBe(303)
     expect(response.headers.get('location')).toBe(
-      'https://cali.so/admin/ama/settings?availability=saved',
+      'https://matthew-miao.com/admin/ama/settings?availability=saved',
     )
   })
 
@@ -258,7 +258,7 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.availability,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const response = await handler(
@@ -272,7 +272,7 @@ describe('AMA admin HTTP contract', () => {
 
     expect(f.mutations).toEqual([])
     expect(response.headers.get('location')).toBe(
-      'https://cali.so/admin/ama/settings?availability=invalid',
+      'https://matthew-miao.com/admin/ama/settings?availability=invalid',
     )
   })
 
@@ -282,7 +282,7 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.availability,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const response = await handler(
@@ -295,7 +295,7 @@ describe('AMA admin HTTP contract', () => {
     )
 
     expect(response.headers.get('location')).toBe(
-      'https://cali.so/admin/ama/settings?availability=invalid',
+      'https://matthew-miao.com/admin/ama/settings?availability=invalid',
     )
     expect(f.mutations).toEqual([])
   })
@@ -306,7 +306,7 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.availability,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const response = await handler(
@@ -320,7 +320,7 @@ describe('AMA admin HTTP contract', () => {
       ['set-time-zone', 'America/Los_Angeles'],
     ])
     expect(response.headers.get('location')).toBe(
-      'https://cali.so/admin/ama/settings?availability=saved',
+      'https://matthew-miao.com/admin/ama/settings?availability=saved',
     )
   })
 
@@ -330,7 +330,7 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.availability,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     await handler(
@@ -368,7 +368,7 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.availability,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     await handler(
@@ -414,7 +414,7 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.availability,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const response = await handler(
@@ -432,7 +432,7 @@ describe('AMA admin HTTP contract', () => {
       ['create', { isoWeekday: 5, startMinute: 540, endMinute: 720 }],
     ])
     expect(response.headers.get('location')).toBe(
-      'https://cali.so/admin/ama/settings?availability=saved',
+      'https://matthew-miao.com/admin/ama/settings?availability=saved',
     )
   })
 
@@ -442,15 +442,15 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.google,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const response = await handler(
-      new Request('https://cali.so/api/admin/ama/google/connect', {
+      new Request('https://matthew-miao.com/api/admin/ama/google/connect', {
         method: 'POST',
         headers: {
           cookie: 'owner=valid',
-          origin: 'https://cali.so',
+          origin: 'https://matthew-miao.com',
           'sec-fetch-site': 'same-origin',
         },
       }),
@@ -467,10 +467,10 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.google,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
     const request = new Request(
-      'https://cali.so/api/admin/ama/google/callback?state=s&code=c',
+      'https://matthew-miao.com/api/admin/ama/google/callback?state=s&code=c',
       { headers: { cookie: 'owner=valid' } },
     )
 
@@ -480,7 +480,7 @@ describe('AMA admin HTTP contract', () => {
       ['complete', { state: 's', code: 'c', error: null }],
     ])
     expect(response.headers.get('location')).toBe(
-      'https://cali.so/admin/ama/settings?calendar=connected',
+      'https://matthew-miao.com/admin/ama/settings?calendar=connected',
     )
   })
 
@@ -490,7 +490,7 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.google,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const response = await handler(
@@ -500,7 +500,7 @@ describe('AMA admin HTTP contract', () => {
     expect(f.googleEvents).toEqual([['disconnect']])
     expect(f.mutations).toEqual([])
     expect(response.headers.get('location')).toBe(
-      'https://cali.so/admin/ama/settings?calendar=disconnected',
+      'https://matthew-miao.com/admin/ama/settings?calendar=disconnected',
     )
   })
 
@@ -514,11 +514,11 @@ describe('AMA admin HTTP contract', () => {
       },
       service: f.availability,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const response = await handler(
-      new Request('https://cali.so/api/admin/ama/availability', {
+      new Request('https://matthew-miao.com/api/admin/ama/availability', {
         method: 'POST',
         headers: {
           origin: 'https://attacker.example',
@@ -539,7 +539,7 @@ describe('AMA admin HTTP contract', () => {
       authenticator: f.authenticator,
       service: f.google,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
     })
 
     const response = await handler(

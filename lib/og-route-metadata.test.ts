@@ -92,10 +92,10 @@ describe('social OG image metadata', () => {
         metadataFor(
           'en',
           '/newsletters/1',
-          'Cali.so Monthly Update Newsletter 01',
+          'FengTalk Monthly Update 01',
           'Archive summary',
         ),
       ),
-    ).toBe('Cali.so Monthly Update Newsletter 01 · Matthew Miao')
+    ).toBe('FengTalk Monthly Update 01 · Matthew Miao')
   })
 })

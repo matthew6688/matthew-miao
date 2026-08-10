@@ -1,7 +1,7 @@
 # matthew-miao.com
 
-Matthew Miao's bilingual personal site, derived from cali.so v3 at the pinned
-upstream commit documented in `docs/research/upstream-source-audit.md`.
+Matthew Miao's bilingual personal site, derived from the pinned MIT upstream
+commit documented in `docs/research/upstream-source-audit.md`.
 
 **Picking up work?** Read `docs/implementation-plan.md`,
 `docs/content/site-profile-draft.md`, and `docs/handoff.md` first.

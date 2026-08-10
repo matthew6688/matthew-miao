@@ -1,11 +1,12 @@
 # Public asset sources
 
 Current source and ownership record for assets intentionally retained on
-Matthew's public site. Upstream personal photos, shelves, project art, Cali Baby
+Matthew's public site. Upstream personal photos, shelves, project art, retired product
 assets, and unconfirmed social imagery are not part of this inventory.
 
 | Asset | Source / status |
 | --- | --- |
+| `app/icon.svg` | Repository-authored Matthew “M” monogram favicon; deterministic vector using the site's paper, ink, and rust palette |
 | `public/images/matthew-placeholder-light.svg` | Repository-authored neutral Matthew monogram; explicitly not a portrait |
 | `public/images/matthew-placeholder-dark.svg` | Repository-authored dark variant of the neutral Matthew monogram |
 | `public/images/matthew-portrait.webp` | Matthew's own creek-side portrait, supplied and approved by Matthew on 2026-08-10; square WebP derivative with EXIF/GPS metadata removed; original remains outside Git |

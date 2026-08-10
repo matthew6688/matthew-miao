@@ -8,7 +8,7 @@ import { localeFromPathname, type Locale } from '~/lib/locale-route'
 export type { Locale } from '~/lib/locale-route'
 export { localize } from '~/lib/locale-route'
 
-export const LOCALE_CHANGE_EVENT = 'cali:locale-change'
+export const LOCALE_CHANGE_EVENT = 'matthew:locale-change'
 
 function getSnapshot(): Locale {
   return document.documentElement.dataset.locale === 'en' ? 'en' : 'zh'
@@ -30,4 +30,3 @@ export function useLocale(): Locale {
   if (!pathname || pathname === '/admin' || pathname.startsWith('/admin/')) return preference
   return localeFromPathname(pathname)
 }
-

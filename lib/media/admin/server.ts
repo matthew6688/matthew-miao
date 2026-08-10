@@ -80,7 +80,7 @@ function createServices() {
   const uploadChunkRateLimiter = createRateLimiter(
     environment.rateLimitBackend,
     {
-      prefix: 'cali:media:upload-chunk',
+      prefix: 'matthew:media:upload-chunk',
       maxRequests: 40,
       windowSeconds: uploadChunkRateLimitWindowSeconds,
     },
@@ -114,7 +114,7 @@ function createServices() {
     storage,
     generator: createMediaAltTextGenerator(altTextConfig),
     rateLimiter: createRateLimiter(environment.rateLimitBackend, {
-      prefix: 'cali:media:alt-text',
+      prefix: 'matthew:media:alt-text',
       maxRequests: altTextConfig.rateLimitMaxRequests,
       windowSeconds: altTextConfig.rateLimitWindowSeconds,
     }),

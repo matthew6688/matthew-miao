@@ -43,15 +43,15 @@ function request(
     contentType = 'application/json',
     headers = {},
     method,
-    origin = 'https://cali.so',
+    origin = 'https://matthew-miao.com',
   } = options
-  return new Request(`https://cali.so${path}`, {
+  return new Request(`https://matthew-miao.com${path}`, {
     method: method ?? (body === undefined ? 'GET' : 'POST'),
     headers: {
       ...(authenticated ? { cookie: 'owner=valid' } : {}),
       ...(body === undefined ? {} : { 'content-type': contentType }),
       origin,
-      'sec-fetch-site': origin === 'https://cali.so' ? 'same-origin' : 'cross-site',
+      'sec-fetch-site': origin === 'https://matthew-miao.com' ? 'same-origin' : 'cross-site',
       ...headers,
     },
     body,
@@ -72,7 +72,7 @@ function fixture(rateLimitAllows = true) {
     },
   }
   const security = createAmaSecurity({
-    baseUrl: new URL('https://cali.so'),
+    baseUrl: new URL('https://matthew-miao.com'),
     features: {
       publicMutations: false,
       payments: false,
@@ -220,7 +220,7 @@ describe('Media admin HTTP contract', () => {
   it('rejects cross-site and rate-limited mutations before service work', async () => {
     for (const [rateLimitAllows, origin, expectedStatus] of [
       [true, 'https://attacker.example', 403],
-      [false, 'https://cali.so', 429],
+      [false, 'https://matthew-miao.com', 429],
     ] as const) {
       const f = fixture(rateLimitAllows)
       const handler = createMediaAssetActionHandler({
@@ -851,7 +851,7 @@ describe('Media admin HTTP contract', () => {
     const handler = createMediaOriginalUploadHandler({
       authenticator: f.authenticator,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
       ingestionRepository: {
         async claimUploadIntentTransfer(ownerUserId, uploadIntentId) {
           f.calls.push({ ownerUserId, uploadIntentId })
@@ -951,7 +951,7 @@ describe('Media admin HTTP contract', () => {
     const handler = createMediaOriginalUploadHandler({
       authenticator: f.authenticator,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
       ingestionRepository: {
         async claimUploadIntentTransfer() {
           return {
@@ -1010,7 +1010,7 @@ describe('Media admin HTTP contract', () => {
     const handler = createMediaOriginalUploadHandler({
       authenticator: f.authenticator,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
       ingestionRepository: { claimUploadIntentTransfer },
       storage: {
         deleteOriginalChunk,
@@ -1054,7 +1054,7 @@ describe('Media admin HTTP contract', () => {
     const handler = createMediaOriginalUploadHandler({
       authenticator: f.authenticator,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
       ingestionRepository: {
         async claimUploadIntentTransfer() {
           return {
@@ -1092,7 +1092,7 @@ describe('Media admin HTTP contract', () => {
     const handler = createMediaOriginalUploadHandler({
       authenticator: f.authenticator,
       security: f.security,
-      baseUrl: new URL('https://cali.so'),
+      baseUrl: new URL('https://matthew-miao.com'),
       ingestionRepository: {
         async claimUploadIntentTransfer() {
           return {

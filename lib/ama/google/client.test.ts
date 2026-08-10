@@ -20,7 +20,7 @@ describe('Google Calendar provider', () => {
     const url = client.createAuthorizationUrl({
       state: 'persisted-state-123',
       codeVerifier: 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk',
-      redirectUri: new URL('https://cali.so/api/ama/google/callback'),
+      redirectUri: new URL('https://matthew-miao.com/api/ama/google/callback'),
     })
 
     expect(url.origin + url.pathname).toBe('https://accounts.google.com/o/oauth2/v2/auth')
@@ -30,7 +30,7 @@ describe('Google Calendar provider', () => {
       code_challenge: 'E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM',
       code_challenge_method: 'S256',
       prompt: 'consent',
-      redirect_uri: 'https://cali.so/api/ama/google/callback',
+      redirect_uri: 'https://matthew-miao.com/api/ama/google/callback',
       response_type: 'code',
       scope: GOOGLE_CALENDAR_SCOPES.join(' '),
       state: 'persisted-state-123',
@@ -63,7 +63,7 @@ describe('Google Calendar provider', () => {
     const tokenSet = await client.exchangeAuthorizationCode({
       code: 'authorization-code-value',
       codeVerifier: 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk',
-      redirectUri: new URL('https://cali.so/api/ama/google/callback'),
+      redirectUri: new URL('https://matthew-miao.com/api/ama/google/callback'),
     })
 
     expect(tokenSet).toEqual({
@@ -82,7 +82,7 @@ describe('Google Calendar provider', () => {
       code: 'authorization-code-value',
       code_verifier: 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk',
       grant_type: 'authorization_code',
-      redirect_uri: 'https://cali.so/api/ama/google/callback',
+      redirect_uri: 'https://matthew-miao.com/api/ama/google/callback',
     })
   })
 
@@ -104,7 +104,7 @@ describe('Google Calendar provider', () => {
     const exchange = client.exchangeAuthorizationCode({
       code: 'authorization-code-value',
       codeVerifier: 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk',
-      redirectUri: new URL('https://cali.so/api/ama/google/callback'),
+      redirectUri: new URL('https://matthew-miao.com/api/ama/google/callback'),
     })
 
     await expect(exchange).rejects.toEqual(
@@ -130,7 +130,7 @@ describe('Google Calendar provider', () => {
       client.exchangeAuthorizationCode({
         code: 'authorization-code-value',
         codeVerifier: 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk',
-        redirectUri: new URL('https://cali.so/api/ama/google/callback'),
+        redirectUri: new URL('https://matthew-miao.com/api/ama/google/callback'),
       }),
     ).rejects.toMatchObject({ code: 'denied_scope' })
   })
@@ -315,7 +315,7 @@ describe('Google Calendar provider', () => {
     const exchange = client.exchangeAuthorizationCode({
       code: secrets.code,
       codeVerifier: secrets.codeVerifier,
-      redirectUri: new URL('https://cali.so/api/ama/google/callback'),
+      redirectUri: new URL('https://matthew-miao.com/api/ama/google/callback'),
     })
 
     const error = await exchange.catch((caught: unknown) => caught)
@@ -363,7 +363,7 @@ describe('Google Calendar provider', () => {
       client.exchangeAuthorizationCode({
         code: 'authorization-code-value',
         codeVerifier: 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk',
-        redirectUri: new URL('https://cali.so/api/ama/google/callback'),
+        redirectUri: new URL('https://matthew-miao.com/api/ama/google/callback'),
       }),
     ).rejects.toMatchObject({
       code: 'invalid_response',
@@ -417,7 +417,7 @@ describe('Google Calendar provider', () => {
       .exchangeAuthorizationCode({
         code: 'authorization-code-value',
         codeVerifier: 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk',
-        redirectUri: new URL('https://cali.so/api/ama/google/callback'),
+        redirectUri: new URL('https://matthew-miao.com/api/ama/google/callback'),
       })
       .catch((caught: unknown) => caught)
 
