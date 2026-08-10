@@ -297,11 +297,12 @@ async function verifyDiscoveryFiles(baseUrl) {
     new RegExp(`Sitemap: ${new URL('/sitemap.xml', productionOrigin).href}`),
   )
 
-  const icon = await fetch(new URL('/icon.png', baseUrl))
+  const icon = await fetch(new URL('/icon.svg', baseUrl))
   assert.equal(icon.status, 200)
-  assert.match(icon.headers.get('content-type') ?? '', /^image\/png/)
-  const iconBytes = new Uint8Array(await icon.arrayBuffer())
-  assert.deepEqual([...iconBytes.slice(1, 4)], [0x50, 0x4e, 0x47])
+  assert.match(icon.headers.get('content-type') ?? '', /^image\/svg\+xml/)
+  const iconSvg = await icon.text()
+  assert.match(iconSvg, /aria-label="Matthew Miao"/)
+  assert.doesNotMatch(iconSvg, /Cali(?:Castle)?/i)
 }
 
 async function verifyNotFound(baseUrl) {
