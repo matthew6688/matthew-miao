@@ -88,3 +88,18 @@ and have a stable unique case in `lib/view-transition-name.ts`.
 
 - Draft: `validate-post.mjs <slug> --draft --check-links`.
 - Publish: register it, then `validate-post.mjs <slug> --check-links`.
+
+## Cloudflare Preview and Production
+
+An unregistered draft intentionally returns 404. To review the actual article UI,
+first pass the draft validator, then register the slug and transition ID only on
+the feature branch. Push that branch and wait for the `Deploy Preview` workflow.
+Review both `/blog/<slug>` and `/en/blog/<slug>` on
+`matthew-miao-preview.matthew6688.workers.dev`. The Preview Worker is shared and
+internet-accessible; the latest successful feature deployment replaces its prior
+contents.
+
+Publishing keeps the registration, passes the publication validator and protected
+PR checks, merges to `main`, and waits for the Production workflow. “Direct
+publish” may skip Matthew's Preview approval wait, but never skips validation,
+branch protection, Production deployment, or hosted verification.
