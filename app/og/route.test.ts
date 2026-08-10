@@ -21,11 +21,11 @@ import { GET } from './route'
 
 describe('retired product OG image route', () => {
   it.each(['zh', 'en'] as const)(
-    'returns 404 for the retired %s Cali Baby page',
+    'returns 404 for the retired %s retired product page',
     async (locale) => {
       const response = await GET(
         new Request(
-          `https://cali.so/og?locale=${locale}&path=%2Fcalibaby`,
+          `https://matthew-miao.com/og?locale=${locale}&path=%2Fretired-product`,
         ),
       )
 

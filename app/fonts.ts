@@ -15,18 +15,6 @@ const geistMono = Geist_Mono({
   display: 'swap',
 })
 
-const openRunde = localFont({
-  src: [
-    { path: './_fonts/OpenRunde-Regular.woff2', weight: '400' },
-    { path: './_fonts/OpenRunde-Medium.woff2', weight: '500' },
-    { path: './_fonts/OpenRunde-Semibold.woff2', weight: '600' },
-    { path: './_fonts/OpenRunde-Bold.woff2', weight: '700' },
-  ],
-  variable: '--font-open-runde',
-  display: 'swap',
-  adjustFontFallback: false,
-})
-
 // Shared CJK fallback for the bilingual public site.
 const frexSansGB = localFont({
   src: [
@@ -47,12 +35,6 @@ export function cjkFontVariableForLocale(locale: Locale) {
 
 export function fontVariablesForLocale(locale: Locale) {
   return [latinFontVariables, cjkFontVariableForLocale(locale)]
-    .filter(Boolean)
-    .join(' ')
-}
-
-export function caliBabyFontVariablesForLocale(locale: Locale) {
-  return [openRunde.variable, cjkFontVariableForLocale(locale)]
     .filter(Boolean)
     .join(' ')
 }

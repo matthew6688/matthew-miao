@@ -48,7 +48,7 @@ describe('admin CSP', () => {
   // instant-navigation shells. Admin pages rely on the static site policy
   // configured in next.config.
   it('stamps no per-request policy in the proxy', () => {
-    const response = siteProxy(new NextRequest('https://cali.so/admin/media'))
+    const response = siteProxy(new NextRequest('https://matthew-miao.com/admin/media'))
 
     expect(response.headers.get('content-security-policy')).toBeNull()
     expect(response.headers.get('x-middleware-request-x-nonce')).toBeNull()
@@ -70,7 +70,7 @@ describe('admin CSP', () => {
 
   it('passes admin requests through the real Clerk middleware unchanged', async () => {
     const response = await throughRealClerkMiddleware(
-      new NextRequest('https://cali.so/admin/photos'),
+      new NextRequest('https://matthew-miao.com/admin/photos'),
       event,
     )
 
@@ -79,12 +79,12 @@ describe('admin CSP', () => {
 
   it('hides development-only AMA fixtures before Clerk outside development', () => {
     const response = siteProxy(
-      new NextRequest('https://cali.so/admin/ama/fixtures/bookings'),
+      new NextRequest('https://matthew-miao.com/admin/ama/fixtures/bookings'),
     )
 
     expect(response.status).toBe(404)
     expect(response.headers.get('x-middleware-rewrite')).toBe(
-      'https://cali.so/_not-found',
+      'https://matthew-miao.com/_not-found',
     )
   })
 })

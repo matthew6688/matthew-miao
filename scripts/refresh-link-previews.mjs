@@ -1,11 +1,14 @@
-// Rebuilds content/link-previews.json through og.zolplay.com for the external
+// Rebuilds content/link-previews.json through the neutral metadata provider for external
 // links found in both localized post sources. Run manually when posts change:
 //   node scripts/refresh-link-previews.mjs
 // Requires network access; existing entries are kept when a fetch fails.
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 
-import { normalizeOgMetadata, ogZolplayUrl } from '../lib/og-zolplay.mjs'
+import {
+  linkPreviewProviderUrl,
+  normalizeOgMetadata,
+} from '../lib/link-preview-provider.mjs'
 
 const POSTS_DIR = 'content/blog'
 const CACHE = 'content/link-previews.json'
@@ -32,7 +35,7 @@ const cache = JSON.parse(readFileSync(CACHE, 'utf8'))
 
 for (const url of urls) {
   try {
-    const metadataUrl = ogZolplayUrl('metadata', url)
+    const metadataUrl = linkPreviewProviderUrl('metadata', url)
     if (!metadataUrl) throw new Error('invalid public HTTP(S) target')
 
     const res = await fetch(metadataUrl, {

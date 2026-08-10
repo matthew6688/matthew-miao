@@ -1,6 +1,6 @@
-# v3 Design Language
+# Matthew Miao Design Language
 
-The visual and interaction spec for cali.so v3. It extends the component stack
+The visual and interaction spec for matthew-miao.com. It extends the component stack
 in ADR-0006 (motion is information, not decoration). Rules here are written to
 be buildable: when a value is stated, use it; when a component is described,
 its behavior spec is the contract.
@@ -142,16 +142,14 @@ are short, concrete, and conversational — "为什么按钮不需要手指光�
 
 ## Homepage introduction
 
-The homepage opens with four short bilingual paragraphs: Cali is a father of
-two, a design engineer, and an agent orchestrator; he loves getting the details
-just right. Zolplay is introduced as an AI-native design studio creating
-products, brands, and digital experiences, a casual generalist note connects
-curiosity and craft to having fun with the team, and a final contact line links
-to X, GitHub, and email.
-Chinese also includes Xiaohongshu. Those inline contact triggers reuse the footer's
+The homepage opens with short bilingual paragraphs introducing Matthew as a
+Brisbane-based builder working across web coding, AI agents, automation,
+outreach, and company knowledge. FengTalk and UChat connect that curiosity to
+the products he is building, and a final contact line links to confirmed public
+channels only. Those inline contact triggers reuse the footer's
 fixed-size informational preview cards and remain plain destination links on
 touch. The personal sentence carries two decorative 18px
-marks: the supplied design-engineer figure and the supplied orbital sparkle
+marks: the locally maintained builder figure and orbital sparkle
 for getting details just right. The orbital mark precedes its phrase in both
 locales. Inline text establishes the shared baseline while each mark centers
 against that text, so neither localized phrase shifts vertically. Hovering the
@@ -163,7 +161,7 @@ characters in 刚刚好 and the three words in "details just right" rise in
 sequence to `translateY(-5px) scale(1.03)` over a one-second spring, staggered
 by 80ms, then settle back at their origin as the animation's end state. English
 punctuation stays inside the unbreakable phrase wrapper but outside the
-animated units, keeping its baseline and position stable. The Zolplay mention
+animated units, keeping its baseline and position stable. The FengTalk mention
 uses the shared external-link preview, its fixed favicon slot, and the standard
 northeast mark. Decorative marks stay out of the accessibility tree, reduced
 motion keeps every mark and text unit static, and the text remains complete
@@ -263,7 +261,7 @@ open rich hover cards. The contract:
   Favicons and Open Graph images are served through the server-side cache at
   `/link-media` (`app/link-media/[kind]/route.ts`), allowlisted against the
   snapshot so the proxy can't be aimed at arbitrary hosts; targets not yet in
-  the snapshot fall back to `og.zolplay.com` directly.
+  the snapshot remain plain anchors until the metadata refresh records them.
   Favicon tone chips (`components/favicon-tone.ts`): the same-origin icon is
   pixel-sampled once on load, and a glyph that would vanish into the theme
   background — white-on-transparent in light mode, black-on-transparent in
@@ -271,7 +269,7 @@ open rich hover cards. The contract:
   slot size unchanged); opaque near-white tiles get a hairline edge on the
   light page. Colorful icons, opaque dark tiles (their glyphs carry their
   own contrast), and un-proxied fallback icons stay untouched. Refresh the metadata
-  from the same first-party service with
+  from the configured neutral metadata provider with
   `node scripts/refresh-link-previews.mjs`.
 - **Link texture.** Inline prose and homepage contact links use a fine dotted
   underline at 38% current ink. Hover and keyboard focus deepen both text and
@@ -367,8 +365,8 @@ typewriter/ascii textures, measuring ticks, registration marks. Rules:
   `oklch(0.98 0.004 95)`, ink `oklch(0.28 0.012 95)`), developing into the
   true photo on hover/focus (300ms). Two modes: pure ordered dither (4×4
   Bayer, 2.5px cells — list thumbnails), and the collage — seeded vertical
-  panels of dither, ascii raster (7px cells, ` -li+tcsea` ramp — the letters of
-  "cali castle" plus - and +, ordered by ink), and a
+  panels of dither, ascii raster (7px cells, ` -mi+athwe` ramp — letters from
+  "matthew miao" plus - and +, ordered by ink), and a
   window of the original photo (post heroes). Post covers enter with a
   morse-choreographed glitch (· — · · –, coverage ≈9→39→12→12→12%);
   afterwards **clicking toggles photo ⇄ the full dither print** through

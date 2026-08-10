@@ -12,7 +12,7 @@ export function getAmaSecurity() {
 
   const environment = getServerEnv()
   const limiter = createRateLimiter(environment.rateLimitBackend, {
-    prefix: 'cali:ama:admin-mutation',
+    prefix: 'matthew:ama:admin-mutation',
     maxRequests: environment.ADMIN_MUTATION_RATE_LIMIT_MAX_REQUESTS,
     windowSeconds: environment.ADMIN_MUTATION_RATE_LIMIT_WINDOW_SECONDS,
   })

@@ -1,4 +1,5 @@
-// Duotone dock icons (18×18, currentColor with 30% fills), provided by Cali.
+// Duotone dock icons (18×18, currentColor with 30% fills), retained from the
+// MIT-licensed visual baseline and maintained locally for Matthew's site.
 
 function Base({ children }: { children: React.ReactNode }) {
   return (

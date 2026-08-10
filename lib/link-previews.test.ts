@@ -21,13 +21,16 @@ describe('link preview media URLs', () => {
     )
   })
 
-  it('falls back to the service for targets missing from the snapshot', () => {
-    expect(faviconUrl('https://not-in-snapshot.example/articles/design')).toBe(
-      'https://og.zolplay.com/favicon/https%3A%2F%2Fnot-in-snapshot.example%2F',
+  it('keeps confirmed homepage services behind the first-party proxy', () => {
+    expect(faviconUrl('https://fengtalk.ai/about')).toBe('/images/projects/fengtalk.svg')
+    expect(faviconUrl('https://uchat.au/')).toBe(
+      '/link-media/favicon?url=https%3A%2F%2Fuchat.au',
     )
-    expect(ogImageUrl('https://not-in-snapshot.example/articles/design')).toBe(
-      'https://og.zolplay.com/image/https%3A%2F%2Fnot-in-snapshot.example%2Farticles%2Fdesign',
-    )
+  })
+
+  it('keeps targets missing from the snapshot as plain links', () => {
+    expect(faviconUrl('https://not-in-snapshot.example/articles/design')).toBeNull()
+    expect(ogImageUrl('https://not-in-snapshot.example/articles/design')).toBeNull()
   })
 
   it('degrades bad links to null instead of throwing', () => {
@@ -38,20 +41,20 @@ describe('link preview media URLs', () => {
 })
 
 describe('link media proxy allowlist', () => {
-  it('resolves allowlisted targets to their og.zolplay.com upstream', () => {
+  it('resolves allowlisted targets to their neutral upstream', () => {
     expect(upstreamLinkMediaUrl('favicon', 'https://astro.build')).toBe(
-      'https://og.zolplay.com/favicon/https%3A%2F%2Fastro.build%2F',
+      'https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fastro.build&sz=64',
     )
     expect(upstreamLinkMediaUrl('favicon', 'https://astro.build/deep/page')).toBe(
-      'https://og.zolplay.com/favicon/https%3A%2F%2Fastro.build%2F',
+      'https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fastro.build&sz=64',
     )
     expect(upstreamLinkMediaUrl('image', 'https://astro.build/')).toBe(
-      'https://og.zolplay.com/image/https%3A%2F%2Fastro.build%2F',
+      'https://api.microlink.io/?url=https%3A%2F%2Fastro.build%2F&embed=image.url',
     )
   })
 
-  it('rejects removed upstream chrome identities', () => {
-    expect(upstreamLinkMediaUrl('favicon', 'https://zolplay.com')).toBeNull()
+  it('rejects unknown legacy origins', () => {
+    expect(upstreamLinkMediaUrl('favicon', 'https://legacy.example')).toBeNull()
   })
 
   it('rejects everything else', () => {

@@ -1,4 +1,4 @@
-export type OgZolplayEndpoint = 'metadata' | 'favicon' | 'image'
+export type LinkPreviewProviderEndpoint = 'metadata' | 'favicon' | 'image'
 
 export interface LinkPreviewSnapshot {
   domain: string
@@ -9,7 +9,10 @@ export interface LinkPreviewSnapshot {
   hasImage?: boolean
 }
 
-export function ogZolplayUrl(endpoint: OgZolplayEndpoint, target: string): string | null
+export function linkPreviewProviderUrl(
+  endpoint: LinkPreviewProviderEndpoint,
+  target: string,
+): string | null
 
 export function normalizeOgMetadata(
   target: string,

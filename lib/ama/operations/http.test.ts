@@ -20,7 +20,7 @@ function fixture(options: { cronSecret?: string; throws?: boolean } = {}) {
 }
 
 function workRequest(authorization?: string) {
-  return new Request('https://cali.so/api/internal/ama/work', {
+  return new Request('https://matthew-miao.com/api/internal/ama/work', {
     headers: authorization ? { authorization } : {},
   })
 }

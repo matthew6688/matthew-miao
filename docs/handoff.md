@@ -15,7 +15,7 @@ Current as of 2026-08-10.
 - Staging cache: `matthew-miao-staging-next-cache` R2 bucket (shared by
   staging and ephemeral preview builds)
 - Source: `matthew6688/matthew-miao`, branch `main`
-- Upstream baseline: `CaliCastle/cali.so@9d9b492`
+- Upstream baseline: the pinned source recorded in `docs/research/upstream-source-audit.md`
 - Chinese is unprefixed; English uses `/en`.
 
 Public home, blog, bilingual article, projects, five-photo publication, sitemap, RSS,

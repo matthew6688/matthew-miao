@@ -17,10 +17,10 @@ const allFeatures: AmaFeatureFlags = {
 }
 
 function browserMutation(cookie = '__session=private-session') {
-  return new Request('https://cali.so/api/admin/ama/availability', {
+  return new Request('https://matthew-miao.com/api/admin/ama/availability', {
     method: 'POST',
     headers: {
-      origin: 'https://cali.so',
+      origin: 'https://matthew-miao.com',
       'sec-fetch-site': 'same-origin',
       cookie,
     },
@@ -28,11 +28,11 @@ function browserMutation(cookie = '__session=private-session') {
 }
 
 function bearerMutation() {
-  return new Request('https://cali.so/api/admin/ama/availability', {
+  return new Request('https://matthew-miao.com/api/admin/ama/availability', {
     method: 'POST',
     headers: {
       authorization: 'Bearer rotated-clerk-token',
-      origin: 'https://cali.so',
+      origin: 'https://matthew-miao.com',
       'sec-fetch-site': 'same-origin',
     },
   })
@@ -44,7 +44,7 @@ function fixture(input?: {
 }) {
   const events: SecurityAuditEvent[] = []
   const security = createAmaSecurity({
-    baseUrl: new URL('https://cali.so'),
+    baseUrl: new URL('https://matthew-miao.com'),
     features: input?.features ?? allFeatures,
     pseudonymKey: Buffer.alloc(32, 3),
     rateLimiter: { limit: input?.limit ?? (async () => ({ success: true })) },
@@ -92,7 +92,7 @@ describe('AMA security service', () => {
 
   it('rejects cross-site mutations without logging request data', async () => {
     const { security, events } = fixture()
-    const request = new Request('https://cali.so/api/admin/ama/availability', {
+    const request = new Request('https://matthew-miao.com/api/admin/ama/availability', {
       method: 'POST',
       headers: {
         origin: 'https://attacker.example/private-email@example.com',

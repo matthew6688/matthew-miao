@@ -1,12 +1,12 @@
 import previews from '~/content/link-previews.json'
-import { ogZolplayUrl } from '~/lib/og-zolplay.mjs'
+import { linkPreviewProviderUrl } from '~/lib/link-preview-provider.mjs'
 
 // Targets the /link-media proxy will serve, derived from the build-time
 // preview snapshot (content/link-previews.json) plus the few chrome links
 // that live outside prose — the proxy can never be aimed at an arbitrary
 // host. Links added to a post before the snapshot refreshes fall back to
 // the service directly (see lib/link-previews.ts).
-const EXTRA_FAVICON_ORIGINS: string[] = []
+const EXTRA_FAVICON_ORIGINS = ['https://uchat.au']
 
 const snapshot = previews as Record<string, { hasImage?: boolean }>
 
@@ -24,7 +24,7 @@ for (const [href, preview] of Object.entries(snapshot)) {
 
 export type LinkMediaKind = 'favicon' | 'image'
 
-// Resolves a proxy target to its og.zolplay.com upstream, or null when the
+// Resolves a proxy target to its allowlisted upstream, or null when the
 // target isn't allowlisted. Favicons resolve per site: any target under a
 // known origin maps to that origin's icon; images require the exact page
 // URL recorded in the snapshot.
@@ -36,11 +36,11 @@ export function upstreamLinkMediaUrl(kind: string, target: string): string | nul
     } catch {
       return null
     }
-    return faviconOrigins.has(origin) ? ogZolplayUrl('favicon', origin) : null
+    return faviconOrigins.has(origin) ? linkPreviewProviderUrl('favicon', origin) : null
   }
 
   if (kind === 'image') {
-    return imageTargets.has(target) ? ogZolplayUrl('image', target) : null
+    return imageTargets.has(target) ? linkPreviewProviderUrl('image', target) : null
   }
 
   return null

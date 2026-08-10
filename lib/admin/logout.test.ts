@@ -6,13 +6,13 @@ import type { AmaSecurity } from '~/lib/ama/security/service'
 
 import { createAdminLogoutHandler } from './logout'
 
-function request(origin = 'https://cali.so') {
-  return new Request('https://cali.so/api/admin/auth/logout', {
+function request(origin = 'https://matthew-miao.com') {
+  return new Request('https://matthew-miao.com/api/admin/auth/logout', {
     method: 'POST',
     headers: {
       origin,
       'sec-fetch-site':
-        origin === 'https://cali.so' ? 'same-origin' : 'cross-site',
+        origin === 'https://matthew-miao.com' ? 'same-origin' : 'cross-site',
     },
   })
 }
@@ -121,7 +121,7 @@ describe('Clerk admin logout', () => {
     const response = await handler(request())
 
     expect(response.status).toBe(303)
-    expect(response.headers.get('location')).toBe('https://cali.so/')
+    expect(response.headers.get('location')).toBe('https://matthew-miao.com/')
     expect(revokeSession).toHaveBeenCalledExactlyOnceWith('sess_active')
     expect(recordPrivilegedAction).toHaveBeenCalledWith(
       expect.any(Request),

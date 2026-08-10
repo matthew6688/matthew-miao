@@ -33,7 +33,7 @@ const WEBHOOK_SECRET = 'whsec_test_secret'
 function makeGuard(options: { allow?: boolean; throws?: boolean } = {}) {
   const limitedKeys: string[] = []
   const guard = createPublicRequestGuard({
-    baseUrl: new URL('https://cali.so'),
+    baseUrl: new URL('https://matthew-miao.com'),
     rateLimiter: {
       async limit(key) {
         limitedKeys.push(key)
@@ -51,11 +51,11 @@ function jsonRequest(
   body: unknown,
   headers: Record<string, string> = {},
 ) {
-  return new Request(`https://cali.so${path}`, {
+  return new Request(`https://matthew-miao.com${path}`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
-      origin: 'https://cali.so',
+      origin: 'https://matthew-miao.com',
       'sec-fetch-site': 'same-origin',
       ...headers,
     },
@@ -101,10 +101,10 @@ describe('public request guard', () => {
       'wrong origin',
       { origin: 'https://attacker.example', 'sec-fetch-site': 'same-origin' },
     ],
-    ['missing sec-fetch-site', { origin: 'https://cali.so' }],
+    ['missing sec-fetch-site', { origin: 'https://matthew-miao.com' }],
     [
       'cross-site fetch metadata',
-      { origin: 'https://cali.so', 'sec-fetch-site': 'cross-site' },
+      { origin: 'https://matthew-miao.com', 'sec-fetch-site': 'cross-site' },
     ],
   ])('denies a request with %s before any service work', async (_name, headers) => {
     const { guard } = makeGuard()
@@ -112,7 +112,7 @@ describe('public request guard', () => {
     const handler = createHoldCreateHandler({ service: f.service, guard })
 
     const response = await handler(
-      new Request('https://cali.so/api/ama/holds', {
+      new Request('https://matthew-miao.com/api/ama/holds', {
         method: 'POST',
         headers: { 'content-type': 'application/json', ...headers },
         body: JSON.stringify(holdBody),
@@ -229,11 +229,11 @@ describe('hold create handler', () => {
     const handler = createHoldCreateHandler({ service: f.service, guard })
 
     const response = await handler(
-      new Request('https://cali.so/api/ama/holds', {
+      new Request('https://matthew-miao.com/api/ama/holds', {
         method: 'POST',
         headers: {
           'content-type': 'application/x-www-form-urlencoded',
-          origin: 'https://cali.so',
+          origin: 'https://matthew-miao.com',
           'sec-fetch-site': 'same-origin',
         },
         body: 'startsAt=now',
@@ -327,7 +327,7 @@ describe('hold state handler', () => {
     const f = stateFixture({ state: 'unknown' })
 
     const response = await f.handler(
-      new Request('https://cali.so/api/ama/holds/x'),
+      new Request('https://matthew-miao.com/api/ama/holds/x'),
       'not-a-uuid',
     )
 
@@ -339,7 +339,7 @@ describe('hold state handler', () => {
     const f = stateFixture({ state: 'unknown' })
 
     const response = await f.handler(
-      new Request('https://cali.so/api/ama/holds/x'),
+      new Request('https://matthew-miao.com/api/ama/holds/x'),
       HOLD_ID,
     )
 
@@ -358,7 +358,7 @@ describe('hold state handler', () => {
     })
 
     const response = await f.handler(
-      new Request('https://cali.so/api/ama/holds/x'),
+      new Request('https://matthew-miao.com/api/ama/holds/x'),
       HOLD_ID,
     )
 
@@ -387,7 +387,7 @@ describe('hold state handler', () => {
     })
 
     const response = await f.handler(
-      new Request('https://cali.so/api/ama/holds/x'),
+      new Request('https://matthew-miao.com/api/ama/holds/x'),
       HOLD_ID,
     )
 
@@ -408,7 +408,7 @@ describe('hold state handler', () => {
     const f = stateFixture({ state: 'expired' })
 
     const response = await f.handler(
-      new Request('https://cali.so/api/ama/holds/x'),
+      new Request('https://matthew-miao.com/api/ama/holds/x'),
       HOLD_ID,
     )
 
@@ -511,7 +511,7 @@ describe('Stripe webhook handler', () => {
   }
 
   function webhookRequest(payload: string, signature: string) {
-    return new Request('https://cali.so/api/ama/webhooks/stripe', {
+    return new Request('https://matthew-miao.com/api/ama/webhooks/stripe', {
       method: 'POST',
       headers: { 'stripe-signature': signature },
       body: payload,
@@ -694,7 +694,7 @@ describe('manage handlers', () => {
     const handler = createManageStateHandler({ manage })
 
     const response = await handler(
-      new Request('https://cali.so/api/ama/manage/x'),
+      new Request('https://matthew-miao.com/api/ama/manage/x'),
       'unknown-token',
     )
 
@@ -710,7 +710,7 @@ describe('manage handlers', () => {
     const handler = createManageStateHandler({ manage })
 
     const response = await handler(
-      new Request('https://cali.so/api/ama/manage/x'),
+      new Request('https://matthew-miao.com/api/ama/manage/x'),
       'raw-token',
     )
     const text = await response.text()
@@ -786,7 +786,7 @@ describe('manage handlers', () => {
     const handler = createManageRescheduleHandler({ manage, guard })
 
     const response = await handler(
-      new Request('https://cali.so/api/ama/manage/x/reschedule', {
+      new Request('https://matthew-miao.com/api/ama/manage/x/reschedule', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ startsAt: STARTS_AT.toISOString() }),

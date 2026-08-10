@@ -32,7 +32,7 @@ const NOW = new Date('2026-07-01T12:00:00Z')
 const STARTS_AT = new Date('2026-07-10T09:00:00Z')
 const ENDS_AT = new Date('2026-07-10T10:00:00Z')
 const ENCRYPTION_KEY = Buffer.alloc(32, 5).toString('base64')
-const BASE_URL = new URL('https://cali.so')
+const BASE_URL = new URL('https://matthew-miao.com')
 
 function makeBooking(overrides: Partial<BookingRecord> = {}): BookingRecord {
   return {
@@ -743,7 +743,7 @@ describe('send_booking_email', () => {
       expect(sent.idempotencyKey).toBe(dedupeKey)
       expect(sent.message.to).toBe('ada@example.com')
       const rawToken = deriveManageToken(ENCRYPTION_KEY, 'bk_1')
-      expect(sent.message.text).toContain(`https://cali.so/en/ama/manage/${rawToken}`)
+      expect(sent.message.text).toContain(`https://matthew-miao.com/en/ama/manage/${rawToken}`)
       expect(f.events.at(-1)).toMatchObject({ event: 'email_sent', detail: { kind } })
     },
   )
@@ -755,7 +755,7 @@ describe('send_booking_email', () => {
 
     const rawToken = deriveManageToken(ENCRYPTION_KEY, 'bk_1')
     expect(f.emailSends[0].message.text).toContain(
-      `https://cali.so/ama/manage/${rawToken}`,
+      `https://matthew-miao.com/ama/manage/${rawToken}`,
     )
     expect(f.emailSends[0].message.text).not.toContain('/en/ama/manage/')
   })

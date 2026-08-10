@@ -15,7 +15,7 @@ const message: EmailMessage = {
 function createSender(fetch: typeof globalThis.fetch) {
   return createResendEmailSender({
     apiKey: 'resend-api-key-must-stay-private',
-    from: 'Cali <sessions@cali.so>',
+    from: 'Matthew <hi@fengtalk.ai>',
     fetch,
   })
 }
@@ -38,7 +38,7 @@ describe('Resend email sender', () => {
       'Idempotency-Key': 'booking-42:confirmation',
     })
     expect(JSON.parse(String(init?.body))).toEqual({
-      from: 'Cali <sessions@cali.so>',
+      from: 'Matthew <hi@fengtalk.ai>',
       to: ['guest@example.com'],
       subject: message.subject,
       text: message.text,

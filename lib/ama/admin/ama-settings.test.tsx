@@ -30,7 +30,7 @@ function settingsProps(
         intervals: [],
       },
     ],
-    publicBookingUrl: 'https://cali.so/ama/book',
+    publicBookingUrl: 'https://matthew-miao.com/ama/book',
     googleConnection: {
       status,
       identity:
@@ -38,7 +38,7 @@ function settingsProps(
           ? null
           : {
               calendarId: 'owner@example.com',
-              summary: 'Cali Castle',
+              summary: 'Matthew Miao',
               email: 'owner@example.com',
             },
     },
@@ -82,7 +82,7 @@ describe('AMA settings UI contract', () => {
     expect(html).toContain('2026-07-18')
     expect(html).toContain('Readiness checklist')
     expect(html).toContain('Connect Google Calendar to check conflicts before publishing open times.')
-    expect(html).toContain('href="https://cali.so/ama/book"')
+    expect(html).toContain('href="https://matthew-miao.com/ama/book"')
   })
 
   it.each([
@@ -234,7 +234,7 @@ describe('AMA settings UI contract', () => {
         overrides={[]}
         googleConnection={{ status: 'disconnected', identity: null }}
         previewSlots={[]}
-        publicBookingUrl="https://cali.so/ama/book"
+        publicBookingUrl="https://matthew-miao.com/ama/book"
       />,
     )
     const form = container.querySelector<HTMLFormElement>(
@@ -262,12 +262,12 @@ describe('AMA settings UI contract', () => {
           status: 'connected',
           identity: {
             calendarId: 'owner@example.com',
-            summary: 'Cali Castle',
+            summary: 'Matthew Miao',
             email: 'owner@example.com',
           },
         }}
         previewSlots={[]}
-        publicBookingUrl="https://cali.so/ama/book"
+        publicBookingUrl="https://matthew-miao.com/ama/book"
       />,
     )
     const form = container.querySelector<HTMLFormElement>(
@@ -376,7 +376,7 @@ describe('AMA settings UI contract', () => {
         overrides={[]}
         googleConnection={{ status: 'disconnected', identity: null }}
         previewSlots={[]}
-        publicBookingUrl="https://cali.so/ama/book"
+        publicBookingUrl="https://matthew-miao.com/ama/book"
         notices={{ availability: 'saved' }}
       />,
     )

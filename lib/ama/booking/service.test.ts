@@ -72,7 +72,7 @@ function fixture() {
     operations: operations.repository,
     availability,
     stripe,
-    baseUrl: new URL('https://cali.so'),
+    baseUrl: new URL('https://matthew-miao.com'),
     clock: { now: () => now },
   })
 
@@ -447,9 +447,9 @@ describe('Booking service createCheckout', () => {
     expect(call.expiresAt).toEqual(new Date(NOW.getTime() + 30 * MS_PER_MINUTE))
     expect(call.clientReferenceId).toBe(f.holdId)
     expect(call.successUrl).toBe(
-      `https://cali.so/ama/book/confirmation?hold=${f.holdId}`,
+      `https://matthew-miao.com/ama/book/confirmation?hold=${f.holdId}`,
     )
-    expect(call.cancelUrl).toBe('https://cali.so/ama/book?checkout=cancelled')
+    expect(call.cancelUrl).toBe('https://matthew-miao.com/ama/book?checkout=cancelled')
     expect(call.metadata).toEqual({ holdId: f.holdId, intentId: f.repo.intents[0].id })
     const metadataDump = JSON.stringify(call.metadata)
     expect(metadataDump).not.toContain('ada@example.com')
@@ -465,7 +465,7 @@ describe('Booking service createCheckout', () => {
 
     expect(f.stripeCalls[0].successUrl).toContain('/en/ama/book/confirmation?hold=')
     expect(f.stripeCalls[0].cancelUrl).toBe(
-      'https://cali.so/en/ama/book?checkout=cancelled',
+      'https://matthew-miao.com/en/ama/book?checkout=cancelled',
     )
   })
 

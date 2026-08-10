@@ -8,7 +8,7 @@ import { GET } from './route'
 
 const request = () =>
   new Request(
-    'https://cali.so/link-media/favicon?url=https%3A%2F%2Fastro.build',
+    'https://matthew-miao.com/link-media/favicon?url=https%3A%2F%2Fastro.build',
   )
 
 const context = () => ({

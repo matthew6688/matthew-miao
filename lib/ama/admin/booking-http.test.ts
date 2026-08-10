@@ -23,11 +23,11 @@ function jsonRequest(
   body: unknown,
   options: { authenticated?: boolean; headers?: Record<string, string> } = {},
 ) {
-  return new Request(`https://cali.so${path}`, {
+  return new Request(`https://matthew-miao.com${path}`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
-      origin: 'https://cali.so',
+      origin: 'https://matthew-miao.com',
       'sec-fetch-site': 'same-origin',
       ...(options.authenticated === false ? {} : { cookie: 'owner=valid' }),
       ...options.headers,
@@ -82,7 +82,7 @@ function fixture(options: { rateLimitAllows?: boolean } = {}) {
 
   const securityEvents: SecurityAuditEvent[] = []
   const security = createAmaSecurity({
-    baseUrl: new URL('https://cali.so'),
+    baseUrl: new URL('https://matthew-miao.com'),
     features: {
       publicMutations: true,
       payments: true,
@@ -108,7 +108,7 @@ function fixture(options: { rateLimitAllows?: boolean } = {}) {
     authenticator,
     service,
     security,
-    baseUrl: new URL('https://cali.so'),
+    baseUrl: new URL('https://matthew-miao.com'),
   }
 
   return {

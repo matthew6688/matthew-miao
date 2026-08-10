@@ -1,12 +1,12 @@
 # AMA Booking
 
-AMA Booking covers the paid one-to-one sessions Cali offers through the site,
+AMA Booking covers the paid one-to-one sessions Matthew offers through the site,
 from choosing a time through the session's completion.
 
 ## Language
 
 **AMA Session**:
-A paid 60-minute one-to-one conversation with Cali about one or more topics
+A paid 60-minute one-to-one conversation with Matthew about one or more topics
 chosen by the guest.
 _Avoid_: Consultation package, coaching call, appointment
 
@@ -20,7 +20,7 @@ with optional supporting links.
 _Avoid_: Application, intake questionnaire, notes
 
 **Availability Window**:
-A recurring period when Cali is generally open to AMA Sessions; actual open
+A recurring period when Matthew is generally open to AMA Sessions; actual open
 times also account for calendar conflicts and booking rules.
 _Avoid_: Slot, office hours
 

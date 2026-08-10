@@ -87,6 +87,20 @@ test('feature pushes deploy a validated Cloudflare Preview', async () => {
   assertOrdered(job.steps, 'Validate application', 'Deploy exact commit to Cloudflare Preview')
   assertOrdered(
     job.steps,
+    'Deploy exact commit to Cloudflare Preview',
+    'Wait for Preview deployment convergence',
+  )
+  assert.match(
+    job.steps.find((step) => step.name === 'Wait for Preview deployment convergence').run,
+    /wait-for-cloudflare-deployment\.mjs/,
+  )
+  assertOrdered(
+    job.steps,
+    'Wait for Preview deployment convergence',
+    'Install Playwright Chromium',
+  )
+  assertOrdered(
+    job.steps,
     'Install Playwright Chromium',
     'Verify Preview in browser',
   )
@@ -111,6 +125,20 @@ test('dev validates and deploys the persistent Cloudflare Staging environment', 
   )
   assert.match(browserCheck.run, /pnpm test:browser:hosted/)
   assertOrdered(job.steps, 'Validate application', 'Deploy exact commit to Cloudflare Staging')
+  assertOrdered(
+    job.steps,
+    'Deploy exact commit to Cloudflare Staging',
+    'Wait for Staging deployment convergence',
+  )
+  assert.match(
+    job.steps.find((step) => step.name === 'Wait for Staging deployment convergence').run,
+    /wait-for-cloudflare-deployment\.mjs/,
+  )
+  assertOrdered(
+    job.steps,
+    'Wait for Staging deployment convergence',
+    'Install Playwright Chromium',
+  )
   assertOrdered(
     job.steps,
     'Install Playwright Chromium',
@@ -161,6 +189,25 @@ test('main validates and deploys the exact commit to Cloudflare Workers', async 
     (step) => step.name === 'Deploy exact commit to Cloudflare Workers',
   )
   assert.match(deploy.run, /opennextjs-cloudflare deploy/)
+  assertOrdered(
+    job.steps,
+    'Deploy exact commit to Cloudflare Workers',
+    'Wait for Production deployment convergence',
+  )
+  assert.match(
+    job.steps.find((step) => step.name === 'Wait for Production deployment convergence').run,
+    /wait-for-cloudflare-deployment\.mjs/,
+  )
+  assertOrdered(
+    job.steps,
+    'Wait for Production deployment convergence',
+    'Install Playwright Chromium',
+  )
+  assertOrdered(
+    job.steps,
+    'Install Playwright Chromium',
+    'Verify production routes',
+  )
   assert.doesNotMatch(JSON.stringify(job), /VERCEL_/)
 })
 

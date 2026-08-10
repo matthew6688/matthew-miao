@@ -17,10 +17,10 @@ describe('Media reconciliation HTTP boundary', () => {
       getReconciliation: () => ({ run }),
     })
     const denied = await handler(
-      new Request('https://cali.so/api/internal/media/reconcile'),
+      new Request('https://matthew-miao.com/api/internal/media/reconcile'),
     )
     const allowed = await handler(
-      new Request('https://cali.so/api/internal/media/reconcile', {
+      new Request('https://matthew-miao.com/api/internal/media/reconcile', {
         headers: { authorization: 'Bearer cron-secret' },
       }),
     )
@@ -45,7 +45,7 @@ describe('Media reconciliation HTTP boundary', () => {
       getReconciliation: () => ({ run: vi.fn() }),
     })
     const response = await handler(
-      new Request('https://cali.so/api/internal/media/reconcile', {
+      new Request('https://matthew-miao.com/api/internal/media/reconcile', {
         headers: { authorization: 'Bearer anything' },
       }),
     )

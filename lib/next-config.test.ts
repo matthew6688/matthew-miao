@@ -38,10 +38,10 @@ describe('route security headers', () => {
 
     expect(globalPolicy).toContain("font-src 'self' data:")
     expect(rules).not.toContainEqual(
-      expect.objectContaining({ source: '/calibaby/:path*' }),
+      expect.objectContaining({ source: '/retired-product/:path*' }),
     )
     expect(rules).not.toContainEqual(
-      expect.objectContaining({ source: '/en/calibaby/:path*' }),
+      expect.objectContaining({ source: '/en/retired-product/:path*' }),
     )
   })
 

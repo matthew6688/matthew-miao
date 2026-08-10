@@ -10,7 +10,7 @@ import {
   storeOriginalChunkFromSameOriginRequest,
 } from './upload'
 
-const canonicalBaseUrl = new URL('https://cali.so')
+const canonicalBaseUrl = new URL('https://matthew-miao.com')
 const bytes = new TextEncoder().encode('private image bytes')
 const expectation = {
   key: 'originals/asset_01/revision_01.heic',
@@ -23,7 +23,7 @@ function uploadRequest(
   body: BodyInit = bytes,
   headers: Record<string, string> = {},
 ) {
-  return new Request('https://cali.so/api/admin/media/uploads/intent_01', {
+  return new Request('https://matthew-miao.com/api/admin/media/uploads/intent_01', {
     method: 'PUT',
     headers: {
       'content-type': 'application/octet-stream',

@@ -70,7 +70,7 @@ describe('faviconTone', () => {
   })
 
   it('samples same-origin media without touching cross-origin fallbacks', () => {
-    const pageUrl = 'https://cali.so/ama'
+    const pageUrl = 'https://matthew-miao.com/ama'
 
     expect(
       isSameOriginFaviconSource(
@@ -80,7 +80,7 @@ describe('faviconTone', () => {
     ).toBe(true)
     expect(
       isSameOriginFaviconSource(
-        'https://og.zolplay.com/favicon?url=https%3A%2F%2Fcursor.com',
+        'https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fcursor.com&sz=64',
         pageUrl,
       ),
     ).toBe(false)

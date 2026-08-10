@@ -120,7 +120,7 @@ function fixture() {
   const randomValues = ['persisted-state', 'pkce-verifier']
   const service = createGoogleCalendarService({
     ownerEmail: 'owner@example.com',
-    baseUrl: new URL('https://cali.so'),
+    baseUrl: new URL('https://matthew-miao.com'),
     repository,
     provider,
     secretBox: box,
@@ -153,7 +153,7 @@ function connectedConnection(
     status: 'connected',
     calendarId: 'owner@example.com',
     calendarEmail: 'owner@example.com',
-    calendarSummary: 'Cali Castle',
+    calendarSummary: 'Matthew Miao',
     grantedScopes: [...GOOGLE_CALENDAR_SCOPES],
     refreshTokenEnvelope,
     accessTokenExpiresAt: new Date('2026-07-14T05:00:00.000Z'),
@@ -177,7 +177,7 @@ describe('Google Calendar connection service', () => {
         {
           state: 'persisted-state',
           codeVerifier: 'pkce-verifier',
-          redirectUri: new URL('https://cali.so/api/admin/ama/google/callback'),
+          redirectUri: new URL('https://matthew-miao.com/api/admin/ama/google/callback'),
         },
       ],
     ])
@@ -208,7 +208,7 @@ describe('Google Calendar connection service', () => {
       {
         code: 'authorization-code',
         codeVerifier: 'pkce-verifier',
-        redirectUri: new URL('https://cali.so/api/admin/ama/google/callback'),
+        redirectUri: new URL('https://matthew-miao.com/api/admin/ama/google/callback'),
       },
     ])
     expect(f.calls).not.toContainEqual(['identity', 'access-token'])

@@ -33,7 +33,7 @@ test('@hosted signed-out admin navigation stops at the authentication boundary',
 
   expect([302, 307]).toContain(response.status())
   const location = new URL(headers.location)
-  expect(location.hostname).not.toContain('cali.so')
+  expect(location.hostname).not.toContain('legacy.example')
   expect(location.pathname).toBe('/sign-in')
   expect(new URL(location.searchParams.get('redirect_url')!).pathname).toBe('/admin')
 })

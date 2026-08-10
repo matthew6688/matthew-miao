@@ -28,11 +28,11 @@ describe('public content proxy', () => {
     '/newsletters/not-an-id',
     '/en/newsletters/not-an-id',
   ])('rewrites an unknown content route before streaming: %s', (pathname) => {
-    const response = siteProxy(new NextRequest(`https://cali.so${pathname}`))
+    const response = siteProxy(new NextRequest(`https://matthew-miao.com${pathname}`))
 
     expect(response.status).toBe(404)
     expect(response.headers.get('x-middleware-rewrite')).toBe(
-      'https://cali.so/_not-found',
+      'https://matthew-miao.com/_not-found',
     )
   })
 
@@ -60,7 +60,7 @@ describe('public content proxy', () => {
     '/en/newsletters/1',
   ])('passes through a published content route without Clerk: %s', async (pathname) => {
     const response = await middleware(
-      new NextRequest(`https://cali.so${pathname}`),
+      new NextRequest(`https://matthew-miao.com${pathname}`),
       event,
     )
 
@@ -73,7 +73,7 @@ describe('public content proxy', () => {
     '/blog/opengraph-image-generated',
     '/en/blog/opengraph-image-generated',
   ])('does not mistake a generated metadata route for a post slug: %s', (pathname) => {
-    const response = siteProxy(new NextRequest(`https://cali.so${pathname}`))
+    const response = siteProxy(new NextRequest(`https://matthew-miao.com${pathname}`))
 
     expect(response.status).toBe(200)
     expect(response.headers.get('x-middleware-next')).toBe('1')
