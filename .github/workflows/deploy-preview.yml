@@ -54,6 +54,9 @@ jobs:
       - name: Report missing deployment credential
         if: ${{ env.CLOUDFLARE_API_TOKEN == '' }}
         run: echo "::warning::Add preview CLOUDFLARE_API_TOKEN to enable automatic deployment."
+      - name: Wait for Preview deployment convergence
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        run: node scripts/wait-for-cloudflare-deployment.mjs "$PUBLIC_SITE_URL"
       - name: Install Playwright Chromium
         if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
         run: pnpm exec playwright install --with-deps chromium
