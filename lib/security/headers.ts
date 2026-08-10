@@ -31,17 +31,12 @@ function optionalClerkSource() {
   }
 }
 
-function optionalCloudflareAnalyticsSource() {
-  return process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN
-    ? ' https://static.cloudflareinsights.com'
-    : ''
-}
-
-function optionalCloudflareAnalyticsConnectSource() {
-  return process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN
-    ? ' https://cloudflareinsights.com'
-    : ''
-}
+// Production uses Cloudflare's automatic Web Analytics injection, which
+// happens after the Worker has emitted its response and therefore cannot be
+// detected from build-time environment variables. Keep these origins scoped
+// to public pages; the owner admin deliberately remains outside analytics.
+const cloudflareAnalyticsScriptSource = ' https://static.cloudflareinsights.com'
+const cloudflareAnalyticsConnectSource = ' https://cloudflareinsights.com'
 
 function contentSecurityPolicy(
   scriptSources: string,
@@ -79,16 +74,16 @@ function contentSecurityPolicy(
 // nonce policy was retired in July 2026: nonces require dynamic rendering,
 // which is incompatible with instant navigation.
 const publicContentSecurityPolicy = contentSecurityPolicy(
-  `'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''}${optionalCloudflareAnalyticsSource()}`,
+  `'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''}${cloudflareAnalyticsScriptSource}`,
   "'self' 'unsafe-inline'",
-  { connectSources: optionalCloudflareAnalyticsConnectSource() },
+  { connectSources: cloudflareAnalyticsConnectSource },
 )
 
 const blogContentSecurityPolicy = contentSecurityPolicy(
-  `'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''}${optionalCloudflareAnalyticsSource()}`,
+  `'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''}${cloudflareAnalyticsScriptSource}`,
   "'self' 'unsafe-inline'",
   {
-    connectSources: optionalCloudflareAnalyticsConnectSource(),
+    connectSources: cloudflareAnalyticsConnectSource,
     frameSources: 'https://www.youtube-nocookie.com https://player.vimeo.com https://*.cloudflarestream.com',
   },
 )
