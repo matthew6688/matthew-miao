@@ -21,13 +21,18 @@ describe('link preview media URLs', () => {
     )
   })
 
-  it('falls back to the service for targets missing from the snapshot', () => {
-    expect(faviconUrl('https://not-in-snapshot.example/articles/design')).toBe(
-      'https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fnot-in-snapshot.example&sz=64',
+  it('keeps confirmed homepage services behind the first-party proxy', () => {
+    expect(faviconUrl('https://fengtalk.ai/about')).toBe(
+      '/link-media/favicon?url=https%3A%2F%2Ffengtalk.ai',
     )
-    expect(ogImageUrl('https://not-in-snapshot.example/articles/design')).toBe(
-      'https://api.microlink.io/?url=https%3A%2F%2Fnot-in-snapshot.example%2Farticles%2Fdesign&embed=image.url',
+    expect(faviconUrl('https://uchat.au/')).toBe(
+      '/link-media/favicon?url=https%3A%2F%2Fuchat.au',
     )
+  })
+
+  it('keeps targets missing from the snapshot as plain links', () => {
+    expect(faviconUrl('https://not-in-snapshot.example/articles/design')).toBeNull()
+    expect(ogImageUrl('https://not-in-snapshot.example/articles/design')).toBeNull()
   })
 
   it('degrades bad links to null instead of throwing', () => {

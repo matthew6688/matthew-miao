@@ -65,7 +65,7 @@ function contentSecurityPolicy(
     `script-src ${scriptSources}`,
     "script-src-attr 'none'",
     `style-src ${styleSources}`,
-    `img-src 'self' data: blob: https://www.google.com https://api.microlink.io${optionalMediaImageSource()}`,
+    `img-src 'self' data: blob:${optionalMediaImageSource()}`,
     "font-src 'self' data:",
     `connect-src 'self'${connectSources}`,
     "media-src 'self' blob:",

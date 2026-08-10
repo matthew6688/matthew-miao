@@ -23,13 +23,13 @@ afterEach(() => {
 describe('external link preview card', () => {
   it('shows localized rich metadata and a fixed Open Graph image slot', async () => {
     document.documentElement.dataset.locale = 'en'
-    const href = 'https://example.com/articles/design'
+    const href = 'https://astro.build/'
     const { getByRole } = render(
       <ExternalLink
         href={href}
-        favicon="https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fexample.com&sz=64"
+        favicon="/link-media/favicon?url=https%3A%2F%2Fastro.build"
         preview={{
-          domain: 'example.com',
+          domain: 'astro.build',
           title: '设计文章',
           titleEn: 'A design article',
           description: '关于设计的文章。',
@@ -47,13 +47,13 @@ describe('external link preview card', () => {
       const card = document.querySelector('.link-card')
       expect(card).not.toBeNull()
       expect(card?.classList.contains('link-card-with-image')).toBe(true)
-      expect(card?.textContent).toContain('example.com')
+      expect(card?.textContent).toContain('astro.build')
       expect(card?.textContent).toContain('A design article')
       // the image speaks for the page — description only on image-less cards
       expect(card?.textContent).not.toContain('An article about design.')
       const image = card?.querySelector('.link-card-image')
       expect(image?.getAttribute('src')).toBe(
-        'https://api.microlink.io/?url=https%3A%2F%2Fexample.com%2Farticles%2Fdesign&embed=image.url',
+        '/link-media/image?url=https%3A%2F%2Fastro.build%2F',
       )
       expect(image?.getAttribute('width')).toBe('236')
       expect(image?.getAttribute('height')).toBe('133')
@@ -64,10 +64,10 @@ describe('external link preview card', () => {
     document.documentElement.dataset.locale = 'en'
     const { getByRole } = render(
       <ExternalLink
-        href="https://example.com/articles/design"
-        favicon="https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fexample.com&sz=64"
+        href="https://astro.build/"
+        favicon="/link-media/favicon?url=https%3A%2F%2Fastro.build"
         preview={{
-          domain: 'example.com',
+          domain: 'astro.build',
           titleEn: 'A design article',
           descriptionEn: 'An article about design.',
           hasImage: false,
@@ -91,10 +91,10 @@ describe('external link preview card', () => {
     document.documentElement.dataset.locale = 'en'
     const { getByRole } = render(
       <ExternalLink
-        href="https://example.com/articles/design"
-        favicon="https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fexample.com&sz=64"
+        href="https://astro.build/"
+        favicon="/link-media/favicon?url=https%3A%2F%2Fastro.build"
         preview={{
-          domain: 'example.com',
+          domain: 'astro.build',
           titleEn: 'A design article',
           descriptionEn: 'An article about design.',
           hasImage: true,
