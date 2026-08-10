@@ -2,7 +2,7 @@
 
 状态：调研完成后的执行草案  
 初稿：2026-07-22；基线更新：2026-08-09  
-目标：以锁定的 MIT 上游源码为基线，完整复制设计、交互、公开功能与 Owner Admin，只替换为 Matthew 的内容、资产、域名和服务账号。
+目标：以锁定的 MIT 上游源码为基线，完整复制设计、交互与公开功能，只替换为 Matthew 的内容、资产、域名和服务账号。Owner Admin 的继承实现保留 fail-closed，但已由 ADR-0016 明确移出当前生产产品范围。
 
 当前锁定生产基线记录在 `docs/research/upstream-source-audit.md`，使用 Next.js 16.3.0 正式版。上游产品页面、文案、图片和品牌资产不进入 Matthew 站点，但其共享框架修复、安全更新和通用交互改进保留。
 
@@ -13,8 +13,9 @@
 3. 个人内容和受版权保护资产必须全部替换；MIT 源码和设计实现保留。
 4. 所有身份替换集中到 Site Profile，避免散落的姓名、域名和社交账号再次硬编码。
 5. 博客继续使用仓库内 MDX，并提供项目专属 Agent Skill，使 AI 可以安全地创建、翻译、预览和发布文章。
-6. 发布前以自动化测试和视觉差异证明 1:1，而非主观验收。
+6. 发布前以自动化测试、保留的上游组件结构，以及 Matthew 站点的双语、多视口、明暗主题与 reduced-motion golden matrix 证明 1:1，而非对不同个人内容做无意义的逐像素相减。
 7. Matthew 于 2026-08-09 明确批准 Cal.com 取代自建公开预约、支付、日历与通知流程；`/ama` 的 1:1 介绍页与 CTA 视觉保持不变，`/ama/book` 和 `/en/ama/book` 成为保留路由并跳转到同一个由浏览器语言本地化的 Cal.com Event Type。这是经 Owner 批准的功能例外，不作为上游视觉漂移回灌到其他页面。
+8. Matthew 于 2026-08-10 确认以仓库 Agent Skills 管理博客和照片，并以 Cal.com 管理预约；ADR-0016 将继承的 Neon/Clerk/SendGrid 自建 Owner Admin 与 AMA provider stack 移出当前上线范围。它们保持 fail-closed，不再作为完成门禁。
 
 ## Phase 0 — 锁定基线与仓库治理
 
@@ -97,7 +98,7 @@
 
 ## Phase 4 — 服务环境与安全隔离
 
-交付：Production、Staging、Preview 环境与上游功能等价。
+交付：Production、Staging、Preview 环境覆盖当前公开产品合同。以下继承 provider 项仅在未来重新批准 Owner Admin 时执行，不阻塞当前发布。
 
 - Cloudflare：Workers/OpenNext runtime、Static Assets、Images、R2/DO/D1 Next cache、Hyperdrive、Cron Worker、Web Analytics、Production/Staging/Preview 环境
 - Neon：业务 PostgreSQL；独立 Production project、Staging project 与 preview branches
@@ -165,14 +166,14 @@ Skill 支持：
 
 ## Phase 8 — 完整发布验收
 
-必须全部通过：
+当前公开产品必须全部通过：
 
 - frozen lockfile install、typecheck、unit、localization、AMA、security、media、deployment、production build
 - Chromium 完整 Playwright、WebKit smoke、hosted Staging tests
 - 三视口 × 双主题 × 双语言 × reduced-motion 的视觉矩阵
-- 首页、文章、项目、照片、AMA、Checkout test mode、manage link、Admin、上传、策展和发布流程
+- 首页、文章、项目、照片、AMA、Cal.com 跳转，以及博客/照片 Agent Skill 的 Preview 与发布流程
 - SEO、canonical、hreflang、RSS、sitemap、robots、OG 和 structured metadata
-- 404、403、500、provider 缺失、数据库不可用、CDN 图片失败和社交 API 失败的降级行为
+- 404、403、500、provider 缺失、CDN 图片失败和社交 API 失败的降级行为；继承 Admin/数据库 provider 必须继续 fail-closed
 - Lighthouse/性能结果不得因身份替换出现显著回退
 - 最终身份与版权扫描
 

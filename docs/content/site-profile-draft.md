@@ -126,7 +126,7 @@ Matthew 于 2026-08-09 确认使用 Cal.com 承载公开预约与付款。
 
 - 主题：AI Agent、业务自动化、Web coding、outreach、外贸获客、company knowledge
 - 语言：中文或英文
-- 60 分钟：USD 99
+- 30 分钟：USD 299
 - 会议方式：Google Meet
 - 改期：开始前 24 小时可免费改期一次
 - 退款：开始前 24 小时取消可全额退款；之后不退款

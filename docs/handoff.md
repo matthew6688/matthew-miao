@@ -59,7 +59,7 @@ shared: the latest successful feature deployment replaces its prior contents.
 
 The public AMA page keeps the pinned visual contract. Its Chinese and English
 booking routes redirect to `https://cal.com/matthew-miao/ama`; Cal.com owns the
-60-minute US$99 booking, Google Meet, email, rescheduling, and cancellation
+30-minute US$299 booking, Google Meet, email, rescheduling, and cancellation
 workflow. The Cal.com dashboard was configured with Stripe payment and a
 one-calendar-day refund policy on 2026-08-09, but a real paid booking, refund,
 and notification round trip remains a manual Production acceptance item.
@@ -68,11 +68,8 @@ and notification round trip remains a manual Production acceptance item.
 gate verifies only fields exposed by Cal.com's Event Type API and cannot prove
 the payment-app connection or refund execution.
 The inherited self-hosted AMA provider routes remain fail-closed and are not the
-public booking system.
-
-The public site and repository-owned blog are live. These inherited provider
-features remain deliberately fail-closed until Matthew authorizes real accounts
-and credentials:
+public booking system. ADR-0016 formally excludes the following inherited
+provider features from the current production product:
 
 - PostgreSQL/Neon and Cloudflare Hyperdrive
 - Clerk owner authentication
@@ -82,11 +79,12 @@ and credentials:
 - Upstash production rate limiting
 - optional Tencent Meeting and AI providers
 
-Until Clerk is configured, Admin routes return a non-public 404 instead of a
-server error. The R2 media provider is configured; until PostgreSQL and Clerk
-are configured, the owner upload UI remains fail-closed. Public Photos uses the
-verified Repository Photo Publication fallback and currently displays five
-approved, metadata-stripped derivatives.
+They are reference code, not pending launch work. Admin routes return a
+non-public 404 instead of a server error, and the owner upload UI remains
+fail-closed. Public Photos uses the verified Repository Photo Publication and
+currently displays five approved, metadata-stripped derivatives. Future
+activation of inherited Admin or provider APIs requires a separate product and
+security decision rather than adding credentials to the current deployment.
 
 ## Publishing with an agent
 
@@ -109,5 +107,6 @@ corepack pnpm build:cloudflare
 PLAYWRIGHT_BASE_URL=https://matthew-miao.com corepack pnpm test:browser:hosted
 ```
 
-Provider-backed Admin, booking, email, calendar, payment, and media acceptance
-must also pass before the full 1:1 functional goal can be marked complete.
+The repository does not claim that its automated Cal.com verifier proves a real
+charge, notification, cancellation, or refund. Those are provider-owned
+operational checks and do not block the public-site release defined by ADR-0016.
