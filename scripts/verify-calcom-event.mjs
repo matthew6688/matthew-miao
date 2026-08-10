@@ -18,8 +18,8 @@ export function assertCalcomAmaEvent(payload) {
     (candidate) => candidate?.bookingUrl === siteProfile.links.calcomBooking,
   )
   assert.ok(event, 'Cal.com AMA event is missing')
-  assert.equal(event.lengthInMinutes, 60, 'Cal.com AMA duration')
-  assert.equal(event.price, 9_900, 'Cal.com AMA price in USD cents')
+  assert.equal(event.lengthInMinutes, 30, 'Cal.com AMA duration')
+  assert.equal(event.price, 29_900, 'Cal.com AMA price in USD cents')
   assert.equal(event.currency, 'usd', 'Cal.com AMA currency')
   assert.equal(event.hidden, false, 'Cal.com AMA must be public')
   assert.equal(event.minimumBookingNotice, 1_440, 'Cal.com AMA booking notice')

@@ -10,8 +10,8 @@ function fixture(overrides = {}) {
     data: [
       {
         bookingUrl: siteProfile.links.calcomBooking,
-        lengthInMinutes: 60,
-        price: 9_900,
+        lengthInMinutes: 30,
+        price: 29_900,
         currency: 'usd',
         hidden: false,
         minimumBookingNotice: 1_440,
@@ -25,7 +25,7 @@ function fixture(overrides = {}) {
   }
 }
 
-test('accepts the published 60-minute US$99 Cal.com AMA contract', () => {
+test('accepts the published 30-minute US$299 Cal.com AMA contract', () => {
   assert.equal(
     assertCalcomAmaEvent(fixture()).bookingUrl,
     siteProfile.links.calcomBooking,

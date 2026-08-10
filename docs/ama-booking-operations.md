@@ -1,13 +1,19 @@
-# AMA booking operations
+# AMA booking operations (reference only)
 
-The paid AMA booking system (issue #79, slices #82 through #87) is fully
-implemented and enabled by default. There are no capability switches: each
-provider-backed capability turns on when its credential pair is configured
-and its routes fail closed with 503 while it is not. This document records
-the environment contract and the operating lifecycle. No secret values
+> Retired from the production product by ADR-0016 on 2026-08-10. Public booking,
+> payment, calendar, notifications, cancellation, and refunds are owned by
+> Cal.com. This runbook documents the inherited fail-closed implementation for
+> code maintenance only; do not configure these credentials or represent these
+> routes as the live booking workflow without a new product and security ADR.
+
+The inherited paid AMA implementation (issue #79, slices #82 through #87) is
+code-complete but production-disabled. It has no capability switches: if a
+future ADR reactivates it, each provider-backed capability turns on when its
+credential pair is configured and otherwise fails closed with 503. The
+sections below preserve that dormant implementation contract. No secret values
 belong in this file, in the repository, or in issue threads.
 
-## Environment contract
+## Dormant environment contract
 
 Runtime application validation lives in `lib/ama/server-env-schema.ts`, while
 `PUBLIC_SITE_URL` is validated when `lib/seo.ts` initializes public discovery.
@@ -30,7 +36,7 @@ mirrors this table.
 | `AMA_PUBLIC_RATE_LIMIT_MAX_REQUESTS` / `_WINDOW_SECONDS` | optional | Public mutation rate limit (defaults 10 per 60s). Backend follows the environment: Upstash in Production, Neon windows in Preview, process-local elsewhere. |
 | `ADMIN_MUTATION_RATE_LIMIT_MAX_REQUESTS` / `_WINDOW_SECONDS` | optional | Owner admin mutation limit. |
 
-Capability posture (maintainer decision, July 2026): the former
+Historical capability posture (maintainer decision, July 2026): the former
 `AMA_*_ENABLED` launch switches are removed. Public booking mutations (Slot
 Holds and Alternate Time Requests) are always enabled. Payments, booking
 finalization, Google, and Tencent derive their availability from the
@@ -38,7 +44,10 @@ credential pairs above; each pair must be complete or entirely absent (a
 half pair fails startup validation), and a route whose provider is
 unconfigured returns 503 before touching provider code.
 
-## Lifecycle summary
+## Dormant lifecycle summary
+
+If reactivated, the inherited implementation would behave as follows. These are
+not the current public routes:
 
 1. `/ama` presents the offer; `/ama/book` collects intake and shows slots from
    the availability engine (recurring owner windows and replacing Date

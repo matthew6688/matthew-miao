@@ -15,8 +15,8 @@ export function amaBookMetadata(locale: Locale): Metadata {
       title: locale === 'en' ? 'Book an AMA Session' : '预订 AMA 时间',
       description:
         locale === 'en'
-          ? `Pick a time for a 60 minute one-to-one AMA Session with ${siteProfile.name.displayEn}.`
-          : `选一个时间，与${siteProfile.name.zh}进行 60 分钟的一对一 AMA。`,
+          ? `Pick a time for a 30 minute one-to-one AMA Session with ${siteProfile.name.displayEn}.`
+          : `选一个时间，与${siteProfile.name.zh}进行 30 分钟的一对一 AMA。`,
     }),
     // The booking flow is transactional: crawlers get the editorial /ama page.
     robots: { index: false, follow: false },

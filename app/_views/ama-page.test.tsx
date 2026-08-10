@@ -33,13 +33,15 @@ describe('AmaPageView', () => {
       '这个 AMA，就是留出一小时，把这些事聊清楚。',
     )
     expect(container.textContent).not.toContain('Answers are getting cheaper')
-    expect(container.textContent).not.toContain('60 minutes')
+    expect(container.textContent).not.toContain('30 minutes')
 
     // Price and duration read straight off the spec sheet.
-    expect(screen.getByText('US$99')).toBeTruthy()
-    expect(screen.getByText('60 分钟')).toBeTruthy()
+    expect(screen.getByText('US$299')).toBeTruthy()
+    expect(screen.getByText('30 分钟')).toBeTruthy()
     expect(container.textContent).toContain('24 小时')
     expect(container.textContent).toContain('未来 30 天')
+    expect(screen.getByText('Google Meet')).toBeTruthy()
+    expect(container.textContent).not.toContain('腾讯会议')
     expect(
       screen.getByText('付款会跳到 Stripe，银行卡信息不会经过本站。'),
     ).toBeTruthy()
@@ -52,12 +54,14 @@ describe('AmaPageView', () => {
     expect(screen.getByText('AMA')).toBeTruthy()
     expect(screen.getByText(/Answers are getting cheaper/)).toBeTruthy()
     expect(container.textContent).not.toContain('答案越来越便宜')
-    expect(container.textContent).not.toContain('60 分钟')
+    expect(container.textContent).not.toContain('30 分钟')
 
-    expect(screen.getByText('US$99')).toBeTruthy()
-    expect(screen.getByText('60 minutes')).toBeTruthy()
+    expect(screen.getByText('US$299')).toBeTruthy()
+    expect(screen.getByText('30 minutes')).toBeTruthy()
     expect(container.textContent).toContain('24 hours')
     expect(container.textContent).toContain('Next 30 days')
+    expect(screen.getByText('Google Meet')).toBeTruthy()
+    expect(container.textContent).not.toContain('Tencent Meeting')
 
     const introductionStage = container.querySelector(
       '[data-ama-introduction-stage]',
@@ -65,11 +69,11 @@ describe('AmaPageView', () => {
     expect(introductionStage?.textContent).toContain('AI tools are the easy part')
     expect(introductionStage?.textContent).toContain('Judgment still decides')
     expect(introductionStage?.textContent).not.toContain('Those qualities show up')
-    expect(introductionStage?.textContent).not.toContain('US$99')
+    expect(introductionStage?.textContent).not.toContain('US$299')
     expect(introductionStage?.textContent).not.toContain('Who you are talking to')
 
     const nameplate = container.querySelector('.spec-nameplate')
-    expect(nameplate?.textContent).toContain('US$99')
+    expect(nameplate?.textContent).toContain('US$299')
     expect(introductionStage?.contains(nameplate)).toBe(false)
   })
 

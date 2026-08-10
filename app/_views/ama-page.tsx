@@ -22,13 +22,13 @@ export function amaPageMetadata(locale: Locale): Metadata {
 }
 
 const SPEC_ROWS = [
-  { zhLabel: '时长', enLabel: 'Duration', zhValue: '60 分钟', enValue: '60 minutes' },
-  { zhLabel: '价格', enLabel: 'Price', zhValue: 'US$99', enValue: 'US$99' },
+  { zhLabel: '时长', enLabel: 'Duration', zhValue: '30 分钟', enValue: '30 minutes' },
+  { zhLabel: '价格', enLabel: 'Price', zhValue: 'US$299', enValue: 'US$299' },
   {
     zhLabel: '形式',
     enLabel: 'Format',
-    zhValue: 'Google Meet 或腾讯会议',
-    enValue: 'Google Meet or Tencent Meeting',
+    zhValue: 'Google Meet',
+    enValue: 'Google Meet',
   },
   { zhLabel: '需提前', enLabel: 'Notice', zhValue: '24 小时', enValue: '24 hours' },
   {
