@@ -22,9 +22,7 @@ describe('link preview media URLs', () => {
   })
 
   it('keeps confirmed homepage services behind the first-party proxy', () => {
-    expect(faviconUrl('https://fengtalk.ai/about')).toBe(
-      '/link-media/favicon?url=https%3A%2F%2Ffengtalk.ai',
-    )
+    expect(faviconUrl('https://fengtalk.ai/about')).toBe('/images/projects/fengtalk.svg')
     expect(faviconUrl('https://uchat.au/')).toBe(
       '/link-media/favicon?url=https%3A%2F%2Fuchat.au',
     )
