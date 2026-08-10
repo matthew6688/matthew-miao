@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { blogSecurityHeader, securityHeaders } from './headers'
+import { adminSecurityHeader, blogSecurityHeader, securityHeaders } from './headers'
 
 afterEach(() => {
   vi.unstubAllEnvs()
@@ -23,6 +23,13 @@ describe('site security headers', () => {
     )
     expect(headers['content-security-policy']).toContain("frame-src 'none'")
     expect(headers['content-security-policy']).toContain("script-src 'self' 'unsafe-inline'")
+    expect(headers['content-security-policy']).toContain(
+      'https://static.cloudflareinsights.com',
+    )
+    expect(headers['content-security-policy']).toContain(
+      'https://cloudflareinsights.com',
+    )
+    expect(adminSecurityHeader.value).not.toContain('cloudflareinsights.com')
     expect(headers['content-security-policy']).not.toContain('fontshare.com')
     expect(headers['content-security-policy']).not.toContain("'unsafe-eval'")
     expect(headers['strict-transport-security']).toBe(
