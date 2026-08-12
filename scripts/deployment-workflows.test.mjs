@@ -228,8 +228,10 @@ test('Production canary probes continuously and owns a deduplicated incident', a
     (step) => step.name === 'Probe Production twice before alerting',
   )
   assert.equal(health['continue-on-error'], true)
-  assert.match(health.run, /verify-production-health\.mjs/)
-  assert.match(health.run, /matthew-miao\.com/)
+  assert.equal(
+    health.run,
+    'node scripts/verify-production-health.mjs https://matthew-miao.com "$RUNNER_TEMP/production-canary.md"',
+  )
 
   const alert = job.steps.find(
     (step) => step.name === 'Open or update Production incident',
