@@ -1,0 +1,73 @@
+name: Production Canary
+
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: production-canary
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+
+      - name: Probe Production twice before alerting
+        id: health
+        continue-on-error: true
+        run: node scripts/verify-production-health.mjs https://matthew-miao.com "$RUNNER_TEMP/production-canary.md"
+
+      - name: Publish canary report
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/production-canary.md" ]; then
+            cat "$RUNNER_TEMP/production-canary.md" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Production canary exited before writing its report." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Open or update Production incident
+        if: always() && steps.health.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INCIDENT_TITLE: "[Production canary] matthew-miao.com is unhealthy"
+        run: |
+          issue_number=$(gh issue list --state open --search "$INCIDENT_TITLE in:title" --json number,title --jq '.[] | select(.title == "[Production canary] matthew-miao.com is unhealthy") | .number' | head -n 1)
+          {
+            echo "The scheduled Production canary found a persistent failure in two consecutive probes."
+            echo
+            echo "Workflow: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo
+            cat "$RUNNER_TEMP/production-canary.md"
+          } > "$RUNNER_TEMP/production-incident.md"
+          if [ -n "$issue_number" ]; then
+            gh issue comment "$issue_number" --body-file "$RUNNER_TEMP/production-incident.md"
+          else
+            gh issue create --title "$INCIDENT_TITLE" --label needs-triage --assignee matthew6688 --body-file "$RUNNER_TEMP/production-incident.md"
+          fi
+          exit 1
+
+      - name: Close recovered Production incident
+        if: always() && steps.health.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INCIDENT_TITLE: "[Production canary] matthew-miao.com is unhealthy"
+        run: |
+          issue_number=$(gh issue list --state open --search "$INCIDENT_TITLE in:title" --json number,title --jq '.[] | select(.title == "[Production canary] matthew-miao.com is unhealthy") | .number' | head -n 1)
+          if [ -n "$issue_number" ]; then
+            gh issue close "$issue_number" --comment "Production recovered and the scheduled canary is healthy again: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          fi

@@ -76,6 +76,7 @@ test('feature pushes deploy a validated Cloudflare Preview', async () => {
   assert.equal(config.concurrency.group, 'cloudflare-preview')
   assert.equal(job.env.CLOUDFLARE_API_TOKEN, '${{ secrets.CLOUDFLARE_API_TOKEN }}')
   assert.match(job.steps.find((step) => step.name === 'Validate application').run, /pnpm test:photo-skill/)
+  assert.match(job.steps.find((step) => step.name === 'Validate application').run, /pnpm test:deployment/)
 
   const deploy = job.steps.find((step) => step.name === 'Deploy exact commit to Cloudflare Preview')
   assert.match(deploy.run, /opennextjs-cloudflare deploy --env preview/)
@@ -114,6 +115,7 @@ test('dev validates and deploys the persistent Cloudflare Staging environment', 
   assert.equal(job.environment, 'staging')
   assert.equal(job.env.CLOUDFLARE_API_TOKEN, '${{ secrets.CLOUDFLARE_API_TOKEN }}')
   assert.match(job.steps.find((step) => step.name === 'Validate application').run, /pnpm test:photo-skill/)
+  assert.match(job.steps.find((step) => step.name === 'Validate application').run, /pnpm test:deployment/)
   const deploy = job.steps.find((step) => step.name === 'Deploy exact commit to Cloudflare Staging')
   assert.match(deploy.run, /opennextjs-cloudflare deploy --env staging/)
   const browserCheck = job.steps.find(
@@ -184,6 +186,7 @@ test('main validates and deploys the exact commit to Cloudflare Workers', async 
   assert.match(validate.run, /pnpm test:unit/)
   assert.match(validate.run, /pnpm test:photo-skill/)
   assert.match(validate.run, /pnpm test:localization/)
+  assert.match(validate.run, /pnpm test:deployment/)
   assert.match(validate.run, /pnpm build:cloudflare/)
   const deploy = job.steps.find(
     (step) => step.name === 'Deploy exact commit to Cloudflare Workers',
@@ -209,6 +212,41 @@ test('main validates and deploys the exact commit to Cloudflare Workers', async 
     'Verify production routes',
   )
   assert.doesNotMatch(JSON.stringify(job), /VERCEL_/)
+})
+
+test('Production canary probes continuously and owns a deduplicated incident', async () => {
+  const config = await workflow('production-canary')
+  assert.deepEqual(config.on.schedule, [
+    { cron: '7,22,37,52 * * * *' },
+  ])
+  assert.deepEqual(config.permissions, { contents: 'read', issues: 'write' })
+  assert.equal(config.concurrency.group, 'production-canary')
+  assert.equal(config.concurrency['cancel-in-progress'], true)
+
+  const job = config.jobs.probe
+  const health = job.steps.find(
+    (step) => step.name === 'Probe Production twice before alerting',
+  )
+  assert.equal(health['continue-on-error'], true)
+  assert.equal(
+    health.run,
+    'node scripts/verify-production-health.mjs https://matthew-miao.com "$RUNNER_TEMP/production-canary.md"',
+  )
+
+  const alert = job.steps.find(
+    (step) => step.name === 'Open or update Production incident',
+  )
+  assert.equal(alert.if, "always() && steps.health.outcome == 'failure'")
+  assert.match(alert.run, /gh issue create/)
+  assert.match(alert.run, /gh issue comment/)
+  assert.match(alert.run, /needs-triage/)
+  assert.match(alert.run, /--assignee matthew6688/)
+
+  const recovery = job.steps.find(
+    (step) => step.name === 'Close recovered Production incident',
+  )
+  assert.equal(recovery.if, "always() && steps.health.outcome == 'success'")
+  assert.match(recovery.run, /gh issue close/)
 })
 
 test('release pull requests reject unsafe migrations before merging to main', async () => {

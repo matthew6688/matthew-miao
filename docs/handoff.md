@@ -122,3 +122,13 @@ adapter and blocked every route sharing that footer. The copyright year is now
 canonical static Site Profile data. Do not add runtime caching around fixed
 identity or copyright values; time-based Cache Component changes require an
 expiry-cycle hosted test, not only a fresh-deploy smoke check.
+
+The follow-up reliability guardrails make that incident class mechanically
+harder to repeat. Shared chrome now reads committed social snapshots rather
+than rebuilding live external data in the Worker, and optional link media uses
+bounded HTTP response caching instead of the Next runtime cache. The deployment
+suite rejects any production Cache Component that does not use the long-lived
+`cacheLife('max')` policy. `.github/workflows/production-canary.yml` probes the
+main bilingual routes, sitemap, feed, and icon every 15 minutes; it retries a
+failure once to suppress transient alerts, then opens or updates one deduplicated
+`needs-triage` issue and closes it automatically after recovery.

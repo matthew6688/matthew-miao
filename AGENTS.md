@@ -45,6 +45,15 @@ All UI work follows the spec in `docs/design-language.md` (motion tokens, typogr
 
 Multi-context: `CONTEXT-MAP.md` at the root points to per-context `CONTEXT.md` files, added as the v3 architecture takes shape. See `docs/agents/domain.md`.
 
+### Production cache safety
+
+- Shared public chrome must use committed/build-time data, not a finite runtime
+  Cache Component refresh.
+- Production source may use `use cache` only with the repository's long-lived
+  `cacheLife('max')` policy. Any time-based runtime policy requires an explicit
+  architecture decision, an isolated blast radius, and hosted expiry-cycle
+  evidence before the cache-safety gate may change.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
