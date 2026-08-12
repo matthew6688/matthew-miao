@@ -1,6 +1,6 @@
 # Matthew site handoff
 
-Current as of 2026-08-10.
+Current as of 2026-08-12.
 
 ## Live state
 
@@ -110,3 +110,15 @@ PLAYWRIGHT_BASE_URL=https://matthew-miao.com corepack pnpm test:browser:hosted
 The repository does not claim that its automated Cal.com verifier proves a real
 charge, notification, cancellation, or refund. Those are provider-owned
 operational checks and do not block the public-site release defined by ADR-0016.
+
+## Cloudflare cache incident note
+
+On 2026-08-12, public React pages began returning Cloudflare 1101 while static
+assets, feeds, sitemap, and API fail-closed responses remained healthy. Worker
+tail identified Cloudflare's hung-request cancellation. The minimal Preview
+experiment isolated the trigger to the footer's one-day `use cache` boundary:
+the first expiry/rebuild cycle never completed under the OpenNext R2 cache
+adapter and blocked every route sharing that footer. The copyright year is now
+canonical static Site Profile data. Do not add runtime caching around fixed
+identity or copyright values; time-based Cache Component changes require an
+expiry-cycle hosted test, not only a fresh-deploy smoke check.
