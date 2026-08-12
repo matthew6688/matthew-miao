@@ -242,11 +242,24 @@ test('Production canary probes continuously and owns a deduplicated incident', a
   assert.match(alert.run, /needs-triage/)
   assert.match(alert.run, /--assignee matthew6688/)
 
+  const infrastructureAlert = job.steps.find(
+    (step) => step.name === 'Open or update canary infrastructure incident',
+  )
+  assert.equal(infrastructureAlert.if, "always() && steps.health.outcome == 'skipped'")
+  assert.match(infrastructureAlert.run, /monitor did not run/)
+  assert.match(infrastructureAlert.run, /gh issue create/)
+
   const recovery = job.steps.find(
     (step) => step.name === 'Close recovered Production incident',
   )
   assert.equal(recovery.if, "always() && steps.health.outcome == 'success'")
   assert.match(recovery.run, /gh issue close/)
+
+  const infrastructureRecovery = job.steps.find(
+    (step) => step.name === 'Close recovered canary infrastructure incident',
+  )
+  assert.equal(infrastructureRecovery.if, "always() && steps.health.outcome == 'success'")
+  assert.match(infrastructureRecovery.run, /gh issue close/)
 })
 
 test('release pull requests reject unsafe migrations before merging to main', async () => {

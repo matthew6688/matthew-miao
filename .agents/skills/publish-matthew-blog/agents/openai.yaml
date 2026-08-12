@@ -1,4 +1,4 @@
 interface:
   display_name: "Publish Matthew Blog"
   short_description: "Preview or publish bilingual, media-rich blog posts"
-  default_prompt: "Use $publish-matthew-blog to create a bilingual article with verified links and media, then deploy it to Cloudflare Preview or publish it to production as requested."
+  default_prompt: "Use $publish-matthew-blog to create or revise a bilingual article with verified links and media, run the repository and hosted article gates, then deploy it to Cloudflare Preview or publish it to production as requested."

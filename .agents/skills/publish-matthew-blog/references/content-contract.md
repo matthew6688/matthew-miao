@@ -88,6 +88,9 @@ and have a stable unique case in `lib/view-transition-name.ts`.
 
 - Draft: `validate-post.mjs <slug> --draft --check-links`.
 - Publish: register it, then `validate-post.mjs <slug> --check-links`.
+- Repository gate: `validate-all-posts.mjs` validates every registered post in
+  publication mode and every committed unregistered directory in draft mode,
+  without external network I/O; `pnpm test:blog-skill` runs this on every CI/deploy path.
 
 ## Cloudflare Preview and Production
 
@@ -103,3 +106,7 @@ Publishing keeps the registration, passes the publication validator and protecte
 PR checks, merges to `main`, and waits for the Production workflow. “Direct
 publish” may skip Matthew's Preview approval wait, but never skips validation,
 branch protection, Production deployment, or hosted verification.
+
+The hosted browser suite derives article cases from `publishedPostSlugs`. It checks
+both locale routes, canonical/hreflang metadata, delivered article images, safe
+links, initial video consent state, feeds, and sitemap for each public slug.

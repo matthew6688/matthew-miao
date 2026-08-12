@@ -1,6 +1,6 @@
 # Matthew site handoff
 
-Current as of 2026-08-12.
+Current as of 2026-08-13.
 
 ## Live state
 
@@ -38,9 +38,14 @@ restore upstream personal assets while syncing code.
 ## Cloudflare deployment
 
 ```bash
-corepack pnpm build:cloudflare
-corepack pnpm deploy:cloudflare
+corepack pnpm build:cloudflare:local
 ```
+
+`build:cloudflare:local` supplies non-secret, unreachable placeholder shapes for
+the dormant inherited provider stack so a clean Agent terminal can reproduce the
+Cloudflare build. Deployment workflows continue to own their environment-specific
+values; the local helper never deploys or writes secrets. Production deployment
+is owned by the protected `main` GitHub workflow rather than a manual local command.
 
 `wrangler.jsonc` owns the production Worker, custom domains, R2 cache and media
 bindings, and public runtime variables. Secrets are stored in Cloudflare,
@@ -94,7 +99,16 @@ delivery modes. Preview temporarily registers the draft on a feature branch,
 deploys the shared Cloudflare Preview, and returns both locale URLs for review.
 Publish uses a protected PR and waits for Production verification. “Direct
 publish” skips only the human Preview wait, never validation or branch
-protection.
+protection. `pnpm test:blog-skill` validates both the validator behavior, every
+registered article, and any committed draft directory. Hosted browser tests derive their article
+matrix from `publishedPostSlugs`, so a new slug automatically receives bilingual
+route, image, canonical/hreflang, feed and sitemap checks.
+
+Read `.agents/skills/manage-matthew-photos/SKILL.md` for photo work. Its CLI
+sanitizes Originals into four deterministic derivatives, refuses mutations on
+protected branches, supports local or Cloudflare Preview, and provides atomic
+commands for bilingual alt-text and focal-point changes. Withdrawal is reversible;
+permanent derivative deletion retains its exact confirmation gate.
 
 ## Required release checks
 
@@ -103,7 +117,7 @@ corepack pnpm typecheck
 corepack pnpm test:unit
 corepack pnpm test:localization
 corepack pnpm test:deployment
-corepack pnpm build:cloudflare
+corepack pnpm build:cloudflare:local
 PLAYWRIGHT_BASE_URL=https://matthew-miao.com corepack pnpm test:browser:hosted
 ```
 
@@ -128,7 +142,9 @@ harder to repeat. Shared chrome now reads committed social snapshots rather
 than rebuilding live external data in the Worker, and optional link media uses
 bounded HTTP response caching instead of the Next runtime cache. The deployment
 suite rejects any production Cache Component that does not use the long-lived
-`cacheLife('max')` policy. `.github/workflows/production-canary.yml` probes the
-main bilingual routes, sitemap, feed, and icon every 15 minutes; it retries a
-failure once to suppress transient alerts, then opens or updates one deduplicated
-`needs-triage` issue and closes it automatically after recovery.
+`cacheLife('max')` policy. `.github/workflows/production-canary.yml` requests four
+probes per hour through GitHub Actions (scheduled runs are best-effort and may be
+delayed by GitHub), covering the main bilingual routes, sitemap, feed, and icon.
+It retries a site failure once before opening a deduplicated `needs-triage` issue,
+and separately alerts when runner/checkout failure prevents the health probe from
+running at all. Both incident types close automatically after a successful probe.

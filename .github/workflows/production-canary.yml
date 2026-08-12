@@ -61,6 +61,25 @@ jobs:
           fi
           exit 1
 
+      - name: Open or update canary infrastructure incident
+        if: always() && steps.health.outcome == 'skipped'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INCIDENT_TITLE: "[Production canary] monitor did not run"
+        run: |
+          issue_number=$(gh issue list --state open --search "$INCIDENT_TITLE in:title" --json number,title --jq '.[] | select(.title == "[Production canary] monitor did not run") | .number' | head -n 1)
+          {
+            echo "The scheduled Production canary could not reach its health-probe step. Production health is unknown until a later successful run."
+            echo
+            echo "Workflow: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          } > "$RUNNER_TEMP/canary-infrastructure-incident.md"
+          if [ -n "$issue_number" ]; then
+            gh issue comment "$issue_number" --body-file "$RUNNER_TEMP/canary-infrastructure-incident.md"
+          else
+            gh issue create --title "$INCIDENT_TITLE" --label needs-triage --assignee matthew6688 --body-file "$RUNNER_TEMP/canary-infrastructure-incident.md"
+          fi
+          exit 1
+
       - name: Close recovered Production incident
         if: always() && steps.health.outcome == 'success'
         env:
@@ -70,4 +89,15 @@ jobs:
           issue_number=$(gh issue list --state open --search "$INCIDENT_TITLE in:title" --json number,title --jq '.[] | select(.title == "[Production canary] matthew-miao.com is unhealthy") | .number' | head -n 1)
           if [ -n "$issue_number" ]; then
             gh issue close "$issue_number" --comment "Production recovered and the scheduled canary is healthy again: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          fi
+
+      - name: Close recovered canary infrastructure incident
+        if: always() && steps.health.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INCIDENT_TITLE: "[Production canary] monitor did not run"
+        run: |
+          issue_number=$(gh issue list --state open --search "$INCIDENT_TITLE in:title" --json number,title --jq '.[] | select(.title == "[Production canary] monitor did not run") | .number' | head -n 1)
+          if [ -n "$issue_number" ]; then
+            gh issue close "$issue_number" --comment "The scheduled health probe is running successfully again: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           fi

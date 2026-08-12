@@ -176,3 +176,39 @@ test('validate rejects every unregistered public file regardless of extension', 
   await run(root, ['validate'], true)
   assert.equal(await readFile(leakedOriginal, 'utf8'), 'private original bytes')
 })
+
+test('updates bilingual alt text and focal point through validated commands', async () => {
+  const { root, source } = await fixture()
+  await run(root, ['import', source, '--id', 'owned-photo', '--alt-zh', '旧中文', '--alt-en', 'Old English', '--publish'])
+
+  await run(root, ['update-alt', 'owned-photo', '--alt-zh', '树荫下的一张照片', '--alt-en', 'A photo beneath the trees'])
+  await run(root, ['set-focal-point', 'owned-photo', '--x', '0.35', '--y', '0.6'])
+
+  const data = await catalog(root)
+  assert.deepEqual(data.items[0].altText, {
+    zhHans: '树荫下的一张照片',
+    en: 'A photo beneath the trees',
+  })
+  assert.deepEqual(data.items[0].focalPoint, { x: 0.35, y: 0.6 })
+  await run(root, ['validate'])
+})
+
+test('rejects invalid focal points before changing the catalog', async () => {
+  const { root, source } = await fixture()
+  await run(root, ['import', source, '--id', 'owned-photo', '--alt-zh', '测试照片', '--alt-en', 'Test photo'])
+  const before = await readFile(path.join(root, 'content/photos/catalog.json'), 'utf8')
+
+  await run(root, ['set-focal-point', 'owned-photo', '--x', '1.1', '--y', '0.5'], true)
+  assert.equal(await readFile(path.join(root, 'content/photos/catalog.json'), 'utf8'), before)
+})
+
+test('refuses photo mutations on a protected repository branch', async () => {
+  const { root, source } = await fixture()
+  await execFileAsync('git', ['init', '--initial-branch=main'], { cwd: root })
+
+  const operation = execFileAsync(process.execPath, [script, 'import', source, '--id', 'owned-photo', '--alt-zh', '测试照片', '--alt-en', 'Test photo'], {
+    env: { ...process.env, PHOTO_SKILL_REPO_ROOT: root },
+  })
+  await assert.rejects(operation, /protected branch: main/)
+  assert.equal((await catalog(root)).items.length, 0)
+})

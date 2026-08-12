@@ -7,6 +7,7 @@ import test from 'node:test'
 import sharp from 'sharp'
 
 const validator = new URL('./validate-post.mjs', import.meta.url)
+const allPostsValidator = new URL('./validate-all-posts.mjs', import.meta.url)
 
 async function fixture(body) {
   const root = await mkdtemp(path.join(os.tmpdir(), 'matthew-blog-skill-'))
@@ -24,19 +25,19 @@ async function fixture(body) {
 }
 
 function validate(root, ...flags) {
-  return spawnSync(process.execPath, [validator.pathname, 'agent-workflow', '--draft', ...flags], { cwd: root, encoding: 'utf8' })
+  return spawnSync(process.execPath, [validator.pathname, 'agent-workflow', ...flags], { cwd: root, encoding: 'utf8' })
 }
 
 test('draft gate accepts checked local media, HTTPS links, and supported video embeds', async () => {
   const root = await fixture('[Source](https://example.com)\n\n![Diagram](./cover.webp#16x9 "Diagram")\n\n<VideoEmbed provider="youtube" id="dQw4w9WgXcQ" title="Demo" />')
-  const result = validate(root)
+  const result = validate(root, '--draft')
   assert.equal(result.status, 0, result.stderr)
   assert.match(result.stdout, /valid \(draft\)/)
 })
 
 test('draft gate rejects unsafe links, malformed identifiers, and raw embeds', async () => {
   const root = await fixture('[Insecure](http://example.com) [Script](javascript:alert(1))\n\n<VideoEmbed provider="vimeo" id="bad" title="Demo" />\n\n{process.env.SECRET}')
-  const result = validate(root)
+  const result = validate(root, '--draft')
   assert.equal(result.status, 1)
   assert.match(result.stderr, /link must use HTTPS/)
   assert.match(result.stderr, /javascript:/)
@@ -47,7 +48,7 @@ test('draft gate rejects unsafe links, malformed identifiers, and raw embeds', a
 test('draft gate rejects orphaned media without provenance or an article reference', async () => {
   const root = await fixture('Draft body')
   await writeFile(path.join(root, 'content/blog/agent-workflow/orphan.webp'), await sharp({ create: { width: 2, height: 2, channels: 3, background: '#fff' } }).webp().toBuffer())
-  const result = validate(root)
+  const result = validate(root, '--draft')
   assert.equal(result.status, 1)
   assert.match(result.stderr, /unreferenced media file must be removed/)
 })
@@ -55,7 +56,7 @@ test('draft gate rejects orphaned media without provenance or an article referen
 test('draft gate rejects active SVG instead of producing a broken public asset', async () => {
   const root = await fixture('![Diagram](./diagram.svg#10x10)')
   await writeFile(path.join(root, 'content/blog/agent-workflow/diagram.svg'), '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/>')
-  const result = validate(root)
+  const result = validate(root, '--draft')
   assert.equal(result.status, 1)
   assert.match(result.stderr, /unsupported SVG media/)
 })
@@ -63,7 +64,7 @@ test('draft gate rejects active SVG instead of producing a broken public asset',
 test('draft gate rejects a slug that is already publicly registered', async () => {
   const root = await fixture('Draft body')
   await writeFile(path.join(root, 'lib/public-content-routes.ts'), "export const publishedPostSlugs = ['agent-workflow']")
-  const result = validate(root)
+  const result = validate(root, '--draft')
   assert.equal(result.status, 1)
   assert.match(result.stderr, /already exposed through a public registry/)
 })
@@ -76,7 +77,42 @@ test('link gate accepts an auditable manual browser check when automation is blo
     manualChecks: [{ url, checkedAt: '2026-08-09T00:00:00.000Z', note: 'Opened in a clean browser and confirmed the cited page.' }],
   }
   await writeFile(path.join(root, 'content/blog/agent-workflow/publication.json'), JSON.stringify(evidence))
-  const result = validate(root, '--check-links')
+  const result = validate(root, '--draft', '--check-links')
   assert.equal(result.status, 0, result.stderr)
   assert.match(result.stderr, /manual check accepted/)
+})
+
+test('publication gate requires both public registries', async () => {
+  const root = await fixture('Published body')
+  await writeFile(path.join(root, 'lib/public-content-routes.ts'), "export const publishedPostSlugs = ['agent-workflow']")
+
+  const missingTransition = validate(root)
+  assert.equal(missingTransition.status, 1)
+  assert.match(missingTransition.stderr, /no view-transition ID/)
+
+  await writeFile(path.join(root, 'lib/view-transition-name.ts'), "switch (slug) { case 'agent-workflow': return 'p02' }")
+  const published = validate(root)
+  assert.equal(published.status, 0, published.stderr)
+  assert.match(published.stdout, /valid \(publish\)/)
+})
+
+test('repository gate validates registered posts and rejects incomplete draft directories', async () => {
+  const root = await fixture('Published body')
+  await writeFile(path.join(root, 'lib/public-content-routes.ts'), "export const publishedPostSlugs = ['agent-workflow']")
+  await writeFile(path.join(root, 'lib/view-transition-name.ts'), "switch (slug) { case 'agent-workflow': return 'p02' }")
+  const valid = spawnSync(process.execPath, [allPostsValidator.pathname], {
+    cwd: root,
+    env: { ...process.env, BLOG_SKILL_REPO_ROOT: root },
+    encoding: 'utf8',
+  })
+  assert.equal(valid.status, 0, valid.stderr)
+
+  await mkdir(path.join(root, 'content/blog/unregistered-draft'))
+  const orphaned = spawnSync(process.execPath, [allPostsValidator.pathname], {
+    cwd: root,
+    env: { ...process.env, BLOG_SKILL_REPO_ROOT: root },
+    encoding: 'utf8',
+  })
+  assert.equal(orphaned.status, 1)
+  assert.match(orphaned.stderr, /missing content\/blog\/unregistered-draft\/index\.mdx/)
 })
