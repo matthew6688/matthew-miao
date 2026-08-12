@@ -27,7 +27,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:validate": "node --test scripts/ama-migrations.test.mjs",
-    "test:deployment": "node --test scripts/check-production-migrations.test.mjs scripts/deployment-workflows.test.mjs scripts/refresh-snapshot-validation.test.mjs scripts/verify-calcom-event.test.mjs scripts/verify-legacy-url-contract.test.mjs",
+    "test:deployment": "node --test scripts/cache-safety.test.mjs scripts/check-production-migrations.test.mjs scripts/deployment-workflows.test.mjs scripts/refresh-snapshot-validation.test.mjs scripts/verify-calcom-event.test.mjs scripts/verify-legacy-url-contract.test.mjs scripts/verify-production-health.test.mjs",
     "test:browser": "playwright test",
     "test:browser:hosted": "playwright test --project=chromium --grep @hosted --workers=1",
     "test:visual": "playwright test tests/browser/visual-matrix.spec.ts --project=chromium",
@@ -53,6 +53,7 @@
     "verify:legacy-urls": "node scripts/verify-legacy-url-contract.mjs",
     "verify:links": "node scripts/verify-public-links.mjs",
     "verify:public-discovery": "node scripts/verify-public-discovery.mjs",
+    "verify:production-health": "node scripts/verify-production-health.mjs",
     "verify:security-boundary": "node scripts/verify-production-security-boundary.mjs",
     "verify:calcom": "node scripts/verify-calcom-event.mjs",
     "typecheck": "tsc --noEmit"

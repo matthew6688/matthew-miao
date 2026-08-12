@@ -1,23 +1,20 @@
-import { cacheLife } from 'next/cache'
-
 import { upstreamLinkMediaUrl } from '~/lib/link-media'
 
 // Link media are small; the cap defends the data cache against a
 // pathological upstream response.
 const MAX_MEDIA_BYTES = 4 * 1024 * 1024
 
-// Server-side cache for proxied link favicons and Open Graph images:
-// entries live in the data cache and refresh in the background, so the
-// browser talks only to this origin and repeat views never re-fetch
-// upstream. Expected upstream failures are values, not exceptions, and
-// are cached only briefly so they neither flood production errors nor
-// pin a missing asset after the service recovers.
+// Link favicons and Open Graph images are optional. This route deliberately
+// avoids the Next runtime data cache: browser/edge response headers provide
+// bounded caching without introducing an expiry rebuild into Worker execution.
 async function fetchLinkMedia(upstream: string) {
-  'use cache'
   let media: { body: Uint8Array<ArrayBuffer>; contentType: string } | null = null
 
   try {
-    const res = await fetch(upstream, { signal: AbortSignal.timeout(10_000) })
+    const res = await fetch(upstream, {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(10_000),
+    })
     const contentType = res.headers.get('content-type')?.trim() ?? ''
 
     // Reject an oversized *declared* length before buffering the body at
@@ -44,11 +41,9 @@ async function fetchLinkMedia(upstream: string) {
   }
 
   if (!media) {
-    cacheLife({ stale: 30, revalidate: 1, expire: 60 })
     return null
   }
 
-  cacheLife({ stale: 86_400, revalidate: 604_800, expire: 2_592_000 })
   return media
 }
 
@@ -81,7 +76,7 @@ export async function GET(
     headers: {
       'Content-Type': media.contentType,
       // browsers keep a copy for a day, the CDN for a week (serving
-      // stale while it refreshes against the data cache). The strict
+      // stale while the next origin request refreshes it). The strict
       // media CSP (sandbox) comes from next.config.ts, which already
       // sends the global security headers — setting it here as well
       // would emit a duplicate Content-Security-Policy header.

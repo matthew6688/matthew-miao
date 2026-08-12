@@ -1,9 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('next/cache', () => ({
-  cacheLife: () => undefined,
-}))
-
 import { GET } from './route'
 
 const request = () =>
@@ -35,6 +31,10 @@ describe('link media proxy', () => {
 
     const response = await GET(request(), context())
 
+    expect(fetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({ cache: 'no-store' }),
+    )
     expect(response.status).toBe(200)
     expect(response.headers.get('content-type')).toBe('image/png')
     expect(response.headers.get('cache-control')).toBe(

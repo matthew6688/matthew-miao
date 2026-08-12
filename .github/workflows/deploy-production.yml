@@ -55,6 +55,7 @@ jobs:
           pnpm test:blog-skill
           pnpm test:photo-skill
           pnpm test:localization
+          pnpm test:deployment
           pnpm build:cloudflare
 
       - name: Verify Cal.com booking contract

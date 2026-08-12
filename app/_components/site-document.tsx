@@ -72,8 +72,8 @@ export async function SiteDocument({
     )
   }
 
-  // Live-but-cached social numbers (ISR via the fetch data cache) keep the
-  // shared public chrome fresh without making any page request-bound.
+  // Committed social snapshots keep shared public chrome independent from
+  // external APIs and runtime cache rebuilds.
   const [github, social] = await Promise.all([getGitHub(), getSocial()])
 
   return (
