@@ -7,6 +7,7 @@ export const siteProfile = {
   email: 'hi@fengtalk.ai',
   domain: 'matthew-miao.com',
   copyright: {
+    year: 2026,
     zh: '老苗 / Matthew Miao',
     en: 'Matthew Miao',
   },

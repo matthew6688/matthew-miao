@@ -1,4 +1,3 @@
-import { cacheLife } from 'next/cache'
 import Link from 'next/link'
 
 import { FooterClock } from '~/components/footer-clock'
@@ -32,13 +31,6 @@ function Tree({
       <ul>{children}</ul>
     </div>
   )
-}
-
-async function CopyrightYear() {
-  'use cache'
-  cacheLife({ stale: 86_400, revalidate: 86_400, expire: 86_400 })
-
-  return new Date().getFullYear()
 }
 
 // Swiss editorial footer, set as folder trees: each column is a directory
@@ -111,7 +103,8 @@ export function SiteFooter({
         <div className="footer-colophon col-span-2 sm:order-first sm:col-span-1">
           <div>
             <p>
-              © <CopyrightYear /> <T zh={siteProfile.copyright.zh} en={siteProfile.copyright.en} />
+              © {siteProfile.copyright.year}{' '}
+              <T zh={siteProfile.copyright.zh} en={siteProfile.copyright.en} />
             </p>
             {/* the name echoed in braille — a printer's mark on the sheet */}
             <p className="footer-braille" aria-hidden>
