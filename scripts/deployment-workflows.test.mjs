@@ -69,6 +69,8 @@ test('local browser release tests use the current repository photo publication m
     config,
     /PHOTO_PUBLICATION_MODE:\s*\n\s*process\.env\.PHOTO_PUBLICATION_MODE \?\? 'repository-bootstrap'/,
   )
+  const security = await workflow('security')
+  assert.equal(security.jobs.quality.env.PHOTO_PUBLICATION_MODE, 'repository-bootstrap')
 })
 
 test('feature pushes deploy a validated Cloudflare Preview', async () => {
