@@ -33,6 +33,7 @@ jobs:
       SITE_URL: https://matthew-miao.com
       PUBLIC_SITE_URL: https://matthew-miao.com
       MEDIA_PUBLIC_BASE_URL: https://matthew-miao.com/media/
+      PHOTO_PUBLICATION_MODE: repository-bootstrap
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

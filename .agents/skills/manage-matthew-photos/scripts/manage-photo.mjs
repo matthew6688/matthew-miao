@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { createHash, randomUUID } from 'node:crypto'
+import { execFileSync } from 'node:child_process'
 import { constants } from 'node:fs'
 import {
   access,
@@ -35,7 +36,7 @@ const isoTimestampPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
 
 function usage() {
   throw new Error(
-    'Usage: manage-photo.mjs import SOURCE --id ID --alt-zh TEXT --alt-en TEXT [--publish] | publish ID | unpublish ID | delete ID --confirm permanent-delete:ID | validate | list',
+    'Usage: manage-photo.mjs import SOURCE --id ID --alt-zh TEXT --alt-en TEXT [--publish] | publish ID | unpublish ID | update-alt ID --alt-zh TEXT --alt-en TEXT | set-focal-point ID --x 0..1 --y 0..1 | delete ID --confirm permanent-delete:ID | validate | list',
   )
 }
 
@@ -302,6 +303,34 @@ async function withLock(operation) {
   }
 }
 
+function assertWorkBranch() {
+  let branch
+  try {
+    branch = execFileSync('git', ['branch', '--show-current'], {
+      cwd: root,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim()
+  } catch {
+    if (process.env.PHOTO_SKILL_REPO_ROOT) return
+    throw new Error('Photo mutations require a valid Git worktree')
+  }
+  if (!branch) throw new Error('Photo mutations require a named Git work branch')
+  if (branch === 'main' || branch === 'dev') {
+    throw new Error(`Refusing to mutate photos directly on protected branch: ${branch}`)
+  }
+  if (!process.env.PHOTO_SKILL_REPO_ROOT) {
+    try {
+      execFileSync('git', ['merge-base', '--is-ancestor', 'origin/main', 'HEAD'], {
+        cwd: root,
+        stdio: 'ignore',
+      })
+    } catch {
+      throw new Error('Photo work branch must include current origin/main')
+    }
+  }
+}
+
 function touchPublication(catalog) {
   const now = new Date().toISOString()
   catalog.revision = `photos-${now.replace(/[-:.TZ]/g, '')}`
@@ -458,6 +487,45 @@ async function unpublishPhoto(id) {
   console.log(`Unpublished: ${id}`)
 }
 
+async function updateAltText(id, args) {
+  const parsed = options(args)
+  if (
+    parsed.positional.length ||
+    !parsed['alt-zh']?.trim() ||
+    !parsed['alt-en']?.trim()
+  ) usage()
+  const catalog = await readCatalog()
+  const item = entry(catalog, id)
+  item.altText = {
+    zhHans: parsed['alt-zh'].trim(),
+    en: parsed['alt-en'].trim(),
+  }
+  if (item.published) touchPublication(catalog)
+  await writeCatalog(catalog)
+  console.log(`Updated bilingual alt text: ${id}`)
+}
+
+async function setFocalPoint(id, args) {
+  const parsed = options(args)
+  const x = Number(parsed.x)
+  const y = Number(parsed.y)
+  if (
+    parsed.positional.length ||
+    !Number.isFinite(x) ||
+    !Number.isFinite(y) ||
+    x < 0 ||
+    x > 1 ||
+    y < 0 ||
+    y > 1
+  ) usage()
+  const catalog = await readCatalog()
+  const item = entry(catalog, id)
+  item.focalPoint = { x, y }
+  if (item.published) touchPublication(catalog)
+  await writeCatalog(catalog)
+  console.log(`Updated focal point: ${id} (${x}, ${y})`)
+}
+
 async function deletePhoto(id, confirmation) {
   if (confirmation !== `permanent-delete:${id}`) {
     throw new Error(`Refusing permanent delete; pass --confirm permanent-delete:${id}`)
@@ -543,9 +611,16 @@ async function validate() {
 
 const [command, ...args] = process.argv.slice(2)
 try {
+  const mutating = new Set(['import', 'publish', 'unpublish', 'update-alt', 'set-focal-point', 'delete'])
+  if (mutating.has(command)) assertWorkBranch()
   if (command === 'import') await withLock(() => importPhoto(args))
   else if (command === 'publish') await withLock(() => publishPhoto(args[0] ?? usage()))
   else if (command === 'unpublish') await withLock(() => unpublishPhoto(args[0] ?? usage()))
+  else if (command === 'update-alt') {
+    await withLock(() => updateAltText(args[0] ?? usage(), args.slice(1)))
+  } else if (command === 'set-focal-point') {
+    await withLock(() => setFocalPoint(args[0] ?? usage(), args.slice(1)))
+  }
   else if (command === 'delete') {
     const parsed = options(args.slice(1))
     await withLock(() => deletePhoto(args[0] ?? usage(), parsed.confirm))

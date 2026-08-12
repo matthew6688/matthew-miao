@@ -63,6 +63,16 @@ test('Cloudflare environments bind isolated R2 media stores', async () => {
   assert.doesNotMatch(JSON.stringify(config), /BUNNY_MEDIA_/)
 })
 
+test('local browser release tests use the current repository photo publication mode', async () => {
+  const config = await text('playwright.config.ts')
+  assert.match(
+    config,
+    /PHOTO_PUBLICATION_MODE:\s*\n\s*process\.env\.PHOTO_PUBLICATION_MODE \?\? 'repository-bootstrap'/,
+  )
+  const security = await workflow('security')
+  assert.equal(security.jobs.quality.env.PHOTO_PUBLICATION_MODE, 'repository-bootstrap')
+})
+
 test('feature pushes deploy a validated Cloudflare Preview', async () => {
   const config = await workflow('deploy-preview')
   assert.deepEqual(config.on.push['branches-ignore'], ['main', 'dev'])
@@ -242,11 +252,24 @@ test('Production canary probes continuously and owns a deduplicated incident', a
   assert.match(alert.run, /needs-triage/)
   assert.match(alert.run, /--assignee matthew6688/)
 
+  const infrastructureAlert = job.steps.find(
+    (step) => step.name === 'Open or update canary infrastructure incident',
+  )
+  assert.equal(infrastructureAlert.if, "always() && steps.health.outcome == 'skipped'")
+  assert.match(infrastructureAlert.run, /monitor did not run/)
+  assert.match(infrastructureAlert.run, /gh issue create/)
+
   const recovery = job.steps.find(
     (step) => step.name === 'Close recovered Production incident',
   )
   assert.equal(recovery.if, "always() && steps.health.outcome == 'success'")
   assert.match(recovery.run, /gh issue close/)
+
+  const infrastructureRecovery = job.steps.find(
+    (step) => step.name === 'Close recovered canary infrastructure incident',
+  )
+  assert.equal(infrastructureRecovery.if, "always() && steps.health.outcome == 'success'")
+  assert.match(infrastructureRecovery.run, /gh issue close/)
 })
 
 test('release pull requests reject unsafe migrations before merging to main', async () => {

@@ -1,4 +1,4 @@
 interface:
   display_name: "Manage Matthew Photos"
-  short_description: "Safely publish and remove website photos"
-  default_prompt: "Use $manage-matthew-photos to import, preview, publish, unpublish, or permanently remove Matthew-owned website photos."
+  short_description: "Safely preview, publish, and maintain website photos"
+  default_prompt: "Use $manage-matthew-photos to import, preview locally or on Cloudflare, update bilingual alt text or focal points, publish, unpublish, or permanently remove Matthew-owned website photos."
