@@ -63,6 +63,14 @@ test('Cloudflare environments bind isolated R2 media stores', async () => {
   assert.doesNotMatch(JSON.stringify(config), /BUNNY_MEDIA_/)
 })
 
+test('local browser release tests use the current repository photo publication mode', async () => {
+  const config = await text('playwright.config.ts')
+  assert.match(
+    config,
+    /PHOTO_PUBLICATION_MODE:\s*\n\s*process\.env\.PHOTO_PUBLICATION_MODE \?\? 'repository-bootstrap'/,
+  )
+})
+
 test('feature pushes deploy a validated Cloudflare Preview', async () => {
   const config = await workflow('deploy-preview')
   assert.deepEqual(config.on.push['branches-ignore'], ['main', 'dev'])

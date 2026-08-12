@@ -9,6 +9,8 @@ const localServerEnv = {
     process.env.AMA_ENCRYPTION_KEY ?? 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
   MEDIA_PUBLIC_BASE_URL:
     process.env.MEDIA_PUBLIC_BASE_URL ?? 'https://media-ci.example.com/media/',
+  PHOTO_PUBLICATION_MODE:
+    process.env.PHOTO_PUBLICATION_MODE ?? 'repository-bootstrap',
   CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY ?? 'sk_live_ci_secret_not_real',
   DATABASE_URL:
     process.env.DATABASE_URL ?? 'postgresql://runtime:runtime@127.0.0.1:5432/cali',
