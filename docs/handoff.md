@@ -110,6 +110,16 @@ protected branches, supports local or Cloudflare Preview, and provides atomic
 commands for bilingual alt-text and focal-point changes. Withdrawal is reversible;
 permanent derivative deletion retains its exact confirmation gate.
 
+Read `.agents/skills/curate-matthew-projects-shelves/SKILL.md` for original
+GitHub projects, books, or music. Matthew may supply only a repository URL plus
+an originality/primary-maintainer confirmation; the Skill inspects fork,
+visibility, archive, README, homepage, and license state before preparing
+bilingual copy. It never treats a public repository as open source without a
+recognized license and never attributes ordinary forks or inferred preferences
+to Matthew. Projects remain a hand-curated build-time registry; books and music
+reuse the preserved upstream shelf components and may launch with text-only art
+instead of unlicensed covers.
+
 ## Required release checks
 
 ```bash
