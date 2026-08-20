@@ -293,6 +293,10 @@ test('release pull requests reject unsafe migrations before merging to main', as
     job.steps.find((step) => step.name === 'Test agent photo management gate').run,
     'pnpm test:photo-skill',
   )
+  assert.equal(
+    job.steps.find((step) => step.name === 'Test agent projects and shelves curation gate').run,
+    'pnpm test:curation-skill',
+  )
   assertOrdered(job.steps, 'Build', 'Test browser release gate')
 })
 

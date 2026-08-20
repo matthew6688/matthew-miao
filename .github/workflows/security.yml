@@ -66,6 +66,9 @@ jobs:
       - name: Test agent photo management gate
         run: pnpm test:photo-skill
 
+      - name: Test agent projects and shelves curation gate
+        run: pnpm test:curation-skill
+
       - name: Validate database migrations
         run: pnpm db:validate
 
