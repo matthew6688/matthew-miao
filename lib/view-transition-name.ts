@@ -4,6 +4,8 @@ function postTransitionId(slug: string) {
   switch (slug) {
     case 'building-in-public-with-ai-agents':
       return 'p01'
+    case 'agentic-search-active-verification':
+      return 'p02'
     default:
       throw new Error('Unknown post view-transition slug')
   }

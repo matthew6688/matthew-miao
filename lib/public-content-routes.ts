@@ -2,6 +2,7 @@
 // proxy, post index, feeds, and sitemap all consume this explicit allowlist.
 export const publishedPostSlugs = [
   'building-in-public-with-ai-agents',
+  'agentic-search-active-verification',
 ] as const
 
 export const archivedNewsletterIds = ['1'] as const
