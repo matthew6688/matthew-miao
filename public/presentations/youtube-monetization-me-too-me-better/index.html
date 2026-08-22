@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<!-- content-brain-metadata:{"content_project_id":"2d860043-e2ea-416a-9ba8-73fe8556613b","master_sha256":"089e6a0b08859acc1c33ca4bfef73623be5e1bd2712e6eafa5731499099888c2","output_kind":"presentation","platform":"youtube","schema":"content-brain-local-output-v1"} -->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="design-system-attribution" content="ESTHER不二 · esthersjw/esther-design-system · CC BY-NC-SA 4.0">
+  <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+  <title>做 YouTube 变现，我的第一步是先抄一个能跑通的频道｜峰说</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=Caveat:wght@400;700&family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;700&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root { --_esther-ds: "esthersjw-v1";
+      --blue: #0F4C5C;
+      --blue-deep: #0F4C5C;
+      --yellow: #DCE8E5;
+      --yellow-soft: #F2F0E6;
+      --red: #E85D34;
+      --cream: #F6F2E8;
+      --cream-dark: #F2F0E6;
+      --ink: #171A18;
+      --ink-light: #4F5A56;
+      --ink-faint: #7D8581;
+      --dark-panel: #171A18;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--cream);
+    }
+
+    ::selection {
+      background: var(--yellow);
+      color: var(--ink);
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 0.6fr;
+      align-items: center;
+      gap: 48px;
+      padding: 6rem 2rem 4rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.15;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      margin-top: 1.5rem;
+      max-width: 540px;
+    }
+
+    .label-caps {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 500;
+      color: var(--ink-faint);
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-cluster {
+      position: relative;
+      width: clamp(160px, 22vw, 240px);
+      height: clamp(160px, 22vw, 240px);
+    }
+    .ring {
+      position: absolute;
+      inset: -12px;
+      border: 2px dashed rgba(15,76,92,0.25);
+      border-radius: 50%;
+      animation: heroSpin 20s linear infinite;
+    }
+    .avatar-img {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      position: relative;
+      z-index: 2;
+    }
+    .orbit-item {
+      position: absolute;
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.7rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+      z-index: 3;
+    }
+    @keyframes heroSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    .section {
+      padding: clamp(80px, 12vh, 160px) 0;
+    }
+
+    .section--alt {
+      background: var(--cream-dark);
+    }
+
+    .section-header {
+      margin-bottom: clamp(40px, 6vw, 80px);
+    }
+
+    .section-number {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--blue);
+      opacity: 0.3;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 900;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+    }
+
+    .numgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 600px; }
+    .numgrid-card {
+      background: var(--cream); border-radius: 14px; padding: 24px 20px;
+      position: relative; overflow: hidden; transition: transform 0.2s;
+    }
+    .numgrid-card:hover { transform: translateY(-3px); }
+    .numgrid-card::before {
+      content: attr(data-num); position: absolute; top: -8px; right: 12px;
+      font-family: 'Caveat', cursive; font-size: 3rem; color: var(--yellow); opacity: 0.2;
+    }
+    .numgrid-card h4 { font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; color: var(--blue); }
+    .numgrid-card p { font-size: 0.78rem; color: var(--ink-light); line-height: 1.8; }
+    .numgrid-card.full { grid-column: 1 / -1; }
+
+    .viral-pullquote {
+      padding: 36px 40px;
+      background: var(--cream);
+      border-radius: 16px;
+      border: 2px solid var(--yellow);
+      position: relative;
+    }
+    .viral-pullquote::before {
+      content: '"';
+      font-family: 'Fraunces', serif;
+      font-size: 5rem;
+      color: var(--yellow);
+      position: absolute;
+      top: -10px; left: 20px;
+      opacity: 0.5;
+      line-height: 1;
+    }
+    .viral-pullquote p {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-weight: 700;
+      line-height: 1.8;
+    }
+
+    .chair-dashed-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .chair-dashed-card {
+      border: 2px dashed;
+      border-radius: 16px;
+      padding: 28px 22px;
+      position: relative;
+      background: var(--cream);
+    }
+    .chair-dashed-card:nth-child(1) { border-color: rgba(15,76,92,0.3); }
+    .chair-dashed-card:nth-child(2) { border-color: rgba(220,232,229,0.8); }
+    .chair-dashed-card:nth-child(3) { border-color: rgba(232,93,52,0.3); }
+    .chair-dashed-card .chair-label {
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      font-family: 'Caveat', cursive;
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: var(--cream);
+      padding: 0 8px;
+    }
+    .chair-dashed-card:nth-child(1) .chair-label { color: var(--blue); }
+    .chair-dashed-card:nth-child(2) .chair-label { color: var(--blue); }
+    .chair-dashed-card:nth-child(3) .chair-label { color: var(--red); }
+    .chair-dashed-card h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      margin-top: 6px;
+    }
+    .chair-dashed-card p {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      line-height: 1.7;
+    }
+
+    .compare-stamp {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .compare-stamp-col {
+      background: var(--cream);
+      border: 2px solid;
+      padding: 28px 24px;
+      position: relative;
+      border-radius: 4px;
+    }
+    .compare-stamp-col--dont { border-color: var(--red); }
+    .compare-stamp-col--do { border-color: var(--blue); }
+    .compare-stamp-col .compare-stamp-label {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Fraunces', serif;
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 2px 16px;
+      background: var(--cream);
+    }
+    .compare-stamp-col--dont .compare-stamp-label { color: var(--red); }
+    .compare-stamp-col--do .compare-stamp-label { color: var(--blue); }
+    .compare-stamp-col ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .compare-stamp-col li {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+      padding-left: 24px;
+      position: relative;
+    }
+    .compare-stamp-col--dont li::before {
+      content: '✕';
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--red);
+    }
+    .compare-stamp-col--do li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      font-size: 0.6rem;
+      top: 4px;
+      color: var(--blue);
+    }
+
+    .dark-section {
+      background: var(--dark-panel);
+      color: #E7ECE9;
+      padding: clamp(60px, 8vh, 120px) 0;
+    }
+    .dark-section .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .dark-section .section-title { color: #F6F2E8; }
+
+    .code-macos {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+    }
+    .code-macos .code-titlebar {
+      background: #2D302E;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .code-macos .code-dots { display: flex; gap: 6px; }
+    .code-macos .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .code-macos .dot:nth-child(1) { background: var(--red); }
+    .code-macos .dot:nth-child(2) { background: var(--yellow); }
+    .code-macos .dot:nth-child(3) { background: var(--blue); }
+    .code-macos .code-filename {
+      flex: 1;
+      text-align: center;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+    }
+    .code-macos .code-body {
+      background: #171A18;
+      padding: 24px;
+    }
+    .code-macos pre {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.9;
+      color: #C6D4D1;
+      margin: 0;
+    }
+
+    .layout-sticky {
+      display: grid;
+      grid-template-columns: 0.35fr 1fr;
+      gap: clamp(40px, 6vw, 100px);
+      align-items: start;
+    }
+    .sticky-side {
+      position: sticky;
+      top: 80px;
+    }
+
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(32px, 4vw, 56px);
+      padding-left: 60px;
+      position: relative;
+    }
+    .steps-container::before {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 40px; bottom: 40px;
+      width: 2px;
+      border-left: 2px dashed var(--yellow);
+    }
+    .step-item {
+      position: relative;
+    }
+    .step-num {
+      position: absolute;
+      left: -60px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+    }
+
+    .tag-card {
+      background: var(--cream);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .tag-card .card-pill {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+    .tag-card .card-pill--blue { background: rgba(15,76,92,0.1); color: var(--blue); }
+    .tag-card .card-pill--yellow { background: rgba(220,232,229,0.5); color: var(--blue); }
+    .tag-card .card-pill--red { background: rgba(232,93,52,0.1); color: var(--red); }
+    .tag-card .card-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .tag-card .card-desc {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+    }
+
+    .split-section {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    .split-left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(40px, 6vw, 80px);
+    }
+    .split-right {
+      display: flex;
+      align-items: center;
+      padding: clamp(40px, 6vw, 80px);
+      background: var(--cream-dark);
+    }
+
+    .quote-minimal {
+      text-align: left;
+    }
+    .quote-minimal .quote-body {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      line-height: 2;
+      color: var(--ink);
+      margin-bottom: 2rem;
+    }
+    .quote-minimal .quote-body .hl {
+      background: linear-gradient(transparent 60%, rgba(220,232,229,0.6) 60%);
+      padding: 0 4px;
+    }
+    .quote-minimal .quote-rule {
+      width: 60px;
+      height: 3px;
+      background: var(--yellow);
+      margin-bottom: 2rem;
+    }
+    .quote-minimal .quote-conclusion {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--blue);
+      line-height: 1.7;
+    }
+
+    .steps-layout {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .steps-layout::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 28px; right: 28px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--yellow), var(--blue));
+    }
+    .step-card {
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .step-dot {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: var(--cream);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+    .reveal-d5 { transition-delay: 0.5s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding: 4rem 1.5rem 3rem;
+      }
+      .layout-sticky { grid-template-columns: 1fr; }
+      .sticky-side { position: static; }
+      .chair-dashed-grid { grid-template-columns: 1fr; }
+      .compare-stamp { grid-template-columns: 1fr; }
+      .split-section { grid-template-columns: 1fr; min-height: auto; }
+      .steps-layout { grid-template-columns: 1fr; gap: 32px; }
+      .steps-layout::before { display: none; }
+    }
+
+    @media (max-width: 768px) { .numgrid { grid-template-columns: 1fr; } }
+
+    @media (max-width: 600px) {
+      body { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero" id="start">
+    <div class="hero-text">
+      <span class="label-caps">YouTube Monetization · 01</span>
+      <h1>先抄一个<br>能跑通的频道</h1>
+      <p>“5 个频道月赚 10 万美元”没有可核验的后台数据。我继续看下去，是因为它的起步方法正好和我最近在做的事撞上了。</p>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-cluster">
+        <div class="ring"></div>
+        <img class="avatar-img" src="/presentations/youtube-monetization-me-too-me-better/fengtalk-circle-logo.png" alt="峰说圆形 Logo">
+        <span class="orbit-item" style="top:0;right:10%">Me Too</span>
+        <span class="orbit-item" style="bottom:10%;left:0">Me Better</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="new-account">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">02</span>
+        <h2 class="section-title">我只研究最近三个月的新账号</h2>
+      </div>
+      <div class="numgrid reveal reveal-d1">
+        <div class="numgrid-card" data-num="01"><h4>排除历史权重</h4><p>做了五年的频道已经有订阅者、品牌影响和算法历史，它今天的播放量不能直接复制到新账号。</p></div>
+        <div class="numgrid-card" data-num="02"><h4>限定最近三个月</h4><p>优先看最近开始发视频，或者最近才跑出来的账号。这能说明内容在现在还有需求。</p></div>
+        <div class="numgrid-card full" data-num="03"><h4>选择相近起点</h4><p>它没有太多历史积累，我和它面对的起点才更接近，拆出来的方法也更有参考价值。</p></div>
+      </div>
+      <div class="viral-pullquote reveal reveal-d2"><p>我找的是一个和我站在相近起点、最近刚跑通的频道。</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="criteria">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">03</span>
+        <h2 class="section-title">三个条件，缺一个都不行</h2>
+      </div>
+      <div class="chair-dashed-grid reveal reveal-d1">
+        <div class="chair-dashed-card"><span class="chair-label">Fresh</span><h3>账号够新</h3><p>最近三个月开始，或者最近三个月刚刚跑出来。</p></div>
+        <div class="chair-dashed-card"><span class="chair-label">Repeatable</span><h3>连续有表现</h3><p>几条视频连续超过订阅规模，才值得继续研究。</p></div>
+        <div class="chair-dashed-card"><span class="chair-label">AI-ready</span><h3>AI 能参与</h3><p>选题、脚本、配音、画面和剪辑都有可拆解的稳定步骤。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="performance">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">04</span>
+        <h2 class="section-title">连续表现比一条爆款更有参考价值</h2>
+      </div>
+      <div class="compare-stamp reveal reveal-d1">
+        <div class="compare-stamp-col compare-stamp-col--dont">
+          <span class="compare-stamp-label">AVOID</span>
+          <ul><li>只研究播放最高的那一条</li><li>把偶然推流当成成功机制</li><li>围绕单条爆款重做整个频道</li></ul>
+        </div>
+        <div class="compare-stamp-col compare-stamp-col--do">
+          <span class="compare-stamp-label">PREFER</span>
+          <ul><li>把表现好和表现差的视频放在一起看</li><li>控制题材、受众和制作方式相近</li><li>寻找多条视频共同出现的真实机制</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark-section" id="skeleton">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">05</span>
+        <h2 class="section-title">拆骨架，不搬运成片</h2>
+      </div>
+      <div class="code-macos reveal reveal-d1">
+        <div class="code-titlebar">
+          <div class="code-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <span class="code-filename">video-skeleton.md</span>
+        </div>
+        <div class="code-body"><pre><code>题目来源      →  为什么现在值得讲
+标题机制      →  为什么让人点进去
+开头几秒      →  先给什么信息
+正文顺序      →  内容如何推进
+画面与配音    →  节奏如何稳定
+制作成本      →  一条需要多久
+
+# 复现内容做法，不复制别人的成片</code></pre></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="workflow">
+    <div class="container">
+      <div class="layout-sticky">
+        <div class="sticky-side reveal">
+          <span class="section-number">06</span>
+          <h2 class="section-title">把一次模仿，拆成可重复的 AI 流程</h2>
+        </div>
+        <div class="content-scroll steps-container">
+          <div class="step-item reveal"><span class="step-num">1</span><div class="tag-card"><span class="card-pill card-pill--blue">Research</span><h3 class="card-title">收集样本</h3><p class="card-desc">找最近跑出来的频道和视频。</p></div></div>
+          <div class="step-item reveal reveal-d1"><span class="step-num">2</span><div class="tag-card"><span class="card-pill card-pill--yellow">Filter</span><h3 class="card-title">筛选对标</h3><p class="card-desc">按新账号、连续表现、AI 可复制筛掉噪声。</p></div></div>
+          <div class="step-item reveal reveal-d2"><span class="step-num">3</span><div class="tag-card"><span class="card-pill card-pill--red">Structure</span><h3 class="card-title">拆内容骨架</h3><p class="card-desc">拆选题、标题、开头和脚本结构。</p></div></div>
+          <div class="step-item reveal"><span class="step-num">4</span><div class="tag-card"><span class="card-pill card-pill--blue">Produce</span><h3 class="card-title">AI 生产</h3><p class="card-desc">让 AI 参与脚本、配音和画面制作。</p></div></div>
+          <div class="step-item reveal reveal-d1"><span class="step-num">5</span><div class="tag-card"><span class="card-pill card-pill--yellow">Template</span><h3 class="card-title">固定模板</h3><p class="card-desc">把稳定的剪辑步骤做成模板。</p></div></div>
+          <div class="step-item reveal reveal-d2"><span class="step-num">6</span><div class="tag-card"><span class="card-pill card-pill--red">Measure</span><h3 class="card-title">发布与回收</h3><p class="card-desc">收回播放、观看和制作时间。</p></div></div>
+          <div class="step-item reveal"><span class="step-num">7</span><div class="tag-card"><span class="card-pill card-pill--blue">Improve</span><h3 class="card-title">保留与改进</h3><p class="card-desc">保留有效部分，只改表现差的地方。</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="split-section" id="better">
+    <div class="split-left">
+      <div><span class="section-number">07</span><h2 class="section-title">先 Me Too<br>再 Me Better</h2></div>
+    </div>
+    <div class="split-right">
+      <div class="key-insight quote-minimal">
+        <p class="quote-body"><span class="hl">Me Too</span> 给我一个可以比较的起点。Me Better 从每次只改一两个变量开始。</p>
+        <div class="quote-rule"></div>
+        <p class="quote-conclusion">如果每条视频同时换题材、结构和制作方式，数据回来以后，也很难判断哪一步真的有效。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="data">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">08</span>
+        <h2 class="section-title">生产流程有了，下一步看真实数据</h2>
+      </div>
+      <div class="steps-layout reveal reveal-d1">
+        <div class="step-card"><span class="step-dot">1</span><div class="tag-card"><span class="card-pill card-pill--blue">NOW</span><h3 class="card-title">已经拥有</h3><p class="card-desc">对标筛选、骨架拆解和第一版 AI 批量生产流程。</p></div></div>
+        <div class="step-card"><span class="step-dot">2</span><div class="tag-card"><span class="card-pill card-pill--yellow">TEST</span><h3 class="card-title">等待验证</h3><p class="card-desc">哪些标准可靠、哪些步骤能稳定自动化、要做多少条。</p></div></div>
+        <div class="step-card"><span class="step-dot">3</span><div class="tag-card"><span class="card-pill card-pill--red">NEXT</span><h3 class="card-title">下一阶段</h3><p class="card-desc">用真实发布结果说话，从抄得像走到做得更好。</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="section" style="padding: clamp(40px, 6vh, 80px) 0; text-align: center;">
+    <div class="container">
+      <p style="font-size: 0.85rem; color: var(--ink-faint);">峰说 · 你的全自动 AI 外贸业务员 · SINCE 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+  <!-- © ESTHER不二 esthersjw/esther-design-system CC BY-NC-SA 4.0 -->
+</body>
+</html>

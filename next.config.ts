@@ -5,6 +5,7 @@ import {
   adminSecurityHeader,
   blogSecurityHeader,
   googleOAuthFormSecurityHeader,
+  presentationSecurityHeader,
   securityHeaders,
 } from './lib/security/headers'
 
@@ -25,6 +26,14 @@ const legacyRewrites = legacyUrlManifest.entries.flatMap((entry) =>
     ? [{ source: entry.source, destination: entry.destination }]
     : [],
 )
+
+const presentationRewrites = [
+  {
+    source: '/presentations/youtube-monetization-me-too-me-better',
+    destination:
+      '/presentations/youtube-monetization-me-too-me-better/index.html',
+  },
+]
 
 const ogRuntimeAssets = [
   './app/_fonts/FrexSansGB-OG-*.ttf',
@@ -99,6 +108,10 @@ const nextConfig: NextConfig = {
       headers: [blogSecurityHeader],
     },
     {
+      source: '/presentations/:path*',
+      headers: [presentationSecurityHeader],
+    },
+    {
       // The global policy is intentionally useful for public navigation, but
       // admin API responses must never disclose their origin to another site.
       source: '/api/admin/:path*',
@@ -136,7 +149,7 @@ const nextConfig: NextConfig = {
   // replaced or retired public URL from the legacy site.
   redirects: async () => legacyRedirects,
 
-  rewrites: async () => legacyRewrites,
+  rewrites: async () => [...legacyRewrites, ...presentationRewrites],
 }
 
 export default nextConfig
