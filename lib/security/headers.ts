@@ -45,10 +45,12 @@ function contentSecurityPolicy(
     formActionSources = "'self'",
     connectSources = '',
     frameSources = "'none'",
+    fontSources = "'self' data:",
   }: {
     formActionSources?: string
     connectSources?: string
     frameSources?: string
+    fontSources?: string
   } = {},
 ) {
   return [
@@ -61,7 +63,7 @@ function contentSecurityPolicy(
     "script-src-attr 'none'",
     `style-src ${styleSources}`,
     `img-src 'self' data: blob:${optionalMediaImageSource()}`,
-    "font-src 'self' data:",
+    `font-src ${fontSources}`,
     `connect-src 'self'${connectSources}`,
     "media-src 'self' blob:",
     "worker-src 'self' blob:",
@@ -91,6 +93,20 @@ const blogContentSecurityPolicy = contentSecurityPolicy(
 export const blogSecurityHeader = {
   key: 'Content-Security-Policy',
   value: blogContentSecurityPolicy,
+} as const
+
+const presentationContentSecurityPolicy = contentSecurityPolicy(
+  `'self' 'unsafe-inline'${cloudflareAnalyticsScriptSource}`,
+  "'self' 'unsafe-inline' https://fonts.googleapis.com",
+  {
+    connectSources: cloudflareAnalyticsConnectSource,
+    fontSources: "'self' data: https://fonts.gstatic.com",
+  },
+)
+
+export const presentationSecurityHeader = {
+  key: 'Content-Security-Policy',
+  value: presentationContentSecurityPolicy,
 } as const
 
 // Admin pages ship clerk-js so the 60-second Clerk session token keeps
