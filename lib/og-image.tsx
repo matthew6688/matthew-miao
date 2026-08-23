@@ -108,7 +108,7 @@ function OgSectionMark({ section }: { section: PublicSection }) {
   const stroke = ogColors.paperInk
   const faint = ogColors.border
 
-  if (section === 'blog') {
+  if (section === 'blog' || section === 'build-in-public') {
     return (
       <svg
         width="232"

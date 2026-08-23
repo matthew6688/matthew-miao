@@ -4,7 +4,13 @@ import type { Locale } from '~/lib/locale-route'
 import { isArchivedNewsletterId } from '~/lib/newsletters'
 import type { PublicSection } from '~/lib/public-page-metadata'
 
-const PUBLIC_SECTIONS = new Set<PublicSection>(['ama', 'blog', 'photos', 'projects'])
+const PUBLIC_SECTIONS = new Set<PublicSection>([
+  'ama',
+  'blog',
+  'build-in-public',
+  'photos',
+  'projects',
+])
 function isLocale(value: string | null): value is Locale {
   return value === 'zh' || value === 'en'
 }

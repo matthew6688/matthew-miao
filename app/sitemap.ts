@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...pairedEntry('/', latest),
     ...pairedEntry('/blog', latest),
+    ...pairedEntry('/build-in-public', latest),
     ...pairedEntry('/photos', latest),
     ...pairedEntry('/projects', latest),
     ...pairedEntry('/ama'),

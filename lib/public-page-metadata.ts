@@ -24,6 +24,17 @@ export const publicPageMetadata = {
         'Notes by Matthew on web coding, AI agents, automation, outreach, and company knowledge systems.',
     },
   },
+  'build-in-public': {
+    zh: {
+      title: '公开构建',
+      description: '记录我把技能、知识和自动化做成产品的真实尝试：假设、上线、获客、结果与失败。',
+    },
+    en: {
+      title: 'Build in Public',
+      description:
+        'An honest record of turning my skills, knowledge, and automation into products: bets, launches, distribution, results, and failures.',
+    },
+  },
   photos: {
     zh: { title: '照片', description: '老苗在工作、生活和旅途中留下的一些瞬间。' },
     en: {

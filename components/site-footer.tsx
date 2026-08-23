@@ -87,6 +87,11 @@ export function SiteFooter({
             </Link>
           </li>
           <li>
+            <Link href={localePath(locale, '/build-in-public')} className="footer-tree-link">
+              <T zh="公开构建" en="Build in Public" />
+            </Link>
+          </li>
+          <li>
             <Link href={localePath(locale, '/ama')} className="footer-tree-link">
               <T zh="一对一" en="AMA" />
             </Link>

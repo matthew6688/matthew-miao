@@ -15,6 +15,9 @@ Create truthful, media-rich bilingual posts without changing the inherited Cali 
 3. Gather the source, factual claims, desired call to action, cover direction, inline-media needs, and video URLs. Browse primary sources when a claim or link needs verification.
 4. Treat Chinese as primary unless Matthew supplies English as the source. Preserve meaning and voice; mark uncertain claims instead of inventing evidence.
 5. Create both MDX editions under `content/blog/<slug>/`. Make each language read natively while keeping facts and structure aligned.
+   When Matthew says the post belongs to Build in Public, add
+   `series: "build-in-public"` to Chinese frontmatter only. Use the series for
+   honest productization and online-business experiments, not generic AI news.
 6. Generate or prepare owned media. Run `node .agents/skills/publish-matthew-blog/scripts/prepare-image.mjs INPUT OUTPUT cover` for a 1600×900 cover, or use `inline` to preserve an illustration's aspect ratio. Copy the printed exact dimensions into MDX and record every file in `publication.json`.
 7. Use `VideoEmbed` for supported hosted video. Never paste raw `iframe`, arbitrary embed HTML, JavaScript URLs, or tracking snippets.
 8. Run the draft gate while the slug is unregistered: `node .agents/skills/publish-matthew-blog/scripts/validate-post.mjs <slug> --draft --check-links`.
@@ -59,6 +62,10 @@ Use this mode immediately only when Matthew explicitly asks to publish or direct
 - Link confirmed entities through `siteProfile` when editing application code.
 - Do not restore upstream Cali identity, posts, photos, products, clients, or social accounts.
 - Do not publish placeholders, fabricated claims or testimonials, unlicensed media, or unverified personal preferences.
+- For Build in Public, separate hypotheses from results. Publish revenue, cost,
+  conversion, customer, or traffic claims only when Matthew supplies or approves
+  the exact figure or range. Never turn an experiment into a success story before
+  the evidence exists.
 - Prefer primary sources and descriptive link text. External links must use HTTPS.
 - A request to preview authorizes pushing its draft branch and deploying Cloudflare Preview. A request to publish authorizes pushing, opening/merging its PR after checks, and verifying the Production deployment. Neither request authorizes newsletters, payments, or unrelated external actions.
 - Work on a draft branch by default. Even an explicit publication request goes through a protected PR; never commit a new article directly to `main`.

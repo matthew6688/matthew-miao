@@ -47,6 +47,18 @@ describe('social OG image metadata', () => {
     ],
     [
       'zh',
+      '/build-in-public',
+      publicPageMetadata['build-in-public'].zh,
+      '公开构建 · Matthew Miao。记录我把技能、知识和自动化做成产品的真实尝试：假设、上线、获客、结果与失败。',
+    ],
+    [
+      'en',
+      '/build-in-public',
+      publicPageMetadata['build-in-public'].en,
+      'Build in Public · Matthew Miao. An honest record of turning my skills, knowledge, and automation into products: bets, launches, distribution, results, and failures.',
+    ],
+    [
+      'zh',
       '/photos',
       publicPageMetadata.photos.zh,
       '照片 · Matthew Miao。老苗在工作、生活和旅途中留下的一些瞬间。',

@@ -37,6 +37,17 @@ describe('public page metadata copy', () => {
         description: 'Moments Matthew has kept from work, life, and everywhere in between.',
       },
     })
+    expect(publicPageMetadata['build-in-public']).toEqual({
+      zh: {
+        title: '公开构建',
+        description: '记录我把技能、知识和自动化做成产品的真实尝试：假设、上线、获客、结果与失败。',
+      },
+      en: {
+        title: 'Build in Public',
+        description:
+          'An honest record of turning my skills, knowledge, and automation into products: bets, launches, distribution, results, and failures.',
+      },
+    })
     expect(publicPageMetadata.projects).toEqual({
       zh: {
         title: '项目',
@@ -64,7 +75,7 @@ describe('public page metadata copy', () => {
   })
 
   it('keeps section descriptions within social preview budgets', () => {
-    for (const section of ['blog', 'photos', 'projects', 'ama'] as const) {
+    for (const section of ['blog', 'build-in-public', 'photos', 'projects', 'ama'] as const) {
       expect(publicPageMetadata[section].zh.description.length, section).toBeLessThanOrEqual(80)
       expect(publicPageMetadata[section].en.description.length, section).toBeLessThanOrEqual(160)
     }

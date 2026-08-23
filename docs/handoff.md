@@ -1,6 +1,6 @@
 # Matthew site handoff
 
-Current as of 2026-08-13.
+Current as of 2026-08-24.
 
 ## Live state
 
@@ -103,6 +103,12 @@ protection. `pnpm test:blog-skill` validates both the validator behavior, every
 registered article, and any committed draft directory. Hosted browser tests derive their article
 matrix from `publishedPostSlugs`, so a new slug automatically receives bilingual
 route, image, canonical/hreflang, feed and sitemap checks.
+
+Build in Public is a filtered bilingual blog series at `/build-in-public` and
+`/en/build-in-public`. Shared Chinese frontmatter may set only
+`series: "build-in-public"`; English inherits that field. The publishing Skill
+must distinguish hypotheses from verified outcomes and never invent revenue,
+cost, conversion, customer, or traffic claims.
 
 Read `.agents/skills/manage-matthew-photos/SKILL.md` for photo work. Its CLI
 sanitizes Originals into four deterministic derivatives, refuses mutations on

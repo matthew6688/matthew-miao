@@ -12,6 +12,7 @@ const frontmatterSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
   publishedAt: z.coerce.date(),
+  series: z.enum(['build-in-public']).optional(),
   cover: z.string().startsWith('./').optional(),
   coverWidth: z.number().int().positive().optional(),
   coverHeight: z.number().int().positive().optional(),
@@ -37,6 +38,7 @@ export interface Post {
   description?: string
   descriptionEn: string
   publishedAt: Date
+  series?: PostSeries
   cover?: PostCover
   readingMinutes: number
   readingMinutesEn: number
@@ -45,6 +47,8 @@ export interface Post {
   body: string
   bodyEn: string
 }
+
+export type PostSeries = 'build-in-public'
 
 export const POST_ARTICLE_START_ID = 'post-article-start'
 
@@ -172,6 +176,7 @@ export function getPost(slug: string): Post {
     description: fm.description,
     descriptionEn: translatedFm.description,
     publishedAt: fm.publishedAt,
+    series: fm.series,
     cover,
     readingMinutes: stats.minutes,
     readingMinutesEn: statsEn.minutes,
@@ -262,4 +267,8 @@ export function getAllPosts(): Post[] {
   return publishedPostSlugs
     .map((slug) => getPost(slug))
     .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
+}
+
+export function getPostsBySeries(series: PostSeries): Post[] {
+  return getAllPosts().filter((post) => post.series === series)
 }

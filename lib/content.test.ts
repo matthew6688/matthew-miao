@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { getAllPosts, getRelatedPosts, isPostSlug } from './content'
+import { getAllPosts, getPostsBySeries, getRelatedPosts, isPostSlug } from './content'
 
 describe('post slug allowlist', () => {
   it('accepts published slugs and rejects unknown or traversal-shaped values', () => {
@@ -27,6 +27,16 @@ describe('posts like this', () => {
     }
 
     expect(getRelatedPosts('not-a-published-post')).toEqual([])
+  })
+})
+
+describe('Build in Public collection', () => {
+  it('includes only explicitly tagged published posts', () => {
+    const posts = getPostsBySeries('build-in-public')
+
+    expect(posts.map((post) => post.slug)).toContain('building-in-public-with-ai-agents')
+    expect(posts.length).toBeGreaterThan(0)
+    expect(posts.every((post) => post.series === 'build-in-public')).toBe(true)
   })
 })
 

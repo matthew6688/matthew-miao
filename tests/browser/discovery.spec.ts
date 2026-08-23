@@ -10,6 +10,7 @@ const metadataCases = [
   {
     locale: 'Chinese',
     path: '/projects',
+    routePath: '/projects',
     canonical: `${expectedOrigin}/projects`,
     openGraphLocale: 'zh_CN',
     socialLocale: 'zh',
@@ -17,7 +18,24 @@ const metadataCases = [
   {
     locale: 'English',
     path: '/en/projects',
+    routePath: '/projects',
     canonical: `${expectedOrigin}/en/projects`,
+    openGraphLocale: 'en_US',
+    socialLocale: 'en',
+  },
+  {
+    locale: 'Chinese Build in Public',
+    path: '/build-in-public',
+    routePath: '/build-in-public',
+    canonical: `${expectedOrigin}/build-in-public`,
+    openGraphLocale: 'zh_CN',
+    socialLocale: 'zh',
+  },
+  {
+    locale: 'English Build in Public',
+    path: '/en/build-in-public',
+    routePath: '/build-in-public',
+    canonical: `${expectedOrigin}/en/build-in-public`,
     openGraphLocale: 'en_US',
     socialLocale: 'en',
   },
@@ -37,11 +55,11 @@ for (const metadata of metadataCases) {
     )
     await expect(page.locator('link[rel="alternate"][hreflang="zh-CN"]')).toHaveAttribute(
       'href',
-      `${expectedOrigin}/projects`,
+      `${expectedOrigin}${metadata.routePath}`,
     )
     await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute(
       'href',
-      `${expectedOrigin}/en/projects`,
+      `${expectedOrigin}/en${metadata.routePath}`,
     )
     await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute(
       'content',
@@ -56,7 +74,7 @@ for (const metadata of metadataCases) {
     expect(socialImageUrl.origin).toBe(expectedOrigin)
     expect(socialImageUrl.pathname).toBe('/og')
     expect(socialImageUrl.searchParams.get('locale')).toBe(metadata.socialLocale)
-    expect(socialImageUrl.searchParams.get('path')).toBe('/projects')
+    expect(socialImageUrl.searchParams.get('path')).toBe(metadata.routePath)
     expect(browserErrors).toEqual([])
   })
 }
@@ -67,6 +85,9 @@ test('@hosted feeds and localized social images return their public media contra
   const chineseFeed = await request.get('/feed.xml')
   const englishFeed = await request.get('/feed.en.xml')
   const socialImage = await request.get('/og?locale=en&path=%2Fprojects')
+  const buildInPublicImage = await request.get(
+    '/og?locale=en&path=%2Fbuild-in-public',
+  )
 
   expect(chineseFeed.status()).toBe(200)
   expect(chineseFeed.headers()['content-type']).toContain('xml')
@@ -79,4 +100,7 @@ test('@hosted feeds and localized social images return their public media contra
   expect(socialImage.status()).toBe(200)
   expect(socialImage.headers()['content-type']).toContain('image/png')
   expect((await socialImage.body()).byteLength).toBeGreaterThan(10_000)
+  expect(buildInPublicImage.status()).toBe(200)
+  expect(buildInPublicImage.headers()['content-type']).toContain('image/png')
+  expect((await buildInPublicImage.body()).byteLength).toBeGreaterThan(10_000)
 })
