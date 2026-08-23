@@ -14,7 +14,13 @@ interface LocaleMetadataOptions {
 }
 
 const SOCIAL_IMAGE_VERSION = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12)
-const SECTION_IMAGE_PATHS = new Set(['/ama', '/blog', '/photos', '/projects'])
+const SECTION_IMAGE_PATHS = new Set([
+  '/ama',
+  '/blog',
+  '/build-in-public',
+  '/photos',
+  '/projects',
+])
 
 export function socialImageUrl(locale: Locale, path: string) {
   const url = new URL('/og', seo.url)

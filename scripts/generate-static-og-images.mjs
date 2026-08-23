@@ -16,6 +16,7 @@ async function render(file, title, description) {
 const sections = {
   home: { zh: ['老苗', 'Web coding、AI Agent、自动化、outreach 与企业知识系统。'], en: ['Matthew Miao', 'Web coding, AI agents, automation, outreach, and company knowledge systems.'] },
   blog: { zh: ['写作', '关于 AI Agent、自动化与产品实践的记录。'], en: ['Writing', 'Notes on AI agents, automation, and building products.'] },
+  'build-in-public': { zh: ['公开构建', '把技能、知识和自动化做成产品的真实尝试。'], en: ['Build in Public', 'Turning skills, knowledge, and automation into products.'] },
   photos: { zh: ['照片', '工作、生活和旅途中留下的一些瞬间。'], en: ['Photos', 'Moments from work, life, and everywhere in between.'] },
   projects: { zh: ['项目', '认真做过的产品、工具和小实验。'], en: ['Projects', 'Products, tools, and small experiments made with care.'] },
   ama: { zh: ['一对一', '用一小时聊清楚判断、取舍与下一步。'], en: ['AMA', 'A focused one-to-one conversation about what to do next.'] },

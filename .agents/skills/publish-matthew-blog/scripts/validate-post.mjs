@@ -67,7 +67,7 @@ function parseEdition(edition, source) {
 
 function validateFrontmatter(edition, data, rawFrontmatter) {
   const allowed = edition === 'index.mdx'
-    ? ['title', 'description', 'publishedAt', 'cover', 'coverWidth', 'coverHeight', 'coverCaption']
+    ? ['title', 'description', 'publishedAt', 'series', 'cover', 'coverWidth', 'coverHeight', 'coverCaption']
     : ['title', 'description']
   for (const key of Object.keys(data)) {
     if (!allowed.includes(key)) fail(`${edition} has unsupported frontmatter field ${key}`)
@@ -75,6 +75,9 @@ function validateFrontmatter(edition, data, rawFrontmatter) {
   if (typeof data.title !== 'string' || !data.title.trim()) fail(`${edition} needs a title`)
   if (typeof data.description !== 'string' || !data.description.trim()) fail(`${edition} needs a description`)
   if (edition === 'index.mdx') {
+    if (data.series !== undefined && data.series !== 'build-in-public') {
+      fail('index.mdx series must be build-in-public when present')
+    }
     const literal = rawFrontmatter.match(/^publishedAt:\s*["']([^"']+)["']\s*$/mu)?.[1]
     if (Number.isNaN(new Date(literal ?? '').valueOf()) || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(literal ?? '')) {
       fail('index.mdx needs publishedAt as an exact ISO UTC timestamp')

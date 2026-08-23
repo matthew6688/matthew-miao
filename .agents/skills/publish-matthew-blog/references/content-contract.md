@@ -9,6 +9,7 @@ Chinese frontmatter owns shared metadata:
 title: "中文标题"
 description: "独立阅读也准确的 SEO 摘要"
 publishedAt: "2026-08-10T00:00:00.000Z"
+series: "build-in-public" # optional; shared series metadata
 cover: "./cover.webp" # optional
 coverWidth: 1600       # required with cover
 coverHeight: 900       # required with cover
@@ -19,6 +20,10 @@ coverCaption: "来源或说明" # optional
 English frontmatter contains only `title` and `description`. Chinese descriptions
 are at most 80 characters and English at most 160. Use a lowercase kebab-case
 slug and `##`/`###` headings so the article rail can build landmarks.
+
+`series` is optional and currently accepts only `build-in-public`. Use it for
+Matthew's first-person productization and online-business experiments. Do not add
+the field to English frontmatter; the English edition inherits shared metadata.
 
 ## Images and diagrams
 

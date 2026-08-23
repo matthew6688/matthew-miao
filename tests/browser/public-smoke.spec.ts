@@ -33,6 +33,14 @@ const profiles = [
     reducedMotion: 'no-preference' as const,
   },
   {
+    name: 'English Build in Public on dark mobile',
+    path: '/en/build-in-public',
+    lang: 'en' as const,
+    viewport: { width: 390, height: 844 },
+    colorScheme: 'dark' as const,
+    reducedMotion: 'no-preference' as const,
+  },
+  {
     name: 'English photos on reduced-motion mobile',
     path: '/en/photos',
     lang: 'en' as const,

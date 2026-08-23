@@ -47,6 +47,7 @@ describe('localized discovery routes', () => {
     const expectedPaths = [
       '/',
       '/blog',
+      '/build-in-public',
       '/photos',
       '/projects',
       '/ama',

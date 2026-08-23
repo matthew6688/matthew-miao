@@ -23,5 +23,8 @@ describe('SiteFooter', () => {
     )
 
     expect(screen.getByText(new RegExp(`© ${siteProfile.copyright.year}`))).toBeTruthy()
+    expect(
+      screen.getByRole('link', { name: /公开构建Build in Public/ }).getAttribute('href'),
+    ).toBe('/build-in-public')
   })
 })
