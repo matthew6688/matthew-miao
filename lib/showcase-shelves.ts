@@ -10,6 +10,9 @@ export const productShelfItems = projects.map((project) => ({
   spineAuthor: project.domain,
   spineColor: project.shelfColor,
   spineInk: project.shelfInk,
+  art: project.cover,
+  coverWidth: project.coverWidth,
+  coverHeight: project.coverHeight,
   spine: 24,
   url: `/projects/${project.slug}`,
   external: false,
@@ -24,6 +27,7 @@ export const experimentShelfItems = experiments.map((experiment) => ({
   genreEn: experiment.statusLabelEn,
   spineColor: experiment.shelfColor,
   spineInk: experiment.shelfInk,
+  art: experiment.cover,
   url: `/build-in-public/${experiment.slug}`,
   external: false,
 }))

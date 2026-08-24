@@ -22,6 +22,7 @@ export interface Experiment {
   statusLabelEn: string
   tags: readonly string[]
   tagsEn: readonly string[]
+  cover: string
   shelfColor: string
   shelfInk: string
   productSlug?: ProjectSlug
@@ -44,6 +45,7 @@ export const experiments: readonly Experiment[] = [
     statusLabelEn: 'Active',
     tags: ['YouTube', '视频'],
     tagsEn: ['YouTube', 'Video'],
+    cover: '/images/showcases/experiments/youtube-channel-cover.svg',
     shelfColor: '#b5402d',
     shelfInk: '#f7f4ed',
   },
@@ -63,6 +65,7 @@ export const experiments: readonly Experiment[] = [
     statusLabelEn: 'Building',
     tags: ['教师工具', '随机抽选'],
     tagsEn: ['Teacher tool', 'Randomizer'],
+    cover: '/images/showcases/experiments/classroom-randomizer-cover.svg',
     shelfColor: '#d5b738',
     shelfInk: '#171713',
   },

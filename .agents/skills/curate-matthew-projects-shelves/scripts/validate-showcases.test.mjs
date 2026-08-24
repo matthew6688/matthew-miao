@@ -11,6 +11,9 @@ const product = {
   descriptionEn: 'Description',
   url: 'https://example.com',
   icon: '/images/projects/sample.svg',
+  cover: '/images/showcases/products/sample.svg',
+  coverWidth: 600,
+  coverHeight: 840,
   domain: 'example.com',
   category: '软件',
   categoryEn: 'Software',
@@ -35,6 +38,7 @@ const experiment = {
   statusLabelEn: 'Building',
   tags: ['工具'],
   tagsEn: ['Tool'],
+  cover: '/images/showcases/experiments/sample.svg',
   shelfColor: '#ded7c9',
   shelfInk: '#171713',
   productSlug: 'sample-product',
@@ -54,5 +58,15 @@ test('rejects duplicate slugs, unsupported taxonomy, and broken product links', 
       [{ ...experiment, category: 'get-rich-quick', productSlug: 'missing' }],
     ),
     /duplicate product slug:[\s\S]*unsupported category[\s\S]*unknown product/,
+  )
+})
+
+test('rejects remote or traversal-prone artwork and invalid product dimensions', () => {
+  assert.throws(
+    () => validateShowcases(
+      { projects: [{ ...product, cover: 'https://example.com/cover.svg', coverWidth: 0 }] },
+      [{ ...experiment, cover: '/images/../private.svg' }],
+    ),
+    /safe local cover[\s\S]*cover dimensions[\s\S]*safe local cover/,
   )
 })

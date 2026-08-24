@@ -9,6 +9,9 @@ export interface Project {
   descriptionEn?: string
   url: string
   icon: string
+  cover: string
+  coverWidth: number
+  coverHeight: number
   domain: string
   category: string
   categoryEn: string

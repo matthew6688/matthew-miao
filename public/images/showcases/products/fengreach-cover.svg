@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 840" role="img" aria-labelledby="title desc">
+  <title id="title">FengReach product cover</title>
+  <desc id="desc">Obsidian outreach workflow cover using the official FengReach mark and brand palette</desc>
+  <rect width="600" height="840" fill="#0F1714"/>
+  <g transform="translate(52 52) scale(.78)">
+    <rect x="8" y="8" width="112" height="112" rx="2" fill="#F7F3EA"/>
+    <path d="M29 29h51c20 0 32 11 32 28 0 12-6 21-17 26l20 22H89L72 84H52v21H29V29Zm23 19v18h27c7 0 11-3 11-9s-4-9-11-9H52Z" fill="#0F1714" fill-rule="evenodd"/>
+    <rect x="31" y="91" width="14" height="14" fill="#C7A15A"/>
+  </g>
+  <text x="165" y="124" fill="#F7F3EA" font-family="Arial, sans-serif" font-size="58" font-weight="700" letter-spacing="-2">FengReach</text>
+  <text x="58" y="222" fill="#25B77A" font-family="Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="3">RESEARCH TO OUTREACH</text>
+  <g fill="none" stroke="#F7F3EA" stroke-opacity=".22" stroke-width="2"><path d="M75 336h88c38 0 38 60 76 60h121c38 0 38 60 76 60h90"/><path d="M75 504h88c38 0 38-60 76-60h121c38 0 38-60 76-60h90"/></g>
+  <g font-family="Arial, sans-serif">
+    <g transform="translate(56 293)"><rect width="150" height="92" rx="4" fill="#F7F3EA"/><text x="20" y="39" fill="#0F1714" font-size="13" font-weight="700" letter-spacing="2">01 · CAPTURE</text><text x="20" y="65" fill="#0F1714" font-size="18">Lead signals</text></g>
+    <g transform="translate(225 397)"><rect width="150" height="92" rx="4" fill="#25B77A"/><text x="20" y="39" fill="#0F1714" font-size="13" font-weight="700" letter-spacing="2">02 · RESEARCH</text><text x="20" y="65" fill="#0F1714" font-size="18">Company context</text></g>
+    <g transform="translate(394 501)"><rect width="150" height="92" rx="4" fill="#F7F3EA"/><text x="20" y="39" fill="#0F1714" font-size="13" font-weight="700" letter-spacing="2">03 · REVIEW</text><text x="20" y="65" fill="#0F1714" font-size="18">Human review</text></g>
+    <text x="58" y="757" fill="#F7F3EA" font-size="25" font-weight="700" letter-spacing="1.5">PERSONALIZED. REVIEWABLE.</text>
+    <text x="58" y="787" fill="#C7A15A" font-size="15" font-weight="700" letter-spacing="3">REACH.FENGTALK.AI</text>
+  </g>
+</svg>

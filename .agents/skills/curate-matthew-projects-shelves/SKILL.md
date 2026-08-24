@@ -42,9 +42,11 @@ node "$SKILL_DIR/scripts/validate-showcases.mjs" --repo "$PWD"
   historical `/projects` route for link stability while presenting it publicly
   as “产品 / Products”.
 - Every product needs a stable slug, bilingual name and description, official
-  HTTPS URL, category, status, neutral or Matthew-owned icon, and readable shelf
-  colors. Do not publish revenue, customers, usage, or superiority claims unless
-  Matthew supplies evidence.
+  HTTPS URL, category, status, neutral or Matthew-owned icon and cover, cover
+  dimensions, and readable shelf colors. Reuse verified first-party brand marks
+  faithfully; do not invent a replacement logo. Record every visual's source,
+  rights basis, and adaptation in `docs/asset-sources.md`. Do not publish revenue,
+  customers, usage, or superiority claims unless Matthew supplies evidence.
 - Product shelf entries link to the internal bilingual product detail page. The
   official site remains a clearly marked external link from that page.
 
@@ -53,7 +55,9 @@ node "$SKILL_DIR/scripts/validate-showcases.mjs" --repo "$PWD"
 - Store time-bounded business experiments in `lib/experiments.ts`; do not mix
   them into the durable product registry. Each experiment needs a stable slug,
   bilingual description and hypothesis, one controlled category, status, tags,
-  and readable shelf colors.
+  a local cover, and readable shelf colors. Until an experiment has a confirmed
+  identity, make its artwork a numbered Build in Public series cover rather than
+  fabricating a standalone brand or copying a platform trademark.
 - Use broad categories (`content` or `software`) and descriptive tags such as
   YouTube, Shorts, or Teacher tool. Do not create a new top-level route for each
   medium.

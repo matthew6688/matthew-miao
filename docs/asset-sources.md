@@ -10,9 +10,14 @@ assets, and unconfirmed social imagery are not part of this inventory.
 | `public/images/matthew-placeholder-light.svg` | Repository-authored neutral Matthew monogram; explicitly not a portrait |
 | `public/images/matthew-placeholder-dark.svg` | Repository-authored dark variant of the neutral Matthew monogram |
 | `public/images/matthew-portrait.webp` | Matthew's own creek-side portrait, supplied and approved by Matthew on 2026-08-10; square WebP derivative with EXIF/GPS metadata removed; original remains outside Git |
-| `public/images/projects/fengtalk.svg` | Repository-authored neutral project tile for Matthew's confirmed FengTalk project |
-| `public/images/projects/tradescope.svg` | Repository-authored neutral globe/grid tile for Matthew's confirmed TradeScope customs-data product; no third-party mark |
-| `public/images/projects/fengreach.svg` | Repository-authored neutral envelope/status tile for Matthew's confirmed FengReach outreach product; no third-party mark |
+| `public/images/projects/fengtalk.svg` | Website-ready vector adaptation of Matthew's official FengTalk circle mark and wordmark, verified against `fengtalk.ai/brand/fengtalk-circle-logo.png` and `fengtalk.ai/brand/fengtalk-wordmark-light.svg` on 2026-08-24; live SVG text uses documented Georgia/Arial fallbacks |
+| `public/images/projects/tradescope.svg` | Exact first-party TradeScope route/scope mark retrieved from `fengtalk.ai/tradescope-mark.svg` on 2026-08-24 |
+| `public/images/projects/fengreach.svg` | Exact first-party FengReach FR mark geometry and palette retrieved from `reach.fengtalk.ai/brand/fengreach-mark.svg` on 2026-08-24 |
+| `public/images/showcases/products/fengtalk-cover.svg` | Repository-authored editorial product cover using Matthew's verified FengTalk wordmark treatment and official paper, harbor, signal, and ink palette; workflow line art is original to this site |
+| `public/images/showcases/products/tradescope-cover.svg` | Repository-authored editorial product cover using the official TradeScope mark, first-party product naming, and an original atlas/route composition |
+| `public/images/showcases/products/fengreach-cover.svg` | Repository-authored editorial product cover using the official FengReach mark and verified obsidian, summit, reach, and brass palette; workflow composition is original to this site |
+| `public/images/showcases/experiments/youtube-channel-cover.svg` | Repository-authored Build in Public series cover for Matthew's video-channel revenue experiment; generic play/publishing-loop motif, no YouTube trademark or inferred channel brand |
+| `public/images/showcases/experiments/classroom-randomizer-cover.svg` | Repository-authored Build in Public series cover for Matthew's classroom randomizer revenue experiment; generic selection-wheel motif, not a finalized product logo |
 | `public/images/social/wechat-service-matthewmiao.png` | Lossless QR crop from the official WeChat Service Account promotional asset supplied by Matthew on 2026-08-10; search name `matthewmiao` |
 | `public/images/social/wechat-subscription-fengtalk.png` | Lossless QR crop from the official WeChat Official Account promotional asset supplied by Matthew on 2026-08-10; search name `fengtalk.ai` |
 | `public/images/photos/*/*.jpg` | Twenty metadata-stripped progressive JPEG Renditions derived from five Matthew-owned photos supplied and approved on 2026-08-10; Originals remain outside Git; provenance and publication state are recorded in `content/photos/catalog.json` |

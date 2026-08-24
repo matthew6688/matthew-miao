@@ -1,10 +1,18 @@
 #!/usr/bin/env node
 
 import path from 'node:path'
+import { existsSync } from 'node:fs'
 import { pathToFileURL } from 'node:url'
 
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const colorPattern = /^#[0-9a-f]{6}$/i
+const localImagePattern = /^\/images\/[a-z0-9/_-]+\.(?:avif|jpe?g|png|svg|webp)$/i
+
+function validateLocalImage(failures, owner, field, value) {
+  if (typeof value !== 'string' || !localImagePattern.test(value)) {
+    failures.push(`${owner} needs a safe local ${field}`)
+  }
+}
 
 export function validateShowcases(siteProfile, experiments) {
   const failures = []
@@ -15,8 +23,13 @@ export function validateShowcases(siteProfile, experiments) {
     if (!slugPattern.test(product.slug ?? '')) failures.push('product needs a lowercase kebab-case slug')
     if (productSlugs.has(product.slug)) failures.push(`duplicate product slug: ${product.slug}`)
     productSlugs.add(product.slug)
-    for (const field of ['name', 'nameEn', 'description', 'descriptionEn', 'category', 'categoryEn', 'icon', 'domain']) {
+    for (const field of ['name', 'nameEn', 'description', 'descriptionEn', 'category', 'categoryEn', 'domain']) {
       if (typeof product[field] !== 'string' || !product[field].trim()) failures.push(`${product.slug ?? 'product'} needs ${field}`)
+    }
+    validateLocalImage(failures, product.slug ?? 'product', 'icon', product.icon)
+    validateLocalImage(failures, product.slug ?? 'product', 'cover', product.cover)
+    if (!Number.isInteger(product.coverWidth) || product.coverWidth <= 0 || !Number.isInteger(product.coverHeight) || product.coverHeight <= 0) {
+      failures.push(`${product.slug ?? 'product'} needs positive integer cover dimensions`)
     }
     try {
       const url = new URL(product.url)
@@ -42,6 +55,7 @@ export function validateShowcases(siteProfile, experiments) {
     if (!Array.isArray(experiment.tags) || !experiment.tags.length || !Array.isArray(experiment.tagsEn) || !experiment.tagsEn.length) {
       failures.push(`${experiment.slug} needs bilingual tags`)
     }
+    validateLocalImage(failures, experiment.slug ?? 'experiment', 'cover', experiment.cover)
     if (experiment.productSlug && !productSlugs.has(experiment.productSlug)) {
       failures.push(`${experiment.slug} references unknown product ${experiment.productSlug}`)
     }
@@ -52,6 +66,23 @@ export function validateShowcases(siteProfile, experiments) {
 
   if (failures.length) throw new Error(failures.join('\n'))
   return { products: productSlugs.size, experiments: experimentSlugs.size }
+}
+
+export function validateAssetFiles(root, siteProfile, experiments) {
+  const missing = []
+  const assets = [
+    ...(siteProfile.projects ?? []).flatMap((product) => [product.icon, product.cover]),
+    ...(experiments ?? []).map((experiment) => experiment.cover),
+  ]
+
+  for (const asset of assets) {
+    if (typeof asset !== 'string' || !localImagePattern.test(asset)) continue
+    const file = path.resolve(root, 'public', asset.slice(1))
+    if (!existsSync(file)) missing.push(asset)
+  }
+
+  if (missing.length) throw new Error(`missing showcase assets:\n${missing.join('\n')}`)
+  return { assets: assets.length }
 }
 
 function parseRepo(argv) {
@@ -68,7 +99,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       import(`${pathToFileURL(path.join(root, 'lib/experiments.ts')).href}${cacheKey}`),
     ])
     const report = validateShowcases(siteProfile, experiments)
-    process.stdout.write(`curate-matthew-projects-shelves: ${report.products} products and ${report.experiments} experiments are valid\n`)
+    const assetReport = validateAssetFiles(root, siteProfile, experiments)
+    process.stdout.write(`curate-matthew-projects-shelves: ${report.products} products, ${report.experiments} experiments, and ${assetReport.assets} local assets are valid\n`)
   } catch (error) {
     process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`)
     process.exitCode = 1

@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-  <rect width="256" height="256" rx="48" fill="#0b2b22"/>
-  <path d="M58 78h140v100H58z" fill="none" stroke="#f0e8d8" stroke-width="12" stroke-linejoin="round"/>
-  <path d="m63 84 65 54 65-54" fill="none" stroke="#f0e8d8" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="183" cy="67" r="20" fill="#b9cf50"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">FengReach</title>
+  <desc id="desc">The official FengReach FR mark in obsidian, summit cream, and brass</desc>
+  <rect x="8" y="8" width="112" height="112" rx="2" fill="#0F1714"/>
+  <path d="M29 29h51c20 0 32 11 32 28 0 12-6 21-17 26l20 22H89L72 84H52v21H29V29Zm23 19v18h27c7 0 11-3 11-9s-4-9-11-9H52Z" fill="#F7F3EA" fill-rule="evenodd"/>
+  <rect x="31" y="91" width="14" height="14" fill="#C7A15A"/>
 </svg>

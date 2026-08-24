@@ -1,5 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-  <rect width="256" height="256" rx="48" fill="#171717"/>
-  <path d="M67 60h122v31H99v28h76v31H99v46H67z" fill="#f7f4ed"/>
-  <rect x="173" y="166" width="20" height="20" fill="#d75c27"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">FengTalk.ai</title>
+  <desc id="desc">FengTalk cream circle logo with the stacked brand wordmark</desc>
+  <circle cx="64" cy="64" r="58" fill="#F2F0E6"/>
+  <text x="64" y="59" fill="#1A1A1A" text-anchor="middle" font-family="Georgia, serif" font-size="36" font-style="italic">feng</text>
+  <text x="64" y="82" fill="#1A1A1A" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="-1">talk.ai</text>
 </svg>
