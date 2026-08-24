@@ -1,12 +1,39 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useReducedMotion } from 'framer-motion'
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import { ExternalLabel } from '~/components/external-mark'
 import { localize, useLocale } from '~/lib/locale-client'
+import { localePath } from '~/lib/locale-route'
 import { books } from '~/lib/personal'
+
+export interface BookshelfItem {
+  title: string
+  titleEn?: string
+  author: string
+  authorEn?: string
+  year?: number
+  category: string
+  spineTitle?: string
+  spineAuthor?: string
+  spineColor: string
+  spineInk: string
+  art?: string
+  coverWidth?: number
+  coverHeight?: number
+  spine?: number
+  url?: string
+  external?: boolean
+}
+
+interface BookshelfProps {
+  items?: readonly BookshelfItem[]
+  labelZh?: string
+  labelEn?: string
+}
 
 const DEFAULT_COVER_W = 148
 const BOOK_H = 210
@@ -45,12 +72,12 @@ function baseLean(i: number, title: string): number {
   return i % 2 ? -mag : mag
 }
 
-function targetTilt(i: number, open: number): number {
+function targetTilt(items: readonly BookshelfItem[], i: number, open: number): number {
   if (i === open) return 0
   const d = Math.abs(i - open)
   const toward = i < open ? -1 : 1
   const lean =
-    Math.abs(baseLean(i, books[i].title)) * Math.max(0.7, 1 - 0.04 * d) +
+    Math.abs(baseLean(i, items[i].title)) * Math.max(0.7, 1 - 0.04 * d) +
     Math.max(0, 1.85 - 0.26 * d)
   return Math.max(-CLAMP, Math.min(CLAMP, toward * lean))
 }
@@ -62,12 +89,10 @@ function easeInOutCubic(t: number): number {
 // Project the visible 3D book (front cover + spine) onto the shelf's X axis.
 // Static spine-width frames are translated to these bounds so the accordion
 // retains its spacing without animating layout.
-function coverWidth(book: (typeof books)[number]) {
+function coverWidth(book: BookshelfItem) {
   if (!book.coverWidth || !book.coverHeight) return DEFAULT_COVER_W
   return (BOOK_H * book.coverWidth) / book.coverHeight
 }
-
-const BOOK_COVER_WIDTHS = books.map(coverWidth)
 
 function projectBookBounds(
   spine: number,
@@ -116,13 +141,18 @@ function pose(progress: number, tilt: number, spine: number, nativeCoverWidth: n
   }
 }
 
-function shelfPoses(progress: number[], tilts: number[]) {
+function shelfPoses(
+  items: readonly BookshelfItem[],
+  coverWidths: readonly number[],
+  progress: number[],
+  tilts: number[],
+) {
   let baseX = 0
   let projectedX = 0
 
-  return books.map((book, i) => {
+  return items.map((book, i) => {
     const spine = book.spine ?? 24
-    const next = pose(progress[i], tilts[i], spine, BOOK_COVER_WIDTHS[i])
+    const next = pose(progress[i], tilts[i], spine, coverWidths[i])
     const frameX = projectedX - baseX
 
     baseX += spine + SHELF_GAP
@@ -132,21 +162,17 @@ function shelfPoses(progress: number[], tilts: number[]) {
   })
 }
 
-function projectedShelfWidth(progress: number[], tilts: number[]) {
-  return shelfPoses(progress, tilts).reduce(
-    (width, next, index) => width + next.width + (index === books.length - 1 ? 0 : SHELF_GAP),
+function projectedShelfWidth(
+  items: readonly BookshelfItem[],
+  coverWidths: readonly number[],
+  progress: number[],
+  tilts: number[],
+) {
+  return shelfPoses(items, coverWidths, progress, tilts).reduce(
+    (width, next, index) => width + next.width + (index === items.length - 1 ? 0 : SHELF_GAP),
     0,
   )
 }
-
-const MAX_PROJECTED_SHELF_WIDTH = Math.max(
-  ...books.map((_, open) =>
-    projectedShelfWidth(
-      books.map((__, index) => (index === open ? 1 : 0)),
-      books.map((__, index) => targetTilt(index, open)),
-    ),
-  ),
-)
 
 // Accordion bookshelf: one book open at a time showing its cover; the
 // others stand as spines and lean toward the open book (harder when
@@ -155,9 +181,30 @@ const MAX_PROJECTED_SHELF_WIDTH = Math.max(
 // over from the current frame instead of restarting the previous motion.
 // The books themselves are selection controls. The selected book's external
 // destination lives in the persistent annotation below the plank.
-export function Bookshelf() {
+export function Bookshelf({
+  items = books,
+  labelZh = '书架',
+  labelEn = 'Bookshelf',
+}: BookshelfProps = {}) {
   const locale = useLocale()
   const shouldReduceMotion = useReducedMotion()
+  const coverWidths = useMemo(() => items.map(coverWidth), [items])
+  const maxProjectedShelfWidth = useMemo(
+    () =>
+      items.length === 0
+        ? 0
+        : Math.max(
+            ...items.map((_, openIndex) =>
+              projectedShelfWidth(
+                items,
+                coverWidths,
+                items.map((__, index) => (index === openIndex ? 1 : 0)),
+                items.map((__, index) => targetTilt(items, index, openIndex)),
+              ),
+            ),
+          ),
+    [coverWidths, items],
+  )
   const [open, setOpen] = useState(0)
   const targetRef = useRef(0)
   const frameRef = useRef(0)
@@ -167,14 +214,14 @@ export function Bookshelf() {
   const controlRefs = useRef<Array<HTMLButtonElement | null>>([])
   const innerRefs = useRef<Array<HTMLSpanElement | null>>([])
   const coverRefs = useRef<Array<HTMLImageElement | null>>([])
-  const coverReadyRef = useRef(books.map((book) => !book.art))
+  const coverReadyRef = useRef(items.map((book) => !book.art))
   const coverPreparationRef = useRef<Array<Promise<void> | undefined>>([])
   const selectionRequestRef = useRef(0)
   const boundsRef = useRef<Array<{ left: number; right: number }>>([])
   const pointerXRef = useRef<number | null>(null)
   const hoverRef = useRef<number | null>(null)
-  const progressRef = useRef<number[]>(books.map((_, i) => (i === 0 ? 1 : 0)))
-  const tiltRef = useRef(books.map((_, i) => targetTilt(i, 0)))
+  const progressRef = useRef<number[]>(items.map((_, i) => (i === 0 ? 1 : 0)))
+  const tiltRef = useRef(items.map((_, i) => targetTilt(items, i, 0)))
 
   const nearestBook = useCallback((pointerX: number, fallback = 0) => {
     let nearest = fallback
@@ -235,14 +282,14 @@ export function Bookshelf() {
     const viewport = viewportRef.current
     const shelf = shelfRef.current
     if (!viewport || !shelf) return
-    const scale = Math.min(1, viewport.clientWidth / MAX_PROJECTED_SHELF_WIDTH)
+    const scale = Math.min(1, viewport.clientWidth / maxProjectedShelfWidth)
     shelf.style.setProperty('--bookshelf-scale', scale.toFixed(4))
-  }, [])
+  }, [maxProjectedShelfWidth])
 
   const applyPoses = useCallback((progress: number[], tilts: number[]) => {
     let projectedX = 0
 
-    shelfPoses(progress, tilts).forEach((next, i) => {
+    shelfPoses(items, coverWidths, progress, tilts).forEach((next, i) => {
       const frame = bookRefs.current[i]
       const inner = innerRefs.current[i]
       boundsRef.current[i] = { left: projectedX, right: projectedX + next.width }
@@ -253,7 +300,7 @@ export function Bookshelf() {
       frame.style.transform = `translateX(${next.frameX.toFixed(2)}px)`
       frame.style.setProperty(
         '--book-contact-scale',
-        (next.width / BOOK_COVER_WIDTHS[i]).toFixed(4),
+        (next.width / coverWidths[i]).toFixed(4),
       )
       inner.style.transform = `translateX(${next.offsetX.toFixed(2)}px) rotate(${next.tilt.toFixed(3)}deg) rotateY(${next.rotateY.toFixed(3)}deg)`
     })
@@ -261,7 +308,7 @@ export function Bookshelf() {
     if (pointerXRef.current !== null) {
       setHoverOwner(hoveredBook(pointerXRef.current))
     }
-  }, [hoveredBook, setHoverOwner])
+  }, [coverWidths, hoveredBook, items, setHoverOwner])
 
   const prepareBookCover = useCallback((index: number) => {
     if (coverReadyRef.current[index]) return Promise.resolve()
@@ -293,8 +340,8 @@ export function Bookshelf() {
 
       const fromProgress = progressRef.current.slice()
       const fromTilts = tiltRef.current.slice()
-      const toProgress = books.map((_, i) => (i === nextOpen ? 1 : 0))
-      const toTilts = books.map((_, i) => targetTilt(i, nextOpen))
+      const toProgress = items.map((_, i) => (i === nextOpen ? 1 : 0))
+      const toTilts = items.map((_, i) => targetTilt(items, i, nextOpen))
 
       const finish = () => {
         progressRef.current = toProgress
@@ -331,7 +378,7 @@ export function Bookshelf() {
 
       frameRef.current = requestAnimationFrame(tick)
     },
-    [applyPoses, hoveredBook, setHoverOwner, shouldReduceMotion],
+    [applyPoses, hoveredBook, items, setHoverOwner, shouldReduceMotion],
   )
 
   const selectBook = useCallback(
@@ -372,14 +419,14 @@ export function Bookshelf() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry?.isIntersecting) return
-        books.forEach((_, index) => void prepareBookCover(index))
+        items.forEach((_, index) => void prepareBookCover(index))
         observer.disconnect()
       },
       { rootMargin: '320px 0px' },
     )
     observer.observe(viewport)
     return () => observer.disconnect()
-  }, [prepareBookCover])
+  }, [items, prepareBookCover])
 
   useEffect(() => {
     return () => {
@@ -392,12 +439,12 @@ export function Bookshelf() {
     cancelAnimationFrame(frameRef.current)
     frameRef.current = 0
     const nextOpen = targetRef.current
-    const progress = books.map((_, i) => (i === nextOpen ? 1 : 0))
-    const tilts = books.map((_, i) => targetTilt(i, nextOpen))
+    const progress = items.map((_, i) => (i === nextOpen ? 1 : 0))
+    const tilts = items.map((_, i) => targetTilt(items, i, nextOpen))
     progressRef.current = progress
     tiltRef.current = tilts
     applyPoses(progress, tilts)
-  }, [applyPoses, shouldReduceMotion])
+  }, [applyPoses, items, shouldReduceMotion])
 
   const handleShelfClickCapture = useCallback(
     (event: React.MouseEvent<HTMLUListElement>) => {
@@ -452,16 +499,16 @@ export function Bookshelf() {
   const handleBookKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
       let next: number | null = null
-      if (event.key === 'ArrowLeft') next = (index - 1 + books.length) % books.length
-      if (event.key === 'ArrowRight') next = (index + 1) % books.length
+      if (event.key === 'ArrowLeft') next = (index - 1 + items.length) % items.length
+      if (event.key === 'ArrowRight') next = (index + 1) % items.length
       if (event.key === 'Home') next = 0
-      if (event.key === 'End') next = books.length - 1
+      if (event.key === 'End') next = items.length - 1
       if (next === null) return
       event.preventDefault()
       selectBook(next, 'instant')
       controlRefs.current[next]?.focus()
     },
-    [selectBook],
+    [items.length, selectBook],
   )
 
   const handleShelfPointerLeave = useCallback(() => {
@@ -469,9 +516,11 @@ export function Bookshelf() {
     setHoverOwner(null)
   }, [setHoverOwner])
 
-  if (books.length === 0) return null
-  const renderedPoses = shelfPoses(progressRef.current, tiltRef.current)
-  const selectedBook = books[open]
+  if (items.length === 0) return null
+  const renderedPoses = shelfPoses(items, coverWidths, progressRef.current, tiltRef.current)
+  const selectedBook = items[open]
+  const selectedTitle = localize(locale, selectedBook.title, selectedBook.titleEn ?? selectedBook.title)
+  const selectedAuthor = localize(locale, selectedBook.author, selectedBook.authorEn ?? selectedBook.author)
 
   return (
     <div className="room-shelf bookshelf-room">
@@ -479,22 +528,24 @@ export function Bookshelf() {
         <ul
           ref={shelfRef}
           className="shelf3"
-          aria-label={localize(locale, '书架', 'Bookshelf')}
+          aria-label={localize(locale, labelZh, labelEn)}
           onClickCapture={handleShelfClickCapture}
           onPointerMove={handleShelfPointerMove}
           onPointerLeave={handleShelfPointerLeave}
           style={
             {
-              '--bookshelf-layout-width': `${MAX_PROJECTED_SHELF_WIDTH.toFixed(2)}px`,
+              '--bookshelf-layout-width': `${maxProjectedShelfWidth.toFixed(2)}px`,
               '--bookshelf-scale': 1,
             } as React.CSSProperties
           }
         >
-        {books.map((book, i) => {
+        {items.map((book, i) => {
           const isOpen = i === open
           const spine = book.spine ?? 24
-          const nativeCoverWidth = BOOK_COVER_WIDTHS[i]
+          const nativeCoverWidth = coverWidths[i]
           const initialPose = renderedPoses[i]
+          const title = localize(locale, book.title, book.titleEn ?? book.title)
+          const author = localize(locale, book.author, book.authorEn ?? book.author)
           const content = (
             <span
               ref={(node) => {
@@ -520,8 +571,8 @@ export function Bookshelf() {
                   />
                 ) : (
                   <span className="book3-cover-blank">
-                    <b>{book.title}</b>
-                    {book.author}
+                    <b>{title}</b>
+                    {author}
                   </span>
                 )}
               </span>
@@ -535,7 +586,7 @@ export function Bookshelf() {
                   } as React.CSSProperties
                 }
               >
-                <span className="book3-spine-title">{book.spineTitle ?? book.title}</span>
+                <span className="book3-spine-title">{book.spineTitle ?? title}</span>
                 <span className="book3-spine-author">{book.spineAuthor ?? book.author}</span>
               </span>
             </span>
@@ -543,7 +594,7 @@ export function Bookshelf() {
 
           return (
             <li
-              key={book.title}
+              key={`${book.title}-${book.url ?? i}`}
               ref={(node) => {
                 bookRefs.current[i] = node
               }}
@@ -569,7 +620,7 @@ export function Bookshelf() {
                 aria-current={isOpen ? 'true' : undefined}
                 aria-pressed={isOpen}
                 tabIndex={isOpen ? 0 : -1}
-                aria-label={`${book.title} by ${book.author} ${
+                aria-label={`${title} · ${author} ${
                   isOpen
                     ? localize(locale, '（当前展示）', '(currently shown)')
                     : localize(locale, '（选择）', '(select)')
@@ -588,19 +639,25 @@ export function Bookshelf() {
       </div>
       <span className="room-shelf-plank" aria-hidden />
       {selectedBook.url && (
-        <a
+        <Link
           className="shelf-annotation"
-          href={selectedBook.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${selectedBook.title} by ${selectedBook.author} ${localize(
-            locale,
-            '（在新标签页中打开）',
-            '(opens in a new tab)',
-          )}`}
+          href={
+            selectedBook.external === false
+              ? localePath(locale, selectedBook.url)
+              : selectedBook.url
+          }
+          target={selectedBook.external === false ? undefined : '_blank'}
+          rel={selectedBook.external === false ? undefined : 'noopener noreferrer'}
+          aria-label={`${selectedTitle} · ${selectedAuthor}${
+            selectedBook.external === false
+              ? ''
+              : localize(locale, '（在新标签页中打开）', ' (opens in a new tab)')
+          }`}
         >
-          <ExternalLabel>{selectedBook.title}</ExternalLabel>
-        </a>
+          {selectedBook.external === false
+            ? selectedTitle
+            : <ExternalLabel>{selectedTitle}</ExternalLabel>}
+        </Link>
       )}
     </div>
   )

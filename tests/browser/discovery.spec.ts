@@ -39,6 +39,22 @@ const metadataCases = [
     openGraphLocale: 'en_US',
     socialLocale: 'en',
   },
+  {
+    locale: 'English product detail',
+    path: '/en/projects/fengreach',
+    routePath: '/projects/fengreach',
+    canonical: `${expectedOrigin}/en/projects/fengreach`,
+    openGraphLocale: 'en_US',
+    socialLocale: 'en',
+  },
+  {
+    locale: 'Chinese experiment detail',
+    path: '/build-in-public/youtube-channel',
+    routePath: '/build-in-public/youtube-channel',
+    canonical: `${expectedOrigin}/build-in-public/youtube-channel`,
+    openGraphLocale: 'zh_CN',
+    socialLocale: 'zh',
+  },
 ]
 
 for (const metadata of metadataCases) {

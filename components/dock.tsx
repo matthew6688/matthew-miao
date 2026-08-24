@@ -27,7 +27,7 @@ import { playDockSound } from '~/lib/sound'
 const ITEMS = [
   { href: '/blog', zh: '写作', en: 'Writing', icon: WritingIcon },
   { href: '/photos', zh: '照片', en: 'Photos', icon: PhotosIcon },
-  { href: '/projects', zh: '项目', en: 'Projects', icon: ProjectsIcon },
+  { href: '/projects', zh: '产品', en: 'Products', icon: ProjectsIcon },
   { href: '/ama', zh: '咨询', en: 'AMA', icon: AmaIcon },
 ] as const
 

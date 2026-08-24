@@ -6,10 +6,51 @@
   feature flag.
 - `lib/projects.ts`: typed projection of the canonical project registry; do not
   duplicate project records here.
+- `lib/experiments.ts`: Build in Public experiment registry, statuses,
+  categories, hypotheses, and optional product relationship.
+- `lib/showcase-shelves.ts`: deterministic projection from the two canonical
+  registries into the preserved book/vinyl shelf interactions.
 - `lib/personal.ts`: book and record arrays.
-- `public/images/projects/`, `public/images/books/`,
+- `public/images/projects/`, `public/images/showcases/`, `public/images/books/`,
   `public/images/records/`: public derivatives only.
 - `docs/asset-sources.md`: provenance and rights record for every added visual.
+
+## Product intake and labels
+
+A durable product requires Matthew's ownership/maintainer confirmation and an
+official HTTPS product page. Public GitHub source is optional. Verify the page's
+title and product purpose before writing bilingual copy. Each product adds a
+stable lowercase kebab-case `slug`, `category`/`categoryEn`, `status`, and
+readable `shelfColor`/`shelfInk`, a local cover, and positive cover dimensions
+alongside the existing fields. Current public status accepts only `live`; do not
+infer launch dates or business metrics. A confirmed product brand uses its
+first-party mark faithfully; any editorial extension is documented separately
+from the official identity.
+
+Product rows and the product shelf link internally to `/projects/<slug>` and
+`/en/projects/<slug>`. The detail page owns the official external link and may
+show related experiments and their Build in Public entries.
+
+## Experiment intake and labels
+
+Experiments live in `lib/experiments.ts`, never in `siteProfile.projects` until
+Matthew explicitly promotes one to a durable product. Required fields are a
+stable slug, bilingual name/description/hypothesis, controlled category and
+status, bilingual tags, a local cover, and readable shelf colors. A `productSlug`
+is optional and must resolve to the product registry. Unbranded experiments use
+the numbered Build in Public cover system and must not imply a finalized product
+identity or borrow a platform logo.
+
+The experiment shelf links internally to `/build-in-public/<slug>` and its
+English counterpart. Articles use Chinese-only shared frontmatter:
+
+```yaml
+series: "build-in-public"
+experiment: "youtube-channel"
+```
+
+English inherits both fields. An experiment page may legitimately have zero
+updates while work is starting; do not create filler posts.
 
 ## Project intake and labels
 

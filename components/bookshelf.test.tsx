@@ -118,4 +118,27 @@ describe('Bookshelf', () => {
     expect(initial.getAttribute('aria-current')).toBeNull()
     expect(target.getAttribute('aria-current')).toBe('true')
   })
+
+  it('reuses the shelf for bilingual internal product links', () => {
+    const items = [
+      {
+        title: '产品中文名',
+        titleEn: 'Product Name',
+        author: '软件',
+        authorEn: 'Software',
+        category: '软件',
+        spineColor: '#222',
+        spineInk: '#fff',
+        url: '/projects/product-name',
+        external: false,
+      },
+    ]
+
+    render(<Bookshelf items={items} labelZh="产品架" labelEn="Product shelf" />)
+
+    expect(screen.getByRole('list', { name: 'Product shelf' })).toBeTruthy()
+    expect(
+      screen.getByRole('link', { name: 'Product Name · Software' }).getAttribute('href'),
+    ).toBe('/en/projects/product-name')
+  })
 })

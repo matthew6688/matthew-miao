@@ -6,9 +6,11 @@ import { siteProfile } from '~/lib/site-profile'
 export interface LinkPreview extends LinkPreviewSnapshot {}
 
 const data = previews as Record<string, LinkPreview>
-const localFavicons = new Map(
-  siteProfile.projects.map((project) => [new URL(project.url).origin, project.icon]),
-)
+const localFavicons = new Map<string, string>()
+for (const project of siteProfile.projects) {
+  const origin = new URL(project.url).origin
+  if (!localFavicons.has(origin)) localFavicons.set(origin, project.icon)
+}
 
 // Build-time snapshot (content/link-previews.json, maintained by
 // scripts/refresh-link-previews.mjs) — an open hover card never waits

@@ -1,9 +1,9 @@
 ---
 name: curate-matthew-projects-shelves
-description: Curate, preview, publish, revise, or withdraw Matthew's original GitHub projects and personal book or music shelves on matthew-miao.com. Use when Matthew supplies a project repository, book, album, project icon, cover, or asks to update the Projects or personal-shelf sections.
+description: Curate, preview, publish, revise, or withdraw Matthew's software products, Build in Public experiments, original GitHub projects, and personal book or music shelves on matthew-miao.com. Use when Matthew supplies a product URL, experiment idea, project repository, book, album, icon, cover, or asks to update the product or experiment shelves.
 ---
 
-# Curate Matthew Projects & Shelves
+# Curate Matthew Products, Experiments & Shelves
 
 Add verified personal content without changing the pinned upstream layout or
 attributing another person's work or preferences to Matthew.
@@ -30,7 +30,46 @@ tests) matches in both repositories. Use the canonical package's
 
 ```bash
 node "$SKILL_DIR/scripts/preflight.mjs" --repo "$PWD"
+node "$SKILL_DIR/scripts/validate-showcases.mjs" --repo "$PWD"
 ```
+
+## Software products
+
+- Matthew's assertion that he owns or maintains the product plus its official
+  public page is enough for intake; a SaaS product does not need a public GitHub
+  repository. Read only the official page and user-supplied facts.
+- Store durable, user-facing products in `siteProfile.projects`. Keep the
+  historical `/projects` route for link stability while presenting it publicly
+  as “产品 / Products”.
+- Every product needs a stable slug, bilingual name and description, official
+  HTTPS URL, category, status, neutral or Matthew-owned icon and cover, cover
+  dimensions, and readable shelf colors. Reuse verified first-party brand marks
+  faithfully; do not invent a replacement logo. Record every visual's source,
+  rights basis, and adaptation in `docs/asset-sources.md`. Do not publish revenue,
+  customers, usage, or superiority claims unless Matthew supplies evidence.
+- Product shelf entries link to the internal bilingual product detail page. The
+  official site remains a clearly marked external link from that page.
+
+## Build in Public experiments
+
+- Store time-bounded business experiments in `lib/experiments.ts`; do not mix
+  them into the durable product registry. Each experiment needs a stable slug,
+  bilingual description and hypothesis, one controlled category, status, tags,
+  a local cover, and readable shelf colors. Until an experiment has a confirmed
+  identity, make its artwork a numbered Build in Public series cover rather than
+  fabricating a standalone brand or copying a platform trademark.
+- Use broad categories (`content` or `software`) and descriptive tags such as
+  YouTube, Shorts, or Teacher tool. Do not create a new top-level route for each
+  medium.
+- An experiment may optionally reference a product slug. A promoted experiment
+  keeps its original page and article history while gaining a product entry;
+  never silently delete or rewrite the experiment record.
+- Articles belong to an experiment through Chinese frontmatter
+  `series: "build-in-public"` plus `experiment: "<slug>"`. Use
+  `$publish-matthew-blog` for the article itself.
+- Revenue, cost, traffic, customer, and conversion fields stay absent until
+  Matthew provides or approves exact figures or ranges. A status such as Active,
+  Building, Paused, Completed, or Stopped is not a claim of commercial success.
 
 ## Original GitHub projects
 
@@ -87,10 +126,12 @@ create runtime GitHub fetching or automatically publish every repository.
 
 ## Preview and publish
 
-1. Run the curation gate, typecheck, focused unit/localization checks, and the
+1. Run the showcase validator, curation gate, typecheck, focused
+   unit/localization checks, and the
    Cloudflare build. Inspect `/`, `/en`, `/projects`, and `/en/projects` in both
-   themes and mobile/desktop; also test keyboard/reduced-motion behavior when a
-   shelf changes.
+   themes and mobile/desktop. For experiments also inspect `/build-in-public`,
+   both experiment detail routes, keyboard navigation, drag/touch behavior, and
+   reduced motion.
 2. For an online review, push the feature branch and wait for Cloudflare Preview.
    Return the relevant Chinese and English URLs plus the proposed bilingual copy,
    source label, license status, and asset provenance.
@@ -103,6 +144,7 @@ create runtime GitHub fetching or automatically publish every repository.
 
 ```bash
 pnpm test:curation-skill
+node .agents/skills/curate-matthew-projects-shelves/scripts/validate-showcases.mjs --repo "$PWD"
 pnpm typecheck
 pnpm test:unit
 pnpm test:localization

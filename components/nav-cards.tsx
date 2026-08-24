@@ -6,7 +6,7 @@ import { localePath, type Locale } from '~/lib/locale-route'
 
 // The three doorways, greeting visitors who never look at the dock:
 // analog vignettes on soft neumorphic cards — manuscript pages for
-// writing, a polaroid fan for photos, blueprint paper for projects.
+// writing, a polaroid fan for photos, blueprint paper for products.
 export function NavCards({
   postCount,
   projectCount,
@@ -81,10 +81,10 @@ export function NavCards({
           </span>
         </span>
         <span className="nc-label">
-          <T zh="项目" en="Projects" />
+          <T zh="产品" en="Products" />
         </span>
         <span className="nc-sub">
-          <T zh={`${projectCount} 个项目`} en={`${projectCount} projects`} />
+          <T zh={`${projectCount} 个产品`} en={`${projectCount} products`} />
         </span>
       </Link>
     </div>

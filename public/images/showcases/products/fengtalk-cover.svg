@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 840" role="img" aria-labelledby="title desc">
+  <title id="title">FengTalk.ai product cover</title>
+  <desc id="desc">Cream and harbor teal editorial cover using the FengTalk wordmark and connected sales workflow motif</desc>
+  <rect width="600" height="840" fill="#F6F2E8"/>
+  <rect x="38" y="38" width="524" height="764" rx="4" fill="none" stroke="#D9D2C3" stroke-width="2"/>
+  <text x="72" y="102" fill="#0F4C5C" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3">AI EXPORT GROWTH</text>
+  <text x="72" y="210" fill="#1A1A1A" font-family="Georgia, serif" font-size="78" font-style="italic">feng</text>
+  <text x="270" y="210" fill="#1A1A1A" font-family="Arial, sans-serif" font-size="73" font-weight="700" letter-spacing="-4">talk.ai</text>
+  <path d="M0 333C130 290 210 362 322 326c111-36 170-5 278-49v563H0Z" fill="#0F4C5C"/>
+  <g fill="none" stroke="#F2F0E6" stroke-opacity=".32" stroke-width="2">
+    <path d="M66 705C150 634 174 531 279 541c107 10 122-108 254-124"/>
+    <path d="M47 633c130 2 166-163 277-141 77 15 127-66 224-93"/>
+  </g>
+  <g fill="#F2F0E6"><circle cx="67" cy="705" r="8"/><circle cx="279" cy="541" r="8"/><circle cx="533" cy="417" r="8"/></g>
+  <path d="M67 705C150 634 174 531 279 541c107 10 122-108 254-124" fill="none" stroke="#E85D34" stroke-width="8" stroke-linecap="round"/>
+  <g font-family="Arial, sans-serif" fill="#F2F0E6">
+    <text x="72" y="762" font-size="23" font-weight="700" letter-spacing="1.5">RESEARCH · REACH · FOLLOW UP</text>
+    <text x="72" y="790" font-size="15" letter-spacing="2.4" opacity=".72">FENGTALK.AI</text>
+  </g>
+</svg>

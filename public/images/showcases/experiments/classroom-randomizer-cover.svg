@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Classroom Randomizer Build in Public experiment cover</title>
+  <desc id="desc">Numbered editorial experiment cover showing a bright classroom selection wheel</desc>
+  <rect width="800" height="800" fill="#D5B738"/>
+  <text x="58" y="75" fill="#171713" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="4">BUILD IN PUBLIC · EXPERIMENT 02</text>
+  <text x="58" y="170" fill="#171713" font-family="Arial, sans-serif" font-size="66" font-weight="700" letter-spacing="-3">PICK A NAME</text>
+  <g transform="translate(400 430)">
+    <path d="M0 0V-194A194 194 0 0 1 168-97Z" fill="#1B365D"/><path d="M0 0 168-97A194 194 0 0 1 168 97Z" fill="#F7F4ED"/><path d="M0 0 168 97A194 194 0 0 1 0 194Z" fill="#B5402D"/><path d="M0 0v194A194 194 0 0 1-168 97Z" fill="#0F4C5C"/><path d="M0 0-168 97A194 194 0 0 1-168-97Z" fill="#F7F4ED"/><path d="M0 0-168-97A194 194 0 0 1 0-194Z" fill="#171713"/>
+    <circle r="53" fill="#D5B738" stroke="#171713" stroke-width="8"/><circle r="12" fill="#171713"/>
+  </g>
+  <path d="m400 212-22 42h44Z" fill="#B5402D" stroke="#171713" stroke-width="5" stroke-linejoin="round"/>
+  <g fill="#171713" font-family="Arial, sans-serif"><text x="58" y="682" font-size="23" font-weight="700" letter-spacing="2">FAST · FAIR · CLASSROOM READY</text><text x="58" y="724" font-size="16" font-weight="700" letter-spacing="3">TEACHER TOOL · BUILDING</text><text x="58" y="766" font-family="Georgia, serif" font-size="25" font-style="italic">A revenue experiment by Matthew</text></g>
+</svg>

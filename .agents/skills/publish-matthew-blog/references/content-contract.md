@@ -10,6 +10,7 @@ title: "中文标题"
 description: "独立阅读也准确的 SEO 摘要"
 publishedAt: "2026-08-10T00:00:00.000Z"
 series: "build-in-public" # optional; shared series metadata
+experiment: "youtube-channel" # optional; registered experiment slug
 cover: "./cover.webp" # optional
 coverWidth: 1600       # required with cover
 coverHeight: 900       # required with cover
@@ -24,6 +25,12 @@ slug and `##`/`###` headings so the article rail can build landmarks.
 `series` is optional and currently accepts only `build-in-public`. Use it for
 Matthew's first-person productization and online-business experiments. Do not add
 the field to English frontmatter; the English edition inherits shared metadata.
+
+`experiment` is optional, but when present it must name an entry in
+`lib/experiments.ts` and requires `series: "build-in-public"`. It connects one
+update to a dedicated experiment page such as `/build-in-public/youtube-channel`.
+Create a missing experiment through `$curate-matthew-projects-shelves` before
+publishing the article; never invent a registry slug from a vague topic.
 
 ## Images and diagrams
 

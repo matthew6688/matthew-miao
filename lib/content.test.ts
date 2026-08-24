@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest'
 
-import { getAllPosts, getPostsBySeries, getRelatedPosts, isPostSlug } from './content'
+import {
+  getAllPosts,
+  getPostsByExperiment,
+  getPostsBySeries,
+  getRelatedPosts,
+  isPostSlug,
+} from './content'
+import { experiments } from './experiments'
 
 describe('post slug allowlist', () => {
   it('accepts published slugs and rejects unknown or traversal-shaped values', () => {
@@ -37,6 +44,15 @@ describe('Build in Public collection', () => {
     expect(posts.map((post) => post.slug)).toContain('building-in-public-with-ai-agents')
     expect(posts.length).toBeGreaterThan(0)
     expect(posts.every((post) => post.series === 'build-in-public')).toBe(true)
+  })
+
+  it('keeps every experiment log explicitly assigned to its registry slug', () => {
+    for (const experiment of experiments) {
+      const posts = getPostsByExperiment(experiment.slug)
+
+      expect(posts.every((post) => post.experiment === experiment.slug)).toBe(true)
+      expect(posts.every((post) => post.series === 'build-in-public')).toBe(true)
+    }
   })
 })
 

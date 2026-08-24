@@ -7,16 +7,21 @@ import {
   publishedPostSlugs,
 } from './public-content-routes'
 import { bundledPosts } from './generated-worker-content'
+import { experimentSlugs, type ExperimentSlug } from './experiments'
 
 const frontmatterSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
   publishedAt: z.coerce.date(),
   series: z.enum(['build-in-public']).optional(),
+  experiment: z.enum(experimentSlugs).optional(),
   cover: z.string().startsWith('./').optional(),
   coverWidth: z.number().int().positive().optional(),
   coverHeight: z.number().int().positive().optional(),
   coverCaption: z.string().optional(),
+}).refine((data) => !data.experiment || data.series === 'build-in-public', {
+  message: 'experiment requires series: build-in-public',
+  path: ['experiment'],
 })
 
 const translatedFrontmatterSchema = z.object({
@@ -39,6 +44,7 @@ export interface Post {
   descriptionEn: string
   publishedAt: Date
   series?: PostSeries
+  experiment?: ExperimentSlug
   cover?: PostCover
   readingMinutes: number
   readingMinutesEn: number
@@ -177,6 +183,7 @@ export function getPost(slug: string): Post {
     descriptionEn: translatedFm.description,
     publishedAt: fm.publishedAt,
     series: fm.series,
+    experiment: fm.experiment,
     cover,
     readingMinutes: stats.minutes,
     readingMinutesEn: statsEn.minutes,
@@ -271,4 +278,8 @@ export function getAllPosts(): Post[] {
 
 export function getPostsBySeries(series: PostSeries): Post[] {
   return getAllPosts().filter((post) => post.series === series)
+}
+
+export function getPostsByExperiment(experiment: ExperimentSlug): Post[] {
+  return getAllPosts().filter((post) => post.experiment === experiment)
 }

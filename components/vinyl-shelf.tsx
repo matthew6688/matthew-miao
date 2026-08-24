@@ -1,12 +1,35 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 
 import { ExternalLabel } from '~/components/external-mark'
 import { localize, useLocale } from '~/lib/locale-client'
+import { localePath } from '~/lib/locale-route'
 import { records } from '~/lib/personal'
+
+export interface VinylShelfItem {
+  artist: string
+  artistEn?: string
+  album: string
+  albumEn?: string
+  year?: number
+  genre: string
+  genreEn?: string
+  spineColor: string
+  spineInk: string
+  url?: string
+  art?: string
+  external?: boolean
+}
+
+interface VinylShelfProps {
+  items?: readonly VinylShelfItem[]
+  labelZh?: string
+  labelEn?: string
+}
 
 const hitCorners = ['top-left', 'top-right', 'bottom-right', 'bottom-left'] as const
 const dragIntentThreshold = 7
@@ -106,18 +129,19 @@ export function sleeveFinish(seed: string): SleeveFinish {
   }
 }
 
-const sleeveFinishes = records.map((record) =>
-  sleeveFinish(`${record.artist}, ${record.album} (${record.year})`),
-)
-
-function sleeveMotion(index: number, selectionPosition: number): SleeveMotion {
+function sleeveMotion(
+  index: number,
+  selectionPosition: number,
+  finishes: readonly SleeveFinish[],
+  itemCount: number,
+): SleeveMotion {
   const offset = index - selectionPosition
   const distance = Math.abs(offset)
   const activeAmount = Math.max(0, 1 - distance)
   const restingAmount = Math.min(distance, 1)
   const inwardAngle = Math.min(68, 16 * Math.min(distance, 1) + distance * 13)
   const contactScale = Math.max(0.38, Math.cos(inwardAngle * Math.PI / 180))
-  const finish = sleeveFinishes[index]
+  const finish = finishes[index]
 
   return {
     contactOpacity: Math.max(0.16, 0.34 - distance * 0.035),
@@ -132,7 +156,7 @@ function sleeveMotion(index: number, selectionPosition: number): SleeveMotion {
     scale: Math.max(0.92, 1 - distance * 0.012 + activeAmount * 0.04),
     stackOrder: Math.max(
       1,
-      Math.round((records.length - distance) * 100) +
+      Math.round((itemCount - distance) * 100) +
         (index === Math.round(selectionPosition) ? 1 : 0),
     ),
   }
@@ -171,9 +195,19 @@ function sleeveMotionCssText(motion: SleeveMotion) {
 // Favorite records as an overlapping horizontal stack of worn-paper
 // sleeves. Every interaction selects a sleeve; the separate annotation is
 // the only external destination.
-export function VinylShelf() {
+export function VinylShelf({
+  items = records,
+  labelZh = '喜欢的唱片',
+  labelEn = 'Favorite records',
+}: VinylShelfProps = {}) {
   const locale = useLocale()
-  const initialIndex = Math.floor(records.length / 2)
+  const sleeveFinishes = useMemo(
+    () => items.map((item) => sleeveFinish(
+      `${item.artist}, ${item.album}${item.year ? ` (${item.year})` : ''}`,
+    )),
+    [items],
+  )
+  const initialIndex = Math.floor(items.length / 2)
   const [activeIndex, setActiveIndex] = useState(initialIndex)
   const [selectionPosition, setSelectionPosition] = useState(initialIndex)
   const [interactionPhase, setInteractionPhaseState] = useState<InteractionPhase>('idle')
@@ -198,10 +232,10 @@ export function VinylShelf() {
   const wheelSelectionStepRef = useRef(64)
   const pointerFocusWasInsideRef = useRef(false)
 
-  const activeRecord = records[activeIndex]
+  const activeRecord = items[activeIndex]
 
   function clampPosition(position: number) {
-    return Math.min(records.length - 1, Math.max(0, position))
+    return Math.min(items.length - 1, Math.max(0, position))
   }
 
   function updateSelection(position: number) {
@@ -217,12 +251,12 @@ export function VinylShelf() {
   }
 
   function applySelectionPosition(position: number) {
-    for (let index = 0; index < records.length; index++) {
+    for (let index = 0; index < items.length; index++) {
       const sleeve = sleeveRefs.current[index]
       const trigger = triggerRefs.current[index]
       if (!sleeve || !trigger) continue
 
-      const motion = sleeveMotion(index, position)
+      const motion = sleeveMotion(index, position, sleeveFinishes, items.length)
       trigger.style.cssText = sleeveMotionCssText(motion)
       sleeve.style.setProperty('--vinyl-stack-order', String(motion.stackOrder))
     }
@@ -278,7 +312,7 @@ export function VinylShelf() {
 
     // Match the browser's paint order: the selected sleeve is on top, then
     // nearer sleeves, with later DOM siblings winning equal z-index ties.
-    const paintOrder = records
+    const paintOrder = items
       .map((_, index) => index)
       .sort((left, right) => {
         if (left === selectedIndex) return -1
@@ -311,7 +345,7 @@ export function VinylShelf() {
   }
 
   function snapTo(index: number, mode: 'animated' | 'instant', shouldFocus: boolean) {
-    const nextIndex = Math.min(records.length - 1, Math.max(0, index))
+    const nextIndex = Math.min(items.length - 1, Math.max(0, index))
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const isAlreadySnapped = Math.abs(selectionPositionRef.current - nextIndex) < 0.001
 
@@ -370,7 +404,7 @@ export function VinylShelf() {
     }
 
     const viewportWidth = viewportRef.current?.clientWidth ?? 0
-    return Math.max(44, viewportWidth / Math.min(records.length, 9) || 64)
+    return Math.max(44, viewportWidth / Math.min(items.length, 9) || 64)
   }
 
   function scheduleClickSuppressionReset(eventTimeStamp: number) {
@@ -388,16 +422,16 @@ export function VinylShelf() {
 
     switch (event.key) {
       case 'ArrowLeft':
-        nextIndex = (activeIndex - 1 + records.length) % records.length
+        nextIndex = (activeIndex - 1 + items.length) % items.length
         break
       case 'ArrowRight':
-        nextIndex = (activeIndex + 1) % records.length
+        nextIndex = (activeIndex + 1) % items.length
         break
       case 'Home':
         nextIndex = 0
         break
       case 'End':
-        nextIndex = records.length - 1
+        nextIndex = items.length - 1
         break
       default:
         return
@@ -600,7 +634,17 @@ export function VinylShelf() {
     }
   }, [])
 
-  if (records.length === 0) return null
+  if (items.length === 0) return null
+  const activeAlbum = localize(
+    locale,
+    activeRecord.album,
+    activeRecord.albumEn ?? activeRecord.album,
+  )
+  const activeArtist = localize(
+    locale,
+    activeRecord.artist,
+    activeRecord.artistEn ?? activeRecord.artist,
+  )
 
   return (
     <div
@@ -624,14 +668,16 @@ export function VinylShelf() {
         <ul
           ref={shelfRef}
           className="vinyl-shelf"
-          aria-label={localize(locale, '喜欢的唱片', 'Favorite records')}
+          aria-label={localize(locale, labelZh, labelEn)}
           data-active-index={activeIndex}
         >
-          {records.map((record, index) => {
+          {items.map((record, index) => {
             const isActive = index === activeIndex
-            const accessibleName = `${record.artist}, ${record.album} (${record.year})`
+            const artist = localize(locale, record.artist, record.artistEn ?? record.artist)
+            const album = localize(locale, record.album, record.albumEn ?? record.album)
+            const accessibleName = `${artist}, ${album}${record.year ? ` (${record.year})` : ''}`
             const finish = sleeveFinishes[index]
-            const motion = sleeveMotion(index, selectionPosition)
+            const motion = sleeveMotion(index, selectionPosition, sleeveFinishes, items.length)
             const spineTone = hashOf(accessibleName) % 5
 
             return (
@@ -670,11 +716,11 @@ export function VinylShelf() {
                   id={`vinyl-trigger-${index}`}
                   data-active={isActive ? '' : undefined}
                   data-pointer-owned={pointerOwnerIndex === index ? '' : undefined}
-                  aria-label={`Select ${accessibleName}`}
+                  aria-label={`${localize(locale, '选择', 'Select')} ${accessibleName}`}
                   aria-pressed={isActive}
                   aria-current={isActive ? 'true' : undefined}
                   aria-posinset={index + 1}
-                  aria-setsize={records.length}
+                  aria-setsize={items.length}
                   tabIndex={isActive ? 0 : -1}
                   onKeyDown={handleKeyDown}
                   onClick={(event) => {
@@ -707,10 +753,10 @@ export function VinylShelf() {
                         />
                       ) : (
                         <>
-                          <span className="vinyl-sleeve-raster">{`${record.album} `.repeat(24)}</span>
+                          <span className="vinyl-sleeve-raster">{`${album} `.repeat(24)}</span>
                           <span className="vinyl-sleeve-type">
-                            <span className="vinyl-sleeve-album">{record.album}</span>
-                            <span className="vinyl-sleeve-artist">{record.artist}</span>
+                            <span className="vinyl-sleeve-album">{album}</span>
+                            <span className="vinyl-sleeve-artist">{artist}</span>
                           </span>
                         </>
                       )}
@@ -721,10 +767,10 @@ export function VinylShelf() {
                       <span className="vinyl-paper" />
                     </span>
                     <span className="vinyl-spine vinyl-spine-left" aria-hidden>
-                      <span>{record.album} · {record.artist}</span>
+                      <span>{album} · {artist}</span>
                     </span>
                     <span className="vinyl-spine vinyl-spine-right" aria-hidden>
-                      <span>{record.album} · {record.artist}</span>
+                      <span>{album} · {artist}</span>
                     </span>
                   </span>
                 </button>
@@ -735,15 +781,25 @@ export function VinylShelf() {
       </div>
       <span className="room-shelf-plank" aria-hidden />
       {activeRecord.url && (
-        <a
+        <Link
           className="shelf-annotation vinyl-annotation"
-          href={activeRecord.url}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`Open ${activeRecord.album} by ${activeRecord.artist} on Apple Music in a new tab`}
+          href={
+            activeRecord.external === false
+              ? localePath(locale, activeRecord.url)
+              : activeRecord.url
+          }
+          target={activeRecord.external === false ? undefined : '_blank'}
+          rel={activeRecord.external === false ? undefined : 'noreferrer'}
+          aria-label={`${activeAlbum} · ${activeArtist}${
+            activeRecord.external === false
+              ? ''
+              : localize(locale, '（在新标签页中打开）', ' (opens in a new tab)')
+          }`}
         >
-          <ExternalLabel>{activeRecord.album}</ExternalLabel>
-        </a>
+          {activeRecord.external === false
+            ? activeAlbum
+            : <ExternalLabel>{activeAlbum}</ExternalLabel>}
+        </Link>
       )}
     </div>
   )

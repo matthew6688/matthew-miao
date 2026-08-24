@@ -18,7 +18,7 @@ const sections = {
   blog: { zh: ['写作', '关于 AI Agent、自动化与产品实践的记录。'], en: ['Writing', 'Notes on AI agents, automation, and building products.'] },
   'build-in-public': { zh: ['公开构建', '把技能、知识和自动化做成产品的真实尝试。'], en: ['Build in Public', 'Turning skills, knowledge, and automation into products.'] },
   photos: { zh: ['照片', '工作、生活和旅途中留下的一些瞬间。'], en: ['Photos', 'Moments from work, life, and everywhere in between.'] },
-  projects: { zh: ['项目', '认真做过的产品、工具和小实验。'], en: ['Projects', 'Products, tools, and small experiments made with care.'] },
+  projects: { zh: ['产品', '长期维护的外贸数据、AI 获客和销售外联产品。'], en: ['Products', 'Maintained products for trade data, AI-powered growth, and sales outreach.'] },
   ama: { zh: ['一对一', '用一小时聊清楚判断、取舍与下一步。'], en: ['AMA', 'A focused one-to-one conversation about what to do next.'] },
 }
 for (const [section, locales] of Object.entries(sections)) for (const [locale, [title, description]] of Object.entries(locales)) await render(`${locale}-${section}.png`, title, description)

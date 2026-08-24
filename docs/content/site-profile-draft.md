@@ -1,11 +1,13 @@
 # 老苗 / Matthew Miao — 网站内容草案
 
-状态：根据 2026-08-09 口述整理；已确认字段已于 2026-08-10 发布，2026-08-24 补充 Build in Public 内容方向，文末项目继续待补。
+状态：根据 2026-08-09 口述整理；已确认字段已于 2026-08-10 发布，2026-08-24 补充产品与 Build in Public 实验体系。
 原则：不虚构经历、客户、业绩或社交数据；语音识别不确定的信息统一放在文末。
 
 ## Build in Public 内容方向
 
-Matthew 希望长期公开记录网上商业尝试，以及把自己的技能、知识和自动化能力产品化的过程。栏目使用“公开构建 / Build in Public”，内容归入博客体系而不是重复建立项目数据源。每篇实验可记录假设、产品化方案、构建、获客、成本、结果、失败和下一步；收入、客户、流量与转化数据只发布 Matthew 明确确认的数字或范围。
+Matthew 希望长期公开记录网上商业尝试，以及把自己的技能、知识和自动化能力产品化的过程。栏目使用“公开构建 / Build in Public”。每种尝试先进入实验注册表，再通过博客文章持续记录假设、产品化方案、构建、获客、成本、结果、失败和下一步；收入、客户、流量与转化数据只发布 Matthew 明确确认的数字或范围。
+
+首批实验为 YouTube 频道（进行中）和面向学校老师的课堂随机抽选工具（正在构建）。实验可以在成熟后升级为正式产品，但保留原实验页和历史文章。
 
 ## 公开身份
 
@@ -73,21 +75,30 @@ Exploring software, automation, web coding, AI agents, outreach, and company kno
 - 中文简介：负责增长与市场工作，同时持续探索聊天自动化、AI Agent 和企业工作流如何进入真实业务。
 - English: Leading marketing and growth while exploring how conversational automation, AI agents, and business workflows can work in real operations.
 
-## 项目
+## 正式产品
 
 ### FengTalk.ai
 
 - 名称：FengTalk.ai
 - 网址：`https://fengtalk.ai`
-- 角色：创始人 / Founder
-- 开始时间：约 2024 年
-- 内容方向：Web coding、AI Agent、outreach、外贸业务与中国企业的实际应用
-- 中文草案：一个围绕 Web coding、AI Agent 和自动化实践的平台，探索 AI 如何帮助中国企业研究市场、寻找潜在客户、推进 outreach，并把企业知识转化为可以运行的工作流。
-- English draft: A platform for hands-on work in web coding, AI agents, and automation—exploring how Chinese companies can research markets, find prospects, run outreach, and turn company knowledge into working systems.
+- 中文简介：从海关数据和多渠道线索出发，将客户研究、触达与持续跟进连接成一套 AI 外贸获客流程。
+- English: An AI-powered export growth workflow connecting trade data and multi-channel signals with research, outreach, and sustained follow-up.
 
-### 后续项目槽位
+### TradeScope 海关数据
 
-项目页预留至少 8 个槽位。没有真实资料的项目不生成假内容；组件保持原模板结构，在内容补齐后逐项发布。
+- 网址：`https://fengtalk.ai/data`
+- 中文简介：按产品或 HS 编码查看拉美 13 国的进口商、供应商、交易记录与开发优先级。
+- English: Explore importers, suppliers, shipment records, and sales priorities across 13 Latin American markets by product or HS code.
+
+### FengReach
+
+- 网址：`https://reach.fengtalk.ai/zh/`
+- 中文简介：捕获 LinkedIn 线索，结合企业知识生成可审核的个性化开发信序列，再由人工批准发送。
+- English: Turn LinkedIn leads and company knowledge into reviewable personalized outreach sequences, with human approval before sending.
+
+### 后续产品槽位
+
+产品注册表只加入真实、长期维护的产品。没有真实资料的产品不生成假内容；新的赚钱尝试先进入 Build in Public 实验注册表。
 
 ## 博客定位
 

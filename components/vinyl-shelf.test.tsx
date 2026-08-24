@@ -412,4 +412,30 @@ describe('VinylShelf', () => {
     expect(annotation?.textContent).toContain(records[nextIndex].album)
     expect(document.activeElement).toBe(triggers[nextIndex])
   })
+
+  it('reuses the shelf for bilingual internal experiment links', () => {
+    const items = [
+      {
+        artist: '软件',
+        artistEn: 'Software',
+        album: '课堂随机抽选工具',
+        albumEn: 'Classroom Randomizer',
+        genre: '正在构建',
+        genreEn: 'Building',
+        spineColor: '#d5b738',
+        spineInk: '#171713',
+        url: '/build-in-public/classroom-randomizer',
+        external: false,
+      },
+    ]
+
+    const { container } = render(
+      <VinylShelf items={items} labelZh="实验" labelEn="Experiments" />,
+    )
+
+    expect(container.querySelector('[aria-label="Experiments"]')).not.toBeNull()
+    expect(
+      container.querySelector<HTMLAnchorElement>('.vinyl-annotation')?.getAttribute('href'),
+    ).toBe('/en/build-in-public/classroom-randomizer')
+  })
 })

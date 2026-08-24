@@ -1,10 +1,13 @@
 import { WritingInkStage } from '~/components/hidden-list-stage'
 import { PixelCluster } from '~/components/pixel-cluster'
 import { PostArchive } from '~/components/post-archive'
+import { SectionTitle } from '~/components/section-title'
+import { VinylShelf } from '~/components/vinyl-shelf'
 import { getPostsBySeries } from '~/lib/content'
 import { T } from '~/lib/i18n'
 import type { Locale } from '~/lib/locale-route'
 import { publicPageMetadata } from '~/lib/public-page-metadata'
+import { experimentShelfItems } from '~/lib/showcase-shelves'
 
 export function BuildInPublicPageView({ locale }: { locale: Locale }) {
   const posts = getPostsBySeries('build-in-public')
@@ -27,9 +30,27 @@ export function BuildInPublicPageView({ locale }: { locale: Locale }) {
         <PixelCluster variant={2} className="enter shrink-0" />
       </div>
 
-      <WritingInkStage className="mt-10" contentClassName="flex flex-col gap-8">
-        <PostArchive posts={posts} locale={locale} />
-      </WritingInkStage>
+      <section className="mt-12">
+        <SectionTitle index="01" delay={120}>
+          <T zh="实验" en="Experiments" />
+        </SectionTitle>
+        <div className="enter mt-5" style={{ '--enter-delay': '160ms' } as React.CSSProperties}>
+          <VinylShelf
+            items={experimentShelfItems}
+            labelZh="正在进行的赚钱实验"
+            labelEn="Active business experiments"
+          />
+        </div>
+      </section>
+
+      <section className="mt-16">
+        <SectionTitle index="02" delay={220}>
+          <T zh="更新" en="Updates" />
+        </SectionTitle>
+        <WritingInkStage className="mt-5" contentClassName="flex flex-col gap-8">
+          <PostArchive posts={posts} locale={locale} />
+        </WritingInkStage>
+      </section>
     </div>
   )
 }
