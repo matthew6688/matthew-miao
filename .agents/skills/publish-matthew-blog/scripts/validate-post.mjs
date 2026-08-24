@@ -10,6 +10,7 @@ import { unified } from 'unified'
 import { visit } from 'unist-util-visit'
 
 import { videoEmbedUrls } from '../../../../lib/blog/video-embed.ts'
+import { experimentSlugs } from '../../../../lib/experiments.ts'
 
 const [slug, ...flags] = process.argv.slice(2)
 const draft = flags.includes('--draft')
@@ -67,7 +68,7 @@ function parseEdition(edition, source) {
 
 function validateFrontmatter(edition, data, rawFrontmatter) {
   const allowed = edition === 'index.mdx'
-    ? ['title', 'description', 'publishedAt', 'series', 'cover', 'coverWidth', 'coverHeight', 'coverCaption']
+    ? ['title', 'description', 'publishedAt', 'series', 'experiment', 'cover', 'coverWidth', 'coverHeight', 'coverCaption']
     : ['title', 'description']
   for (const key of Object.keys(data)) {
     if (!allowed.includes(key)) fail(`${edition} has unsupported frontmatter field ${key}`)
@@ -77,6 +78,12 @@ function validateFrontmatter(edition, data, rawFrontmatter) {
   if (edition === 'index.mdx') {
     if (data.series !== undefined && data.series !== 'build-in-public') {
       fail('index.mdx series must be build-in-public when present')
+    }
+    if (data.experiment !== undefined && !experimentSlugs.includes(data.experiment)) {
+      fail(`index.mdx experiment must be one of: ${experimentSlugs.join(', ')}`)
+    }
+    if (data.experiment !== undefined && data.series !== 'build-in-public') {
+      fail('index.mdx experiment requires series: build-in-public')
     }
     const literal = rawFrontmatter.match(/^publishedAt:\s*["']([^"']+)["']\s*$/mu)?.[1]
     if (Number.isNaN(new Date(literal ?? '').valueOf()) || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(literal ?? '')) {

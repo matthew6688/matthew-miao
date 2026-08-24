@@ -41,6 +41,22 @@ const profiles = [
     reducedMotion: 'no-preference' as const,
   },
   {
+    name: 'Chinese product detail on mobile',
+    path: '/projects/tradescope',
+    lang: 'zh-CN' as const,
+    viewport: { width: 390, height: 844 },
+    colorScheme: 'light' as const,
+    reducedMotion: 'no-preference' as const,
+  },
+  {
+    name: 'English experiment detail on desktop',
+    path: '/en/build-in-public/classroom-randomizer',
+    lang: 'en' as const,
+    viewport: { width: 1440, height: 900 },
+    colorScheme: 'dark' as const,
+    reducedMotion: 'no-preference' as const,
+  },
+  {
     name: 'English photos on reduced-motion mobile',
     path: '/en/photos',
     lang: 'en' as const,

@@ -104,11 +104,13 @@ registered article, and any committed draft directory. Hosted browser tests deri
 matrix from `publishedPostSlugs`, so a new slug automatically receives bilingual
 route, image, canonical/hreflang, feed and sitemap checks.
 
-Build in Public is a filtered bilingual blog series at `/build-in-public` and
-`/en/build-in-public`. Shared Chinese frontmatter may set only
-`series: "build-in-public"`; English inherits that field. The publishing Skill
-must distinguish hypotheses from verified outcomes and never invent revenue,
-cost, conversion, customer, or traffic claims.
+Build in Public has a registry-backed experiment shelf at `/build-in-public`
+and `/en/build-in-public`. Each experiment owns localized detail routes and may
+have zero or more blog updates. Shared Chinese frontmatter sets
+`series: "build-in-public"` and may add a registered `experiment` slug; English
+inherits both fields. The publishing Skill must distinguish hypotheses from
+verified outcomes and never invent revenue, cost, conversion, customer, or
+traffic claims.
 
 Read `.agents/skills/manage-matthew-photos/SKILL.md` for photo work. Its CLI
 sanitizes Originals into four deterministic derivatives, refuses mutations on
@@ -116,15 +118,14 @@ protected branches, supports local or Cloudflare Preview, and provides atomic
 commands for bilingual alt-text and focal-point changes. Withdrawal is reversible;
 permanent derivative deletion retains its exact confirmation gate.
 
-Read `.agents/skills/curate-matthew-projects-shelves/SKILL.md` for original
-GitHub projects, books, or music. Matthew may supply only a repository URL plus
-an originality/primary-maintainer confirmation; the Skill inspects fork,
-visibility, archive, README, homepage, and license state before preparing
-bilingual copy. It never treats a public repository as open source without a
-recognized license and never attributes ordinary forks or inferred preferences
-to Matthew. Projects remain a hand-curated build-time registry; books and music
-reuse the preserved upstream shelf components and may launch with text-only art
-instead of unlicensed covers.
+Read `.agents/skills/curate-matthew-projects-shelves/SKILL.md` for software
+products, Build in Public experiments, original GitHub projects, books, or
+music. Durable products live in `siteProfile.projects`; time-bounded experiments
+live in `lib/experiments.ts` and can optionally reference a product. Both are
+projected into the preserved upstream Bookshelf/Vinyl Shelf interactions and
+link to bilingual detail pages. GitHub originals still require fork,
+visibility, archive, README, homepage, and license checks. Books and music use
+only Matthew-confirmed preferences and may launch with text-only art.
 
 ## Required release checks
 

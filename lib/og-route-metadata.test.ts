@@ -73,13 +73,13 @@ describe('social OG image metadata', () => {
       'zh',
       '/projects',
       publicPageMetadata.projects.zh,
-      '项目 · Matthew Miao。这些年做过的产品、开源工具和小实验。有些实用，有些只是好玩，但每一个我都认真做过。',
+      '产品 · Matthew Miao。我长期维护的软件产品：从外贸数据、AI 获客到可审核的销售外联工作流。',
     ],
     [
       'en',
       '/projects',
       publicPageMetadata.projects.en,
-      'Projects · Matthew Miao. Products, open-source tools, and small experiments I have made over the years. Some useful, some playful, all made with care.',
+      'Products · Matthew Miao. Software products I maintain across trade data, AI-powered growth, and reviewable sales outreach.',
     ],
   ] as const)(
     'describes the %s %s artwork with its own content',

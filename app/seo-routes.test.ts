@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest'
 
 import { buildEnglishFeedXml } from '~/lib/feeds'
 import { getAllPosts } from '~/lib/content'
+import { experiments } from '~/lib/experiments'
 import { archivedNewsletterIds } from '~/lib/newsletters'
+import { projects } from '~/lib/projects'
 import { seo } from '~/lib/seo'
 
 import robots from './robots'
@@ -51,6 +53,8 @@ describe('localized discovery routes', () => {
       '/photos',
       '/projects',
       '/ama',
+      ...projects.map((project) => `/projects/${project.slug}`),
+      ...experiments.map((experiment) => `/build-in-public/${experiment.slug}`),
       ...archivedNewsletterIds.map((id) => `/newsletters/${id}`),
       ...getAllPosts().map((post) => `/blog/${post.slug}`),
     ]

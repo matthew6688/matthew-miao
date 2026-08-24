@@ -11,6 +11,8 @@ assets, and unconfirmed social imagery are not part of this inventory.
 | `public/images/matthew-placeholder-dark.svg` | Repository-authored dark variant of the neutral Matthew monogram |
 | `public/images/matthew-portrait.webp` | Matthew's own creek-side portrait, supplied and approved by Matthew on 2026-08-10; square WebP derivative with EXIF/GPS metadata removed; original remains outside Git |
 | `public/images/projects/fengtalk.svg` | Repository-authored neutral project tile for Matthew's confirmed FengTalk project |
+| `public/images/projects/tradescope.svg` | Repository-authored neutral globe/grid tile for Matthew's confirmed TradeScope customs-data product; no third-party mark |
+| `public/images/projects/fengreach.svg` | Repository-authored neutral envelope/status tile for Matthew's confirmed FengReach outreach product; no third-party mark |
 | `public/images/social/wechat-service-matthewmiao.png` | Lossless QR crop from the official WeChat Service Account promotional asset supplied by Matthew on 2026-08-10; search name `matthewmiao` |
 | `public/images/social/wechat-subscription-fengtalk.png` | Lossless QR crop from the official WeChat Official Account promotional asset supplied by Matthew on 2026-08-10; search name `fengtalk.ai` |
 | `public/images/photos/*/*.jpg` | Twenty metadata-stripped progressive JPEG Renditions derived from five Matthew-owned photos supplied and approved on 2026-08-10; Originals remain outside Git; provenance and publication state are recorded in `content/photos/catalog.json` |

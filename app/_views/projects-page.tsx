@@ -1,14 +1,15 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
-import { ExternalLabel } from '~/components/external-mark'
 import { GhostSchematic } from '~/components/ghost-schematic'
 import { ProjectsBlueprintStage } from '~/components/hidden-list-stage'
 import { PixelCluster } from '~/components/pixel-cluster'
 import { T } from '~/lib/i18n'
 import { publicPageMetadata } from '~/lib/public-page-metadata'
 import { projects } from '~/lib/projects'
+import { localePath, type Locale } from '~/lib/locale-route'
 
-export function ProjectsPageView() {
+export function ProjectsPageView({ locale }: { locale: Locale }) {
   const center = (projects.length - 1) / 2
 
   return (
@@ -17,7 +18,7 @@ export function ProjectsPageView() {
       <div className="flex items-start justify-between gap-4">
         <header className="max-w-[34rem]">
           <h1 className="page-eyebrow enter">
-            <T zh="项目" en="Projects" />
+            <T zh="产品" en="Products" />
           </h1>
           <p
             className="page-introduction enter mt-4 text-balance"
@@ -44,10 +45,8 @@ export function ProjectsPageView() {
                 } as React.CSSProperties
               }
             >
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                href={localePath(locale, `/projects/${project.slug}`)}
                 className="project-row hairline-top group"
                 data-list-stage-row
                 data-list-stage-id={project.name}
@@ -63,16 +62,14 @@ export function ProjectsPageView() {
                 </span>
                 <span className="project-identity">
                   <span className="project-name font-medium">
-                    <ExternalLabel>
-                      <T zh={project.name} en={project.nameEn} />
-                    </ExternalLabel>
+                    <T zh={project.name} en={project.nameEn} />
                   </span>
                   <span className="project-domain text-muted-foreground">{project.domain}</span>
                 </span>
                 <span className="project-description text-muted-foreground">
                   <T zh={project.description} en={project.descriptionEn ?? project.description} />
                 </span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

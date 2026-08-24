@@ -1,4 +1,4 @@
 interface:
-  display_name: "Curate Matthew Projects & Shelves"
-  short_description: "Publish original projects, books, and music safely"
-  default_prompt: "Use $curate-matthew-projects-shelves to inspect an original GitHub project or personal book/music choice, prepare verified bilingual content, and publish it through the Matthew site gates."
+  display_name: "Curate Matthew Products & Experiments"
+  short_description: "Publish products, experiments, projects, and shelves safely"
+  default_prompt: "Use $curate-matthew-projects-shelves to verify and curate a Matthew-owned product, Build in Public experiment, original GitHub project, or personal shelf item, then publish it through the Matthew site gates."

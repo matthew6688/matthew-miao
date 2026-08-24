@@ -29,10 +29,10 @@ test('@hosted prefetched dock navigation renders instantly and preserves history
   })
 
   await instant(page, async () => {
-    await page.getByRole('link', { name: 'Projects, G then J' }).click()
+    await page.getByRole('link', { name: 'Products, G then J' }).click()
 
     await expect(page).toHaveURL(/\/en\/projects$/)
-    await expect(page.getByRole('heading', { level: 1, name: 'Projects' })).toBeVisible()
+    await expect(page.getByRole('heading', { level: 1, name: 'Products' })).toBeVisible()
     await expect(page.locator('main [data-list-stage-row]')).not.toHaveCount(0)
     expect(
       await page.evaluate(
@@ -42,7 +42,6 @@ test('@hosted prefetched dock navigation renders instantly and preserves history
     expect(await page.evaluate(() => window.history.length)).toBe(historyLength + 1)
   })
 
-  await expect(page.locator('main a[target="_blank"]')).not.toHaveCount(0)
   await page.goBack()
   await expect(page).toHaveURL(/\/en\/blog$/)
   await expect(page.getByRole('heading', { level: 1, name: 'Writing' })).toBeVisible()
@@ -100,6 +99,6 @@ test('Preferences keeps the current route when switching languages', async ({ pa
 
   await expect(page).toHaveURL(/\/en\/projects$/)
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
-  await expect(page.getByRole('heading', { level: 1, name: 'Projects' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1, name: 'Products' })).toBeVisible()
   expect(browserErrors).toEqual([])
 })

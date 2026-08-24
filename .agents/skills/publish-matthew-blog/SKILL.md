@@ -18,6 +18,10 @@ Create truthful, media-rich bilingual posts without changing the inherited Cali 
    When Matthew says the post belongs to Build in Public, add
    `series: "build-in-public"` to Chinese frontmatter only. Use the series for
    honest productization and online-business experiments, not generic AI news.
+   If the update belongs to a registered experiment, also add its exact
+   `experiment` slug from `lib/experiments.ts`. A missing experiment must first
+   be created with `$curate-matthew-projects-shelves`; do not create an orphaned
+   article label.
 6. Generate or prepare owned media. Run `node .agents/skills/publish-matthew-blog/scripts/prepare-image.mjs INPUT OUTPUT cover` for a 1600×900 cover, or use `inline` to preserve an illustration's aspect ratio. Copy the printed exact dimensions into MDX and record every file in `publication.json`.
 7. Use `VideoEmbed` for supported hosted video. Never paste raw `iframe`, arbitrary embed HTML, JavaScript URLs, or tracking snippets.
 8. Run the draft gate while the slug is unregistered: `node .agents/skills/publish-matthew-blog/scripts/validate-post.mjs <slug> --draft --check-links`.

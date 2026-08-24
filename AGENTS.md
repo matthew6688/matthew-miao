@@ -28,14 +28,16 @@ publication, withdrawal, alt-text, or deletion task. Originals stay outside
 Git; permanent derivative deletion requires the Skill's exact confirmation
 gate.
 
-### Projects and personal shelves
+### Products, experiments, and personal shelves
 
 Use `.agents/skills/curate-matthew-projects-shelves/SKILL.md` whenever Matthew
-supplies a GitHub project, book, album, project icon, or cover. Only verified
-Matthew originals may be presented as his projects; a public repository is
-called open source only when it has an explicit recognized license. Books and
-music must come from Matthew's stated preferences, never from upstream content
-or inference.
+supplies a product URL, Build in Public experiment, GitHub project, book,
+album, icon, or cover. Durable products and time-bounded experiments use
+separate registries; experiment articles must reference their registered slug.
+Only verified Matthew originals may be presented as his projects; a public
+repository is called open source only when it has an explicit recognized
+license. Books and music must come from Matthew's stated preferences, never
+from upstream content or inference.
 
 ### Issue tracker
 

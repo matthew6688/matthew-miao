@@ -9,6 +9,7 @@ import { NavCards, PhotoNavCard } from '~/components/nav-cards'
 import { PixelCluster } from '~/components/pixel-cluster'
 import { PostRow } from '~/components/post-row'
 import { PortraitHiddenStage } from '~/components/portrait-hidden-stage'
+import { SectionTitle } from '~/components/section-title'
 import { VinylShelf } from '~/components/vinyl-shelf'
 import { getAllPosts } from '~/lib/content'
 import { T } from '~/lib/i18n'
@@ -19,29 +20,7 @@ import { getGitHub, getSocial } from '~/lib/social-live'
 import { getHomepagePhotoPreview } from '~/lib/media/photo-selection/repository'
 import { getPublishedPhotoSelection } from '~/lib/media/photo-selection/server'
 import { siteProfile } from '~/lib/site-profile'
-
-function SectionTitle({
-  index,
-  children,
-  delay,
-}: {
-  index: string
-  children: React.ReactNode
-  delay: number
-}) {
-  return (
-    <h2
-      className="section-tag enter"
-      style={{ '--enter-delay': `${delay}ms` } as React.CSSProperties}
-    >
-      <span className="section-tag-index" aria-hidden>
-        {index}
-      </span>
-      <span className="section-tag-hatch" aria-hidden />
-      <span className="section-tag-label">{children}</span>
-    </h2>
-  )
-}
+import { experimentShelfItems, productShelfItems } from '~/lib/showcase-shelves'
 
 export async function HomePageView({ locale }: { locale: Locale }) {
   const [github, social] = await Promise.all([getGitHub(), getSocial()])
@@ -170,6 +149,50 @@ export async function HomePageView({ locale }: { locale: Locale }) {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="mt-16">
+        <div className="flex items-center justify-between gap-4">
+          <SectionTitle index={nextSectionIndex()} delay={300}>
+            <T zh="产品架" en="Products" />
+          </SectionTitle>
+          <Link
+            href={localePath(locale, '/projects')}
+            className="enter relative shrink-0 text-sm text-muted-foreground transition-colors duration-150 ease-[ease] after:absolute after:-inset-x-2 after:-inset-y-3 after:content-[''] hover:text-foreground focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4"
+            style={{ '--enter-delay': '320ms' } as React.CSSProperties}
+          >
+            <T zh="查看全部" en="View all" />
+          </Link>
+        </div>
+        <div className="enter mt-5" style={{ '--enter-delay': '340ms' } as React.CSSProperties}>
+          <Bookshelf
+            items={productShelfItems}
+            labelZh="老苗的软件产品"
+            labelEn="Matthew's software products"
+          />
+        </div>
+      </section>
+
+      <section className="mt-16">
+        <div className="flex items-center justify-between gap-4">
+          <SectionTitle index={nextSectionIndex()} delay={360}>
+            <T zh="正在实验" en="Experiments" />
+          </SectionTitle>
+          <Link
+            href={localePath(locale, '/build-in-public')}
+            className="enter relative shrink-0 text-sm text-muted-foreground transition-colors duration-150 ease-[ease] after:absolute after:-inset-x-2 after:-inset-y-3 after:content-[''] hover:text-foreground focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4"
+            style={{ '--enter-delay': '380ms' } as React.CSSProperties}
+          >
+            <T zh="查看全部" en="View all" />
+          </Link>
+        </div>
+        <div className="enter mt-5" style={{ '--enter-delay': '400ms' } as React.CSSProperties}>
+          <VinylShelf
+            items={experimentShelfItems}
+            labelZh="正在进行的赚钱实验"
+            labelEn="Active business experiments"
+          />
+        </div>
       </section>
 
       {siteProfile.features.personalShelves && records.length > 0 && (

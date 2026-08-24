@@ -460,7 +460,14 @@ typewriter/ascii textures, measuring ticks, registration marks. Rules:
   open book leaves it selected. Each projected book owns a shelf-plane contact
   shadow that expands with its visible width but stays on the wood when the
   jacket lifts on hover. The annotation below the plank is the only link to its
-  official author or publisher page.
+  official author or publisher page. The same interaction accepts registered
+  software products as content, linking its annotation to the localized
+  product detail route; this changes neither geometry nor motion.
+- **Showcase shelf roles**: the homepage product shelf projects the durable
+  product registry through Bookshelf, while the Build in Public experiment
+  shelf projects time-bounded experiments through Vinyl Shelf. Both keep the
+  upstream keyboard, pointer, touch, reduced-motion, plank, and annotation
+  contracts. Personal books and music remain separate optional data sources.
 - **Spec plates** (`.spec-plate`): metadata stamped like an engraved data
   plate — label/value pairs between hairline top and bottom rules, set in
   the mono stack (Geist Mono, CJK fallback), labels 11px uppercase at
@@ -757,9 +764,10 @@ pauses while the page is hidden. On mobile, contact and index remain a
 two-column row and the colophon follows them as the final row; inside it,
 copyright and clock occupy opposite halves of a two-column grid.
 
-## Project index
+## Product index
 
-The homepage Projects doorway is one standalone monochrome 52×52px app icon.
+The historical `/projects` route is publicly labeled Products. Its homepage
+doorway is one standalone monochrome 52×52px app icon.
 Its solid center axes, two diagonals, and circle are clipped by the icon's
 rounded square, with the crossed project mark centered above them. The whole
 icon lifts together by 2px over the 300ms physical-object spring while the mark
@@ -767,7 +775,7 @@ retains its fine-pointer exploded-diagram response. Touch and reduced-motion
 presentations are static, and the Writing and Photos doorway vignettes remain
 independent.
 
-The project page opens with a short bilingual note, then one intentionally
+The product page opens with a short bilingual note, then one intentionally
 ordered list. Each linked row is a compact artifact: a fixed 36px project icon,
 the project name and domain, then its description. Narrow screens keep the icon
 in the first column and stack all copy in the second, with natural wrapping and
