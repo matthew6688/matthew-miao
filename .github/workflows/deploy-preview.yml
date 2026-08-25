@@ -2,7 +2,7 @@ name: Deploy Preview
 
 on:
   push:
-    branches-ignore: [main, dev]
+    branches: ["codex/preview/**"]
 
 permissions:
   contents: read

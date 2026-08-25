@@ -73,9 +73,9 @@ test('local browser release tests use the current repository photo publication m
   assert.equal(security.jobs.quality.env.PHOTO_PUBLICATION_MODE, 'repository-bootstrap')
 })
 
-test('feature pushes deploy a validated Cloudflare Preview', async () => {
+test('only explicit Preview branches deploy a validated Cloudflare Preview', async () => {
   const config = await workflow('deploy-preview')
-  assert.deepEqual(config.on.push['branches-ignore'], ['main', 'dev'])
+  assert.deepEqual(config.on.push.branches, ['codex/preview/**'])
   assert.equal(config.on.pull_request, undefined)
   assert.equal(config.on.pull_request_target, undefined)
   assert.equal(config.concurrency['cancel-in-progress'], true)
@@ -158,7 +158,7 @@ test('dev validates and deploys the persistent Cloudflare Staging environment', 
   )
 })
 
-test('main validates and deploys the exact commit to Cloudflare Workers', async () => {
+test('main builds and deploys the exact commit to Cloudflare Workers', async () => {
   const config = await workflow('deploy-production')
   assert.deepEqual(config.on.push.branches, ['main'])
 
@@ -169,35 +169,46 @@ test('main validates and deploys the exact commit to Cloudflare Workers', async 
     '${{ secrets.CLOUDFLARE_API_TOKEN }}',
   )
   assert.equal(job.env.CALCOM_API_KEY, '${{ secrets.CALCOM_API_KEY }}')
+  const scope = job.steps.find((step) => step.name === 'Classify merged change scope')
+  assert.match(scope.run, /classify-blog-change\.mjs/)
   assertOrdered(
     job.steps,
     'Install dependencies',
-    'Validate application',
+    'Build deployment artifact',
   )
   assertOrdered(
     job.steps,
-    'Validate application',
-    'Verify Cal.com booking contract',
-  )
-  assertOrdered(
-    job.steps,
-    'Verify Cal.com booking contract',
+    'Build deployment artifact',
     'Deploy exact commit to Cloudflare Workers',
   )
   const calcom = job.steps.find(
     (step) => step.name === 'Verify Cal.com booking contract',
   )
-  assert.equal(calcom.if, undefined)
+  assert.equal(calcom.if, "steps.scope.outputs.blog_only != 'true'")
   assert.equal(calcom.run, 'pnpm verify:calcom')
   const validate = job.steps.find(
-    (step) => step.name === 'Validate application',
+    (step) => step.name === 'Validate manually dispatched application',
   )
+  assert.equal(validate.if, "github.event_name == 'workflow_dispatch'")
   assert.match(validate.run, /pnpm typecheck/)
   assert.match(validate.run, /pnpm test:unit/)
   assert.match(validate.run, /pnpm test:photo-skill/)
   assert.match(validate.run, /pnpm test:localization/)
   assert.match(validate.run, /pnpm test:deployment/)
-  assert.match(validate.run, /pnpm build:cloudflare/)
+  const blogValidation = job.steps.find(
+    (step) => step.name === 'Validate changed blog inputs',
+  )
+  assert.match(blogValidation.run, /pnpm test:blog-skill/)
+  assert.match(blogValidation.run, /pnpm test:localization/)
+  const build = job.steps.find(
+    (step) => step.name === 'Build deployment artifact',
+  )
+  assert.equal(build.run, 'pnpm build:cloudflare')
+  const changedBlogRoutes = job.steps.find(
+    (step) => step.name === 'Verify changed blog routes',
+  )
+  assert.equal(changedBlogRoutes.env.BLOG_SLUGS, '${{ steps.scope.outputs.changed_slugs }}')
+  assert.match(changedBlogRoutes.run, /blog-publication\.spec\.ts/)
   const deploy = job.steps.find(
     (step) => step.name === 'Deploy exact commit to Cloudflare Workers',
   )
@@ -219,9 +230,30 @@ test('main validates and deploys the exact commit to Cloudflare Workers', async 
   assertOrdered(
     job.steps,
     'Install Playwright Chromium',
-    'Verify production routes',
+    'Verify changed blog routes',
   )
   assert.doesNotMatch(JSON.stringify(job), /VERCEL_/)
+})
+
+test('blog-only pull requests use the focused release gate', async () => {
+  const config = await workflow('security')
+  const steps = config.jobs.quality.steps
+  const scope = steps.find((step) => step.name === 'Classify pull request scope')
+  assert.match(scope.run, /classify-blog-change\.mjs/)
+
+  const unit = steps.find((step) => step.name === 'Test unit and integration suites')
+  const blog = steps.find((step) => step.name === 'Test agent blog publishing gate')
+  const build = steps.find((step) => step.name === 'Build')
+  const fullBrowser = steps.find((step) => step.name === 'Test browser release gate')
+  const focusedBrowser = steps.find((step) => step.name === 'Test changed blog articles')
+
+  assert.equal(unit.if, "steps.scope.outputs.blog_only != 'true'")
+  assert.equal(blog.if, undefined)
+  assert.equal(build.if, undefined)
+  assert.equal(fullBrowser.if, "steps.scope.outputs.blog_only != 'true'")
+  assert.equal(focusedBrowser.if, "steps.scope.outputs.blog_only == 'true'")
+  assert.equal(focusedBrowser.env.BLOG_SLUGS, '${{ steps.scope.outputs.changed_slugs }}')
+  assert.match(focusedBrowser.run, /blog-publication\.spec\.ts/)
 })
 
 test('Production canary probes continuously and owns a deduplicated incident', async () => {
