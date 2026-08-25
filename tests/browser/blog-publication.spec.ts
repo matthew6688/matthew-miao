@@ -6,8 +6,18 @@ import { expectHealthyPublicDocument, prepareBrowserPage, watchBrowserErrors } f
 const expectedOrigin = process.env.PLAYWRIGHT_BASE_URL
   ? new URL(process.env.PLAYWRIGHT_BASE_URL).origin
   : 'https://matthew-miao.com'
+const requestedSlugs = process.env.BLOG_SLUGS
+  ?.split(',')
+  .map((slug) => slug.trim())
+  .filter(Boolean)
+const publishedPostSlugSet = new Set<string>(publishedPostSlugs)
+const unknownSlugs = requestedSlugs?.filter((slug) => !publishedPostSlugSet.has(slug)) ?? []
+if (unknownSlugs.length > 0) {
+  throw new Error(`BLOG_SLUGS contains unpublished slugs: ${unknownSlugs.join(', ')}`)
+}
+const testedPostSlugs = requestedSlugs?.length ? requestedSlugs : publishedPostSlugs
 
-for (const slug of publishedPostSlugs) {
+for (const slug of testedPostSlugs) {
   for (const locale of ['zh', 'en'] as const) {
     const path = locale === 'en' ? `/en/blog/${slug}` : `/blog/${slug}`
     const lang = locale === 'en' ? 'en' : 'zh-CN'
