@@ -263,6 +263,7 @@ export async function BlogPostPageView({ slug, locale }: { slug: string; locale:
                     headingLevel="h3"
                     dateStyle="short"
                     locale={locale}
+                    imageLoading="eager"
                   />
                 </li>
               ))}

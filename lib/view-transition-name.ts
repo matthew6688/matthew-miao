@@ -6,6 +6,8 @@ function postTransitionId(slug: string) {
       return 'p01'
     case 'agentic-search-active-verification':
       return 'p02'
+    case 'ai-youtube-content-system-experiment':
+      return 'p03'
     default:
       throw new Error('Unknown post view-transition slug')
   }

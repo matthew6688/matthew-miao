@@ -14,12 +14,14 @@ export function PostRow({
   dateStyle = 'full',
   locale = 'zh',
   listStageId,
+  imageLoading = 'lazy',
 }: {
   post: Post
   headingLevel?: 'h2' | 'h3'
   dateStyle?: 'full' | 'month-day' | 'short'
   locale?: Locale
   listStageId?: string
+  imageLoading?: 'eager' | 'lazy'
 }) {
   const Heading = headingLevel
   const safeSlug = encodeURIComponent(post.slug)
@@ -47,6 +49,7 @@ export function PostRow({
               width={64}
               height={44}
               sizes="64px"
+              loading={imageLoading}
               className="print-thumb-img"
             />
           </span>
