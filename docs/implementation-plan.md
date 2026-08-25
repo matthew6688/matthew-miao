@@ -120,8 +120,8 @@
 
 - 改写上游 workflow 中的仓库名、环境名、域名和 provider project IDs
 - 保留 migration hash lock、expand-only 检查和 migration/runtime database role 分离
-- Preview PR 创建/刷新 Neon preview branch，通过 OpenNext CLI 发布稳定 Worker Preview
-- `dev` 自动部署 Staging；`main` 仅在完整检查后部署 Production
+- 仅 `codex/preview/**` 分支通过 OpenNext CLI 发布共享 Worker Preview；普通发布 PR 不占用 Preview
+- `dev` 自动部署 Staging；`main` 在按变更范围选择的 focused 或 full 检查通过后部署 Production
 - 失败时不继续部署；部署摘要必须记录 exact SHA 与 URL
 - Cloudflare Cron Worker 定时、带密钥且幂等地调用媒体 reconcile 和 AMA work endpoint
 
@@ -153,7 +153,7 @@ Skill 支持：
 - 图片复制到文章同目录，生成稳定引用、尺寸和 alt text
 - 运行格式、链接、内容、OG、RSS、typecheck、unit 和文章页面 Playwright 检查
 - 默认创建草稿分支，不直接推送 `main`
-- 默认先临时注册到共享 Cloudflare Preview 并返回中英文审阅链接；明确“直接发布”时可跳过人工等待，但不能跳过验证、受保护 PR 或 Production hosted checks
+- 默认在 `codex/preview/**` 分支临时注册到共享 Cloudflare Preview 并返回中英文审阅链接；明确“直接发布”时使用非 Preview 分支，可跳过人工等待和无用的 Preview 部署，但不能跳过对应的 focused/full 验证、受保护 PR 或 Production hosted checks
 - 发布前展示 diff、URL、SEO 摘要和缺失项
 - 支持更新旧文、撤稿、重命名 slug，并维护 redirect/legacy manifest
 - 明确禁止把 secret、私人照片原图位置、EXIF 或未授权素材写入公开内容
