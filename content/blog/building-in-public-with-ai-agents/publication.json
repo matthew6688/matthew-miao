@@ -1,5 +1,9 @@
 {
   "media": {
+    "cover.webp": {
+      "source": "Generated specifically for this article with OpenAI image generation, using the article's owned workflow illustration as a style reference",
+      "rights": "generated"
+    },
     "automation-workflow.webp": {
       "source": "Generated specifically for Matthew's first bilingual article",
       "rights": "generated"
