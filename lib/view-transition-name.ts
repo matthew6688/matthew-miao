@@ -8,6 +8,8 @@ function postTransitionId(slug: string) {
       return 'p02'
     case 'ai-youtube-content-system-experiment':
       return 'p03'
+    case 'youtube-channel-research-decision-office':
+      return 'p04'
     default:
       throw new Error('Unknown post view-transition slug')
   }
