@@ -15,6 +15,7 @@
 /out/
 /.open-next/
 /.wrangler/
+/public/content/
 
 # Amp service-generated portal manifests
 /.amp/portals/

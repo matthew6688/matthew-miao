@@ -1,10 +1,9 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
-import { bundledAssets } from '~/lib/generated-worker-content'
-
 // Serves colocated public-content images so content can live next to its MDX
-// (ADR-0001) without a public/ copy step.
+// (ADR-0001). Production builds copy registered public media into the static
+// asset binding; this filesystem fallback keeps local development working.
 const ALLOWED =
   /^(?:blog\/[a-z0-9-]+|newsletters\/[0-9]+)\/[A-Za-z0-9_-]+\.(png|jpe?g|webp|gif|avif)$/
 
@@ -25,16 +24,6 @@ export async function GET(
   if (!ALLOWED.test(rel)) return new Response('Not found', { status: 404 })
 
   const ext = rel.split('.').pop()!
-  const bundled = bundledAssets[`/content/${rel}` as keyof typeof bundledAssets]
-  if (bundled) {
-    return new Response(Uint8Array.from(Buffer.from(bundled, 'base64')), {
-      headers: {
-        'Content-Type': MIME[ext],
-        'Cache-Control': 'public, max-age=31536000, immutable',
-      },
-    })
-  }
-
   try {
     const buf = await readFile(path.join(process.cwd(), 'content', rel))
     return new Response(new Uint8Array(buf), {

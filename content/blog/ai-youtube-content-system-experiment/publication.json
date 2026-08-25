@@ -1,0 +1,32 @@
+{
+  "media": {
+    "cover.webp": {
+      "source": "Original cover prepared for this article from Matthew's locally generated Past Made Us artwork",
+      "rights": "owned"
+    },
+    "image-variants.webp": {
+      "source": "Two AI-generated Past Made Us visual directions supplied from Matthew's local production run",
+      "rights": "owned"
+    },
+    "past-made-us-channel.webp": {
+      "source": "Matthew-owned Past Made Us YouTube channel screenshot supplied for this article",
+      "rights": "owned"
+    },
+    "workflow.webp": {
+      "source": "Original workflow diagram created specifically for this article",
+      "rights": "owned"
+    }
+  },
+  "manualChecks": [
+    {
+      "url": "https://support.google.com/youtube/answer/1311392",
+      "checkedAt": "2026-08-25T00:12:29.887Z",
+      "note": "Manually verified in the official YouTube Help Center; Google returns a false 404 to the validator's automated HEAD request."
+    },
+    {
+      "url": "https://support.google.com/youtube/answer/14328491",
+      "checkedAt": "2026-08-25T00:12:29.887Z",
+      "note": "Manually verified in the official YouTube Help Center; Google returns a false 404 to the validator's automated HEAD request."
+    }
+  ]
+}

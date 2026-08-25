@@ -3,6 +3,7 @@
 export const publishedPostSlugs = [
   'building-in-public-with-ai-agents',
   'agentic-search-active-verification',
+  'ai-youtube-content-system-experiment',
 ] as const
 
 export const archivedNewsletterIds = ['1'] as const

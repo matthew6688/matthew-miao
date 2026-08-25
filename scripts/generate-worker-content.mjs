@@ -1,4 +1,4 @@
-import { readFile, readdir, writeFile } from 'node:fs/promises'
+import { copyFile, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
 import { archivedNewsletterIds, publishedPostSlugs } from '../lib/public-content-routes.ts'
@@ -37,11 +37,22 @@ for (const id of archivedNewsletterIds) {
 
 const assets = {}
 const generatedOgFiles = await readdir(path.join(root, 'public/generated-og'))
+
+// Content media is public and immutable, so let OpenNext upload it through the
+// static-assets binding instead of embedding base64 copies in the Worker. Only
+// media referenced by registered posts/newsletters reaches this directory.
+const generatedContentRoot = path.join(root, 'public/content')
+await rm(generatedContentRoot, { recursive: true, force: true })
+for (const [publicPath, file] of contentMedia) {
+  const output = path.join(root, 'public', publicPath.slice(1))
+  await mkdir(path.dirname(output), { recursive: true })
+  await copyFile(path.join(root, file), output)
+}
+
 for (const [publicPath, file] of [
   ['/images/matthew-placeholder-light.svg', 'public/images/matthew-placeholder-light.svg'],
   ['/fonts/og-regular.ttf', 'app/_fonts/FrexSansGB-OG-Regular.ttf'],
   ['/fonts/og-semibold.ttf', 'app/_fonts/FrexSansGB-OG-SemiBold.ttf'],
-  ...contentMedia,
   ...generatedOgFiles.map((file) => [`/generated-og/${file}`, `public/generated-og/${file}`]),
 ]) {
   assets[publicPath] = (await readFile(path.join(root, file))).toString('base64')
