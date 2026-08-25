@@ -60,7 +60,7 @@ Use when the change crosses the routine blog boundary or when scope is uncertain
 
 1. After the draft gate passes, temporarily add the slug to `publishedPostSlugs` and assign one stable unique view-transition ID on the draft branch. This registration is required for the real article route to render in Cloudflare Preview; do not merge it yet.
 2. Run the local gate for the selected change scope. The Preview workflow performs the full deployment validation and hosted browser checks.
-3. Commit and push the draft branch. A non-`main`, non-`dev` push deploys the shared Preview Worker through `.github/workflows/deploy-preview.yml`.
+3. Commit and push the `codex/preview/<slug>` draft branch. Only pushes matching `codex/preview/**` deploy the shared Preview Worker through `.github/workflows/deploy-preview.yml`; ordinary publication branches intentionally do not consume Preview time.
 4. Wait for `Deploy Preview` to finish successfully. Do not claim that Preview exists when deployment or hosted checks were skipped or failed.
 5. Return these review URLs:
    - Chinese: `https://matthew-miao-preview.matthew6688.workers.dev/blog/<slug>`

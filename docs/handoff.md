@@ -53,12 +53,14 @@ never in Git.
 GitHub's Production environment deploys automatically with its encrypted
 `CLOUDFLARE_API_TOKEN`.
 
-`dev` deploys to the persistent Staging Worker. Feature branches deploy to the
-Preview Worker. These workflows use the same validation gates as Production;
-Preview uses an encrypted, least-privilege `CLOUDFLARE_API_TOKEN` plus the
-non-secret `CLOUDFLARE_ACCOUNT_ID` environment variable. The exact Preview
-deployment and hosted browser gate passed on 2026-08-10. The Preview Worker is
-shared: the latest successful feature deployment replaces its prior contents.
+`dev` deploys to the persistent Staging Worker. Only explicit
+`codex/preview/**` branches deploy to the Preview Worker; routine publication
+branches do not consume an unused Preview deployment. Preview runs the full
+deployment and hosted validation gate and uses an encrypted, least-privilege
+`CLOUDFLARE_API_TOKEN` plus the non-secret `CLOUDFLARE_ACCOUNT_ID` environment
+variable. The exact Preview deployment and hosted browser gate passed on
+2026-08-10. The Preview Worker is shared: the latest successful Preview branch
+deployment replaces its prior contents.
 
 ## Provider boundary
 
@@ -95,11 +97,12 @@ security decision rather than adding credentials to the current deployment.
 
 Read `.agents/skills/publish-matthew-blog/SKILL.md`. The skill creates paired
 Chinese/English MDX, validates frontmatter and media, and supports two explicit
-delivery modes. Preview temporarily registers the draft on a feature branch,
-deploys the shared Cloudflare Preview, and returns both locale URLs for review.
-Publish uses a protected PR and waits for Production verification. “Direct
-publish” skips only the human Preview wait, never validation or branch
-protection. `pnpm test:blog-skill` validates both the validator behavior, every
+delivery modes. Preview temporarily registers the draft on a
+`codex/preview/<slug>` branch, deploys the shared Cloudflare Preview, and returns
+both locale URLs for review. Publish uses a protected non-Preview PR and waits
+for Production verification. “Direct publish” skips only the human Preview wait,
+never the focused or full validation gate or branch protection.
+`pnpm test:blog-skill` validates both the validator behavior, every
 registered article, and any committed draft directory. Hosted browser tests derive their article
 matrix from `publishedPostSlugs`, so a new slug automatically receives bilingual
 route, image, canonical/hreflang, feed and sitemap checks.
