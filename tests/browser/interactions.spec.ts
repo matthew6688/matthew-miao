@@ -6,6 +6,8 @@ import {
   watchBrowserErrors,
 } from './support'
 
+test.describe.configure({ mode: 'serial' })
+
 async function runningAnimationCount(pageOrLocator: {
   evaluate<Result>(callback: () => Result): Promise<Result>
 }) {

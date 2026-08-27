@@ -117,9 +117,9 @@ describe('ZoomImage', () => {
       detail: 0,
     })
 
-    expect(
-      screen.getByRole('dialog', { name: 'Taipei' }).getAttribute('data-state'),
-    ).toBe('open')
+    const dialog = screen.getByRole('dialog', { name: 'Taipei' })
+    expect(dialog.getAttribute('data-state')).toBe('open')
+    expect(dialog.classList.contains('zoom-overlay-instant')).toBe(true)
     expect(requestAnimationFrame).not.toHaveBeenCalled()
   })
 
