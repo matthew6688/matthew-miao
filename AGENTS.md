@@ -39,6 +39,16 @@ repository is called open source only when it has an explicit recognized
 license. Books and music must come from Matthew's stated preferences, never
 from upstream content or inference.
 
+### Presentations
+
+Published browser presentations live under `public/presentations/<slug>/` and
+are registered once in `lib/presentations.ts`; the registry drives the homepage,
+the bilingual `/presentations` index, sitemap discovery, and clean-URL rewrite
+tests. Keep each deck standalone so it remains suitable for full-screen video
+recording. New decks must retain their content-pipeline metadata and design-system
+attribution, pass desktop/mobile rendering plus Presentation/CSP tests, and ship
+through a protected Production PR.
+
 ### Issue tracker
 
 Project issues belong to `matthew6688/matthew-miao`. Upstream issues remain useful

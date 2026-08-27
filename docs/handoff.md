@@ -18,7 +18,7 @@ Current as of 2026-08-24.
 - Upstream baseline: the pinned source recorded in `docs/research/upstream-source-audit.md`
 - Chinese is unprefixed; English uses `/en`.
 
-Public home, blog, bilingual article, projects, five-photo publication, sitemap, RSS,
+Public home, blog, bilingual article, projects, browser presentations, five-photo publication, sitemap, RSS,
 dynamic OG routes, and the Cal.com booking handoff have passed live HTTP smoke checks. The site now uses Matthew's approved creek-side portrait, published
 as a metadata-stripped WebP through the existing interactive halftone treatment.
 Five approved photos now publish through ADR-0015's Repository Photo

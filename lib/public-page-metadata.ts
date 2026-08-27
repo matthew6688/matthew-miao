@@ -52,6 +52,17 @@ export const publicPageMetadata = {
       description: 'Software products I maintain across trade data, AI-powered growth, and reviewable sales outreach.',
     },
   },
+  presentations: {
+    zh: {
+      title: '视频演示',
+      description: '我为视频讲解制作的浏览器 Presentation：把产品、实验和思考拆成可以顺着讲清楚的页面。',
+    },
+    en: {
+      title: 'Presentations',
+      description:
+        'Browser presentations made for my videos—structured walkthroughs of products, experiments, and working ideas.',
+    },
+  },
   ama: {
     zh: {
       title: '一对一',

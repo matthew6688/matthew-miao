@@ -33,6 +33,10 @@ const presentationRewrites = [
     destination:
       '/presentations/youtube-monetization-me-too-me-better/index.html',
   },
+  {
+    source: '/presentations/six-months-two-ai-products',
+    destination: '/presentations/six-months-two-ai-products/index.html',
+  },
 ]
 
 const ogRuntimeAssets = [
