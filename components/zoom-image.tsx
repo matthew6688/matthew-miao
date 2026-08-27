@@ -222,7 +222,9 @@ export function ZoomImage({
     }
     // Scrolls that bypass wheel/touch (keyboard, scrollbar drag) still close;
     // close() re-measures the landing spot, so the flight stays correct.
-    const onViewportChange = () => close('viewport')
+    const onViewportChange = () => {
+      if (!zoom.instant) close('viewport')
+    }
     window.addEventListener('keydown', onKey)
     window.addEventListener('wheel', onGesture, { passive: false })
     window.addEventListener('touchmove', onGesture, { passive: false })

@@ -20,11 +20,14 @@ test('keyboard preview cards open without card or contribution-cell motion', asy
   await prepareBrowserPage(page)
   const browserErrors = watchBrowserErrors(page)
   await page.goto('/en')
+  await page.waitForLoadState('networkidle')
   await expect(page.getByRole('button', { name: 'Preferences' })).toBeEnabled()
 
   const trigger = page.locator('main a[href="https://github.com/matthew6688"]:visible')
   await expect(trigger).toHaveCount(1)
+  await page.keyboard.press('Tab')
   await trigger.focus()
+  await expect(trigger).toBeFocused()
 
   const card = page.locator('.link-card')
   await expect(card).toBeVisible()
@@ -47,6 +50,7 @@ test('keyboard lightbox opens and closes immediately with focus restoration', as
   await prepareBrowserPage(page)
   const browserErrors = watchBrowserErrors(page)
   await gotoBrowserArticleFixture(page)
+  await page.waitForLoadState('networkidle')
   await expect(page.getByRole('button', { name: 'Preferences' })).toBeEnabled()
 
   const trigger = page.locator('.zoom-trigger:visible').first()

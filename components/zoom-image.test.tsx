@@ -143,6 +143,17 @@ describe('ZoomImage', () => {
     expect(document.activeElement).toBe(trigger)
   })
 
+  it('keeps a keyboard-opened dialog stable through incidental viewport events', () => {
+    render(<ZoomImage src="/photo.jpg" alt="Taipei" width={800} height={600} />)
+    const trigger = screen.getByRole('button', { name: 'Zoom image: Taipei' })
+    fireEvent.click(trigger, { detail: 0 })
+
+    fireEvent.scroll(window)
+    fireEvent.resize(window)
+
+    expect(screen.getByRole('dialog', { name: 'Taipei' })).not.toBeNull()
+  })
+
   it('preserves the two-frame pointer opening transition', () => {
     const frames: FrameRequestCallback[] = []
     vi.stubGlobal(
