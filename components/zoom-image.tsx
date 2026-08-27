@@ -84,6 +84,7 @@ export function ZoomImage({
     expandedSrc: string
     target: { left: number; top: number; width: number; height: number }
     from: string
+    instant: boolean
   } | null>(null)
   const [state, setState] = useState<'opening' | 'open' | 'closing'>('opening')
   const stateRef = useRef(state)
@@ -144,13 +145,15 @@ export function ZoomImage({
     const s = rect.width / w
     const tx = rect.left + rect.width / 2 - (target.left + w / 2)
     const ty = rect.top + rect.height / 2 - (target.top + h / 2)
+    const reduced = prefersReducedMotion()
+    const instant = event.detail === 0 || reduced
     setZoom({
       expandedSrc,
       target,
       from: `translate(${tx}px, ${ty}px) scale(${s})`,
+      instant,
     })
-    const reduced = prefersReducedMotion()
-    setState(event.detail === 0 || reduced ? 'open' : 'opening')
+    setState(instant ? 'open' : 'opening')
   }, [expandedSrc, width, height, expandedContent])
 
   const unmount = useCallback(() => {
@@ -219,7 +222,9 @@ export function ZoomImage({
     }
     // Scrolls that bypass wheel/touch (keyboard, scrollbar drag) still close;
     // close() re-measures the landing spot, so the flight stays correct.
-    const onViewportChange = () => close('viewport')
+    const onViewportChange = () => {
+      if (!zoom.instant) close('viewport')
+    }
     window.addEventListener('keydown', onKey)
     window.addEventListener('wheel', onGesture, { passive: false })
     window.addEventListener('touchmove', onGesture, { passive: false })
@@ -272,7 +277,7 @@ export function ZoomImage({
           <div
             ref={overlayRef}
             tabIndex={-1}
-            className="zoom-overlay"
+            className={`zoom-overlay${zoom.instant ? ' zoom-overlay-instant' : ''}`}
             data-state={floating ? 'open' : state}
             role="dialog"
             aria-modal="true"

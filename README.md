@@ -53,6 +53,12 @@ default when publication intent is unclear and uses an explicit
 Preview deployment while retaining its scope-appropriate validation and every
 branch-protection gate.
 
+Standalone browser presentations used for video recording are published under
+`public/presentations/<slug>/` and registered in `lib/presentations.ts`. The
+registry powers the homepage section, bilingual `/presentations` index, sitemap,
+and clean public URLs. Presentation releases use the same protected Production
+PR and Cloudflare verification path as application changes.
+
 ## License and content rights
 
 Application source code is available under the [MIT License](LICENSE). Matthew's

@@ -8,6 +8,7 @@ import { HomeIntroduction } from '~/components/home-introduction'
 import { NavCards, PhotoNavCard } from '~/components/nav-cards'
 import { PixelCluster } from '~/components/pixel-cluster'
 import { PostRow } from '~/components/post-row'
+import { PresentationRow } from '~/components/presentation-row'
 import { PortraitHiddenStage } from '~/components/portrait-hidden-stage'
 import { SectionTitle } from '~/components/section-title'
 import { VinylShelf } from '~/components/vinyl-shelf'
@@ -16,6 +17,7 @@ import { T } from '~/lib/i18n'
 import { localePath, type Locale } from '~/lib/locale-route'
 import { books, experience, records } from '~/lib/personal'
 import { projects } from '~/lib/projects'
+import { presentations } from '~/lib/presentations'
 import { getGitHub, getSocial } from '~/lib/social-live'
 import { getHomepagePhotoPreview } from '~/lib/media/photo-selection/repository'
 import { getPublishedPhotoSelection } from '~/lib/media/photo-selection/server'
@@ -118,6 +120,32 @@ export async function HomePageView({ locale }: { locale: Locale }) {
                   {job.from}—{job.to ?? <T zh="现在" en="now" />}
                 </span>
               </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mt-16">
+        <div className="flex items-center justify-between gap-4">
+          <SectionTitle index={nextSectionIndex()} delay={280}>
+            <T zh="视频演示" en="Presentations" />
+          </SectionTitle>
+          <Link
+            href={localePath(locale, '/presentations')}
+            className="enter relative shrink-0 text-sm text-muted-foreground transition-colors duration-150 ease-[ease] after:absolute after:-inset-x-2 after:-inset-y-3 after:content-[''] hover:text-foreground focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4"
+            style={{ '--enter-delay': '300ms' } as React.CSSProperties}
+          >
+            <T zh="查看全部" en="View all" />
+          </Link>
+        </div>
+        <ul className="focus-list mt-4 flex flex-col">
+          {presentations.map((presentation, index) => (
+            <li
+              key={presentation.slug}
+              className="enter-swing"
+              style={{ '--enter-delay': `${320 + index * 50}ms` } as React.CSSProperties}
+            >
+              <PresentationRow presentation={presentation} />
             </li>
           ))}
         </ul>

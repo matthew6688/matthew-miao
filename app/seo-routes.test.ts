@@ -5,6 +5,7 @@ import { getAllPosts } from '~/lib/content'
 import { experiments } from '~/lib/experiments'
 import { archivedNewsletterIds } from '~/lib/newsletters'
 import { projects } from '~/lib/projects'
+import { presentations, presentationPath } from '~/lib/presentations'
 import { seo } from '~/lib/seo'
 
 import robots from './robots'
@@ -51,6 +52,7 @@ describe('localized discovery routes', () => {
       '/blog',
       '/build-in-public',
       '/photos',
+      '/presentations',
       '/projects',
       '/ama',
       ...projects.map((project) => `/projects/${project.slug}`),
@@ -77,6 +79,15 @@ describe('localized discovery routes', () => {
           }),
         )
       }
+    }
+
+    for (const presentation of presentations) {
+      expect(entries).toContainEqual(
+        expect.objectContaining({
+          url: new URL(presentationPath(presentation.slug), seo.url).href,
+          lastModified: presentation.publishedAt,
+        }),
+      )
     }
   })
 })

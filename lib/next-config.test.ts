@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import nextConfig from '../next.config'
+import { presentations, presentationPath } from './presentations'
 
 describe('server output tracing', () => {
   it('packages content and OG dependencies for runtime routes', () => {
@@ -81,10 +82,12 @@ describe('presentation routes', () => {
   it('publishes the approved deck at its clean public URL', async () => {
     const rewrites = await nextConfig.rewrites!()
 
-    expect(rewrites).toContainEqual({
-      source: '/presentations/youtube-monetization-me-too-me-better',
-      destination:
-        '/presentations/youtube-monetization-me-too-me-better/index.html',
-    })
+    for (const presentation of presentations) {
+      const source = presentationPath(presentation.slug)
+      expect(rewrites).toContainEqual({
+        source,
+        destination: `${source}/index.html`,
+      })
+    }
   })
 })

@@ -2574,6 +2574,14 @@ img.tweet-card-avatar {
   transition: opacity 200ms ease 140ms;
 }
 
+.zoom-overlay-instant .zoom-overlay-backdrop,
+.zoom-overlay-instant img,
+.zoom-overlay-instant .zoom-overlay-marks,
+.zoom-overlay-instant .zoom-detail-item,
+.zoom-overlay-instant .zoom-detail-frame {
+  transition: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .zoom-overlay-backdrop,
   .zoom-overlay img,

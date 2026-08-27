@@ -19,6 +19,7 @@ const SECTION_IMAGE_PATHS = new Set([
   '/blog',
   '/build-in-public',
   '/photos',
+  '/presentations',
   '/projects',
 ])
 

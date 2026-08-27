@@ -117,9 +117,9 @@ describe('ZoomImage', () => {
       detail: 0,
     })
 
-    expect(
-      screen.getByRole('dialog', { name: 'Taipei' }).getAttribute('data-state'),
-    ).toBe('open')
+    const dialog = screen.getByRole('dialog', { name: 'Taipei' })
+    expect(dialog.getAttribute('data-state')).toBe('open')
+    expect(dialog.classList.contains('zoom-overlay-instant')).toBe(true)
     expect(requestAnimationFrame).not.toHaveBeenCalled()
   })
 
@@ -141,6 +141,17 @@ describe('ZoomImage', () => {
     expect(escape.defaultPrevented).toBe(true)
     expect(screen.queryByRole('dialog', { name: 'Taipei' })).toBeNull()
     expect(document.activeElement).toBe(trigger)
+  })
+
+  it('keeps a keyboard-opened dialog stable through incidental viewport events', () => {
+    render(<ZoomImage src="/photo.jpg" alt="Taipei" width={800} height={600} />)
+    const trigger = screen.getByRole('button', { name: 'Zoom image: Taipei' })
+    fireEvent.click(trigger, { detail: 0 })
+
+    fireEvent.scroll(window)
+    fireEvent.resize(window)
+
+    expect(screen.getByRole('dialog', { name: 'Taipei' })).not.toBeNull()
   })
 
   it('preserves the two-frame pointer opening transition', () => {
