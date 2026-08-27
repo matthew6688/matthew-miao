@@ -5,6 +5,7 @@ export const publishedPostSlugs = [
   'agentic-search-active-verification',
   'ai-youtube-content-system-experiment',
   'youtube-channel-research-decision-office',
+  'six-months-two-ai-products',
 ] as const
 
 export const archivedNewsletterIds = ['1'] as const
